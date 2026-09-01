@@ -54,12 +54,14 @@
     line-height:0.95;z-index:2;font-weight:400;
     letter-spacing:-0.02em;
   }
-  /* Орнамент - медленное вращение */
+  /* Орнамент - медленное вращение + параллакс при скролле */
   .ornament{
     position:absolute;width:clamp(500px,60vw,900px);
-    top:50%;left:50%;transform:translate(-50%,-50%);
+    top:50%;left:50%;
     opacity:.22;pointer-events:none;
     animation:rotate 60s linear infinite;
+    transform-origin:center;
+    will-change:transform;
   }
   @keyframes rotate{
     from{transform:translate(-50%,-50%) rotate(0deg)}
@@ -71,6 +73,7 @@
     background:var(--orange);
     padding:100px 48px 120px;
     position:relative;
+    overflow:hidden;
   }
   .manifest .inner{
     max-width:700px;margin:0 auto;
@@ -305,7 +308,7 @@
       <a href="https://instagram.com/kofayoha" target="_blank">@kofayoha</a>
     </div>
     <div class="right">
-      <a href="/cdn-cgi/l/email-protection#463523272a2f2822272e2933352306212b272f2a6825292b"><span class="__cf_email__" data-cfemail="99eafcf8f5f0f7fdf8f1f6eceafcd9fef4f8f0f5b7faf6f4">[email&#160;protected]</span></a>
+      <a href="/cdn-cgi/l/email-protection#196a7c787570777d7871766c6a7c597e74787075377a7674"><span class="__cf_email__" data-cfemail="611204000d080f0500090e14120421060c00080d4f020e0c">[email&#160;protected]</span></a>
     </div>
   </div>
   <p class="copy">© 2026 prët — art & energy</p>
@@ -313,9 +316,27 @@
 
 <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
   const header = document.querySelector('header');
+  const ornament = document.querySelector('.ornament');
+  const heroSection = document.querySelector('.hero');
+  const manifestSection = document.querySelector('.manifest');
+  
   window.addEventListener('scroll',()=>{
     header.classList.toggle('scrolled',window.scrollY>80);
+    
+    // Параллакс орнамента
+    if(ornament){
+      const rect = heroSection.getBoundingClientRect();
+      const progress = Math.max(0, Math.min(1, (window.innerHeight - rect.top) / (window.innerHeight + rect.height)));
+      
+      // Увеличение, вращение и смещение вниз при скролле
+      const scale = 1 + progress * 0.4; // Увеличение до 140%
+      const rotate = progress * 45; // Вращение на 45°
+      const translateY = progress * 150; // Смещение вниз на 150px
+      
+      ornament.style.transform = `translate(-50%, calc(-50% + ${translateY}px)) rotate(${rotate}deg) scale(${scale})`;
+    }
   });
+  
   const io=new IntersectionObserver(e=>{
     e.forEach(el=>{if(el.isIntersecting)el.target.classList.add('visible')});
   },{threshold:0.15});
