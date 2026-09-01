@@ -54,16 +54,16 @@
     line-height:0.95;z-index:2;font-weight:400;
     letter-spacing:-0.02em;
   }
-  /* Орнамент */
+  /* Орнамент - медленное вращение */
   .ornament{
     position:absolute;width:clamp(500px,60vw,900px);
     top:50%;left:50%;transform:translate(-50%,-50%);
     opacity:.22;pointer-events:none;
-    animation:float 40s ease-in-out infinite;
+    animation:rotate 60s linear infinite;
   }
-  @keyframes float{
-    0%,100%{transform:translate(-50%,-50%) scale(1)}
-    50%{transform:translate(-48%,-52%) scale(1.03)}
+  @keyframes rotate{
+    from{transform:translate(-50%,-50%) rotate(0deg)}
+    to{transform:translate(-50%,-50%) rotate(360deg)}
   }
 
   /* ---------- MANIFEST ---------- */
@@ -95,18 +95,32 @@
   /* ---------- ARTIST ---------- */
   .artist{
     background:var(--pink);
-    padding:0;position:relative;
+    padding:0;position:relative;overflow:hidden;
   }
+  /* Бегущая строка */
   .artist .bar{
-    padding:60px 48px 32px;
-    display:flex;justify-content:space-between;align-items:baseline;
-    flex-wrap:wrap;gap:24px;
+    padding:60px 0 32px;
+    white-space:nowrap;
+    overflow:hidden;
+  }
+  .artist .bar-content{
+    display:inline-block;
+    animation:ticker 25s linear infinite;
+    padding:0 48px;
+  }
+  @keyframes ticker{
+    0%{transform:translateX(0)}
+    100%{transform:translateX(-50%)}
   }
   .artist .bar h3{
+    display:inline-block;
     font-size:clamp(40px,6vw,80px);font-weight:400;font-style:italic;
+    margin-right:80px;
   }
   .artist .bar p{
+    display:inline-block;
     font-size:clamp(14px,1.8vw,18px);font-style:italic;
+    margin-right:80px;
   }
   .artist .lead{
     padding:0 48px 48px;
@@ -244,9 +258,13 @@
 
 <!-- ХУДОЖНИЦА -->
 <section class="artist" id="artist">
-  <div class="bar reveal">
-    <h3>Я — художница</h3>
-    <p>Использую телесную живопись</p>
+  <div class="bar">
+    <div class="bar-content">
+      <h3>Я — художница</h3>
+      <p>Использую телесную живопись</p>
+      <h3>Я — художница</h3>
+      <p>Использую телесную живопись</p>
+    </div>
   </div>
   <div class="lead reveal">
     Я работаю с материалом, который есть всегда: с телом, с линией, с энергией
@@ -287,13 +305,13 @@
       <a href="https://instagram.com/kofayoha" target="_blank">@kofayoha</a>
     </div>
     <div class="right">
-      <a href="mailto:sealindahouse@gmail.com">sealindahouse@gmail.com</a>
+      <a href="/cdn-cgi/l/email-protection#463523272a2f2822272e2933352306212b272f2a6825292b"><span class="__cf_email__" data-cfemail="99eafcf8f5f0f7fdf8f1f6eceafcd9fef4f8f0f5b7faf6f4">[email&#160;protected]</span></a>
     </div>
   </div>
   <p class="copy">© 2026 prët — art & energy</p>
 </footer>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
   const header = document.querySelector('header');
   window.addEventListener('scroll',()=>{
     header.classList.toggle('scrolled',window.scrollY>80);
