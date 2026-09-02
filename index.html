@@ -40,7 +40,6 @@
   }
   nav a:hover{opacity:.6}
   
-  /* Language toggle */
   .lang-toggle{
     cursor:pointer;
     font-size:14px;
@@ -81,7 +80,6 @@
     max-width:60%;
   }
   
-  /* Ornament image - larger, bottom right, rotates on scroll */
   .ornament{
     position:absolute;
     width:clamp(800px,100vw,1400px);
@@ -121,88 +119,10 @@
   }
   .btn:hover{opacity:.7}
 
-  /* ---------- JOURNEY (GALLERY) ---------- */
-  .journey{
-    background:var(--cream);
-    padding:120px 48px;
-    position:relative;
-  }
-  .journey .head{
-    display:flex;justify-content:space-between;align-items:center;
-    margin-bottom:60px;max-width:100%;
-  }
-  .journey h2{
-    font-size:clamp(44px,7vw,90px);font-style:italic;font-weight:400;
-    font-family:'Averia Serif Libre',serif;
-  }
-  .journey .head a{
-    text-decoration:underline;text-underline-offset:6px;
-    color:var(--ink);font-size:16px;font-style:italic;
-  }
-  
-  /* Dynamic grid gallery */
-  .grid{
-    display:grid;
-    grid-auto-rows:300px;
-    grid-auto-flow:dense;
-    gap:20px;
-    grid-template-columns:repeat(auto-fit, minmax(280px, 1fr));
-  }
-  .card{
-    border-radius:0;
-    overflow:hidden;
-    position:relative;
-    display:block;
-    transition:transform .4s ease, box-shadow .4s ease;
-  }
-  .card:hover{
-    transform:translateY(-8px);
-    box-shadow:0 20px 50px rgba(43,24,16,.12);
-  }
-  .card img{
-    width:100%;
-    height:100%;
-    object-fit:cover;
-    display:block;
-  }
-  .card:nth-child(1){
-    grid-column:span 2;
-    grid-row:span 2;
-  }
-  .card:nth-child(4){
-    grid-column:span 2;
-    grid-row:span 2;
-  }
-
-  /* ---------- PORTRAIT SLIDE ---------- */
-  .portrait-slide{
-    position:relative;
-    height:100vh;
-    overflow:hidden;
-    will-change:transform;
-  }
-  .portrait-slide img{
-    width:100%;
-    height:100%;
-    object-fit:cover;
-    display:block;
-    will-change:transform;
-  }
-  .portrait-overlay{
-    position:absolute;
-    top:0;
-    left:0;
-    width:100%;
-    height:100%;
-    background:rgba(0,0,0,0);
-    will-change:background;
-    pointer-events:none;
-  }
-
-  /* ---------- ARTIST ---------- */
+  /* ---------- ARTIST (TEXT ONLY) ---------- */
   .artist{
     background:var(--pink);
-    padding:50px 48px 40px;
+    padding:80px 48px;
     position:relative;
     overflow:hidden;
   }
@@ -242,12 +162,83 @@
     font-size:clamp(14px,1.5vw,18px);
     font-style:italic;
   }
-  .artist .visual{
-    width:100%;height:auto;display:block;
-    margin-top:30px;
+
+  /* ---------- PORTRAIT SLIDE ---------- */
+  .portrait-slide{
+    position:relative;
+    height:100vh;
+    overflow:hidden;
+    will-change:transform;
   }
-  .artist .visual img{
-    width:100%;height:auto;display:block;
+  .portrait-slide img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    display:block;
+    will-change:transform;
+  }
+  .portrait-overlay{
+    position:absolute;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background:rgba(0,0,0,0);
+    will-change:background;
+    pointer-events:none;
+    z-index:1;
+  }
+
+  /* ---------- JOURNEY (GALLERY) - SMALLER BLOCKS ---------- */
+  .journey{
+    background:var(--cream);
+    padding:80px 48px;
+    position:relative;
+  }
+  .journey .head{
+    display:flex;justify-content:space-between;align-items:center;
+    margin-bottom:50px;
+  }
+  .journey h2{
+    font-size:clamp(40px,6vw,80px);font-style:italic;font-weight:400;
+    font-family:'Averia Serif Libre',serif;
+  }
+  .journey .head a{
+    text-decoration:underline;text-underline-offset:6px;
+    color:var(--ink);font-size:16px;font-style:italic;
+  }
+  
+  .grid{
+    display:grid;
+    grid-auto-rows:220px;
+    grid-auto-flow:dense;
+    gap:16px;
+    grid-template-columns:repeat(auto-fit, minmax(220px, 1fr));
+  }
+  .card{
+    border-radius:0;
+    overflow:hidden;
+    position:relative;
+    display:block;
+    transition:transform .4s ease, box-shadow .4s ease;
+  }
+  .card:hover{
+    transform:translateY(-6px);
+    box-shadow:0 16px 40px rgba(43,24,16,.1);
+  }
+  .card img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    display:block;
+  }
+  .card:nth-child(1){
+    grid-column:span 2;
+    grid-row:span 2;
+  }
+  .card:nth-child(4){
+    grid-column:span 2;
+    grid-row:span 2;
   }
 
   /* ---------- FOOTER ---------- */
@@ -280,7 +271,8 @@
   /* ---------- RESPONSIVE ---------- */
   @media(max-width:1024px){
     .grid{
-      grid-template-columns:repeat(auto-fit, minmax(200px, 1fr));
+      grid-template-columns:repeat(auto-fit, minmax(180px, 1fr));
+      grid-auto-rows:200px;
     }
     .card:nth-child(1),.card:nth-child(4){
       grid-column:span 1;
@@ -331,6 +323,27 @@
   </div>
 </section>
 
+<!-- ARTIST (TEXT ONLY) -->
+<section class="artist" id="artist">
+  <div class="container reveal">
+    <h3 data-en="I am an artist" data-ru="Я — художница">I am an artist</h3>
+    <div class="content-row">
+      <div class="lead" data-en="I work with material that is always present: the body, the line, the energy" data-ru="Я работаю с материалом, который есть всегда: с телом, с линией, с энергией">
+        I work with material that is always present: the body, the line, the energy
+      </div>
+      <div class="bottom-text">
+        <p data-en="Using body painting" data-ru="Использую телесную живопись">Using body painting</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PORTRAIT SLIDE -->
+<section class="portrait-slide" id="portrait">
+  <div class="portrait-overlay"></div>
+  <img src="img/portrait.jpg" alt="Portrait">
+</section>
+
 <!-- GALLERY -->
 <section class="journey" id="journey">
   <div class="head reveal">
@@ -350,30 +363,6 @@
     <a class="card reveal" href="https://www.behance.net/gallery/242092697/Chenergy" target="_blank">
       <img src="img/chenergy.jpg" alt="Chenergy">
     </a>
-  </div>
-</section>
-
-<!-- PORTRAIT SLIDE -->
-<section class="portrait-slide" id="portrait">
-  <div class="portrait-overlay"></div>
-  <img src="img/portrait.jpg" alt="Portrait">
-</section>
-
-<!-- ARTIST -->
-<section class="artist" id="artist">
-  <div class="container reveal">
-    <h3 data-en="I am an artist" data-ru="Я — художница">I am an artist</h3>
-    <div class="content-row">
-      <div class="lead" data-en="I work with material that is always present: the body, the line, the energy" data-ru="Я работаю с материалом, который есть всегда: с телом, с линией, с энергией">
-        I work with material that is always present: the body, the line, the energy
-      </div>
-      <div class="bottom-text">
-        <p data-en="Using body painting" data-ru="Использую телесную живопись">Using body painting</p>
-      </div>
-    </div>
-  </div>
-  <div class="visual reveal">
-    <img src="img/portrait.jpg" alt="Portrait" onerror="this.style.display='none'">
   </div>
 </section>
 
@@ -420,29 +409,27 @@
   window.addEventListener('scroll',()=>{
     header.classList.toggle('scrolled',window.scrollY>80);
     
-    // Parallax animation - ornament rotates 45 degrees and moves up (LONGER ANIMATION)
+    // Hero ornament - longer animation with rotation
     if(ornament){
       const rect = heroSection.getBoundingClientRect();
       const scrollProgress = Math.max(0, Math.min(1, -rect.top / (rect.height - window.innerHeight)));
       
-      const rotate = scrollProgress * 45; // Rotate 45 degrees
-      const translateY = scrollProgress * 350; // Move up MORE (was 200px)
-      const opacity = 0.4 - scrollProgress * 0.2; // Fade more gradually
+      const rotate = scrollProgress * 45;
+      const translateY = scrollProgress * 350;
+      const opacity = 0.4 - scrollProgress * 0.2;
       
       ornament.style.transform = `translateY(-${translateY}px) rotate(${rotate}deg)`;
       ornament.style.opacity = opacity;
     }
     
-    // Portrait slide parallax and overlay effect
+    // Portrait slide parallax effect
     if(portraitSlide && portraitImg && portraitOverlay){
       const rect = portraitSlide.getBoundingClientRect();
       const progress = Math.max(0, Math.min(1, (window.innerHeight - rect.top) / (window.innerHeight + rect.height)));
       
-      // Image moves up with parallax
       const translateY = progress * 150;
       portraitImg.style.transform = `translateY(${translateY}px)`;
       
-      // Overlay darkens as you scroll through
       const overlayOpacity = progress * 0.4;
       portraitOverlay.style.backgroundColor = `rgba(0,0,0,${overlayOpacity})`;
     }
