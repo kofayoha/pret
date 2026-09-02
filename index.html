@@ -94,40 +94,45 @@
   /* ---------- ARTIST ---------- */
   .artist{
     background:var(--pink);
-    padding:0;position:relative;overflow:hidden;
-  }
-  /* Бегущая строка */
-  .artist .bar{
-    padding:60px 0 32px;
-    white-space:nowrap;
+    padding:80px 48px 60px;
+    position:relative;
     overflow:hidden;
   }
-  .artist .bar-content{
-    display:inline-block;
-    animation:ticker 25s linear infinite;
-    padding:0 48px;
+  .artist .container{
+    max-width:1400px;
+    margin:0 auto;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:40px;
   }
-  @keyframes ticker{
-    0%{transform:translateX(0)}
-    100%{transform:translateX(-50%)}
-  }
-  .artist .bar h3{
-    display:inline-block;
-    font-size:clamp(40px,6vw,80px);font-weight:400;font-style:italic;
-    margin-right:80px;
-  }
-  .artist .bar p{
-    display:inline-block;
-    font-size:clamp(14px,1.8vw,18px);font-style:italic;
-    margin-right:80px;
+  .artist h3{
+    font-size:clamp(60px,8vw,120px);
+    font-weight:400;
+    font-style:italic;
+    text-align:center;
+    line-height:1;
   }
   .artist .lead{
-    padding:0 48px 48px;
-    font-size:clamp(24px,3vw,42px);line-height:1.35;
-    max-width:1100px;
+    font-size:clamp(20px,2.5vw,36px);
+    line-height:1.35;
+    text-align:center;
+    max-width:900px;
+  }
+  .artist .bottom-text{
+    width:100%;
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-end;
+    margin-top:20px;
+  }
+  .artist .bottom-text p{
+    font-size:clamp(14px,1.5vw,18px);
+    font-style:italic;
   }
   .artist .visual{
     width:100%;height:auto;display:block;
+    margin-top:40px;
   }
   .artist .visual img{
     width:100%;height:auto;display:block;
@@ -200,7 +205,7 @@
     header{padding:20px 24px}
     nav{gap:20px}
     nav a{font-size:11px}
-    .artist .bar{flex-direction:column;align-items:flex-start}
+    .artist .bottom-text{flex-direction:column;align-items:center;gap:16px}
     .grid{
       grid-template-columns:1fr 1fr;
       grid-template-rows:auto;
@@ -257,16 +262,15 @@
 
 <!-- ХУДОЖНИЦА -->
 <section class="artist" id="artist">
-  <div class="bar">
-    <div class="bar-content">
-      <h3>Я — художница</h3>
+  <div class="container reveal">
+    <h3>Я — художница</h3>
+    <div class="lead">
+      Я работаю с материалом, который есть всегда: с телом, с линией, с энергией
+    </div>
+    <div class="bottom-text">
       <p>Использую телесную живопись</p>
-      <h3>Я — художница</h3>
       <p>Использую телесную живопись</p>
     </div>
-  </div>
-  <div class="lead reveal">
-    Я работаю с материалом, который есть всегда: с телом, с линией, с энергией
   </div>
   <div class="visual reveal">
     <img src="img/portrait.jpg" alt="Портрет" onerror="this.style.display='none'">
