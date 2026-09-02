@@ -58,15 +58,15 @@
 
   /* ---------- HERO ---------- */
   .hero{
-    min-height:100vh;
+    min-height:130vh;
     background:var(--orange);
     display:flex;
     flex-direction:column;
-    justify-content:flex-start;
+    justify-content:center;
     align-items:flex-start;
     position:relative;
     overflow:hidden;
-    padding:180px 48px 48px;
+    padding:0 48px 48px;
   }
   .hero h1{
     font-size:clamp(64px,12vw,140px);
@@ -78,24 +78,26 @@
     letter-spacing:-0.02em;
     font-family:'Averia Serif Libre',serif;
     position:relative;
+    max-width:60%;
   }
   
-  /* Ornament image with scroll animation */
+  /* Ornament image - larger, bottom right, rotates on scroll */
   .ornament{
     position:absolute;
-    width:clamp(400px,50vw,700px);
-    bottom:0;
-    left:0;
-    opacity:.35;
+    width:clamp(800px,100vw,1400px);
+    bottom:-10%;
+    right:-15%;
+    opacity:.4;
     pointer-events:none;
     will-change:transform,opacity;
     z-index:1;
+    transform-origin:center center;
   }
 
   /* ---------- MANIFEST ---------- */
   .manifest{
     background:var(--orange);
-    padding:100px 48px 120px;
+    padding:60px 48px 80px;
     position:relative;
     overflow:hidden;
   }
@@ -122,7 +124,7 @@
   /* ---------- ARTIST ---------- */
   .artist{
     background:var(--pink);
-    padding:80px 48px 60px;
+    padding:50px 48px 40px;
     position:relative;
     overflow:hidden;
   }
@@ -131,29 +133,32 @@
     margin:0 auto;
     display:flex;
     flex-direction:column;
-    align-items:center;
-    gap:40px;
+    align-items:flex-start;
+    gap:30px;
   }
   .artist h3{
-    font-size:clamp(60px,8vw,120px);
+    font-size:clamp(50px,7vw,100px);
     font-weight:400;
     font-style:italic;
-    text-align:center;
+    text-align:left;
     line-height:1;
     font-family:'Averia Serif Libre',serif;
   }
-  .artist .lead{
-    font-size:clamp(20px,2.5vw,36px);
-    line-height:1.35;
-    text-align:center;
-    max-width:900px;
-  }
-  .artist .bottom-text{
+  .artist .content-row{
     width:100%;
     display:flex;
     justify-content:space-between;
-    align-items:flex-end;
-    margin-top:20px;
+    align-items:flex-start;
+    gap:40px;
+  }
+  .artist .lead{
+    font-size:clamp(18px,2vw,28px);
+    line-height:1.4;
+    text-align:left;
+    max-width:600px;
+  }
+  .artist .bottom-text{
+    text-align:right;
   }
   .artist .bottom-text p{
     font-size:clamp(14px,1.5vw,18px);
@@ -161,7 +166,7 @@
   }
   .artist .visual{
     width:100%;height:auto;display:block;
-    margin-top:40px;
+    margin-top:30px;
   }
   .artist .visual img{
     width:100%;height:auto;display:block;
@@ -236,9 +241,11 @@
     header{padding:20px 24px}
     nav{gap:20px}
     nav a{font-size:11px}
-    .hero{padding:140px 24px 48px;justify-content:center;align-items:center}
-    .hero h1{text-align:center}
-    .artist .bottom-text{flex-direction:column;align-items:center;gap:16px}
+    .hero{padding:140px 24px 48px;justify-content:center;align-items:center;min-height:100vh}
+    .hero h1{text-align:center;max-width:100%}
+    .ornament{width:clamp(600px,120vw,1000px);right:-20%;bottom:-5%}
+    .artist .content-row{flex-direction:column}
+    .artist .bottom-text{text-align:left}
     .grid{
       grid-template-columns:1fr 1fr;
       grid-template-rows:auto;
@@ -256,11 +263,10 @@
 <header>
   <a class="logo" href="#top">prët</a>
   <nav>
-    <a href="#manifest" data-en="Services" data-ru="Услуги">Services</a>
-    <a href="#journey" data-en="Shop" data-ru="Магазин">Shop</a>
+    <a href="#journey" data-en="Gallery" data-ru="Галерея">Gallery</a>
+    <a href="shop.html" data-en="Shop" data-ru="Магазин">Shop</a>
     <a href="#artist" data-en="About" data-ru="О себе">About</a>
     <a href="#contact" data-en="Contact" data-ru="Контакты">Contact</a>
-    <a href="#contact" data-en="Cart" data-ru="Корзина">Cart</a>
     <span class="lang-toggle" onclick="toggleLanguage()">RU</span>
   </nav>
 </header>
@@ -283,12 +289,13 @@
 <section class="artist" id="artist">
   <div class="container reveal">
     <h3 data-en="I am an artist" data-ru="Я — художница">I am an artist</h3>
-    <div class="lead" data-en="I work with material that is always present: the body, the line, the energy" data-ru="Я работаю с материалом, который есть всегда: с телом, с линией, с энергией">
-      I work with material that is always present: the body, the line, the energy
-    </div>
-    <div class="bottom-text">
-      <p data-en="Using body painting" data-ru="Использую телесную живопись">Using body painting</p>
-      <p data-en="Using body painting" data-ru="Использую телесную живопись">Using body painting</p>
+    <div class="content-row">
+      <div class="lead" data-en="I work with material that is always present: the body, the line, the energy" data-ru="Я работаю с материалом, который есть всегда: с телом, с линией, с энергией">
+        I work with material that is always present: the body, the line, the energy
+      </div>
+      <div class="bottom-text">
+        <p data-en="Using body painting" data-ru="Использую телесную живопись">Using body painting</p>
+      </div>
     </div>
   </div>
   <div class="visual reveal">
@@ -358,17 +365,16 @@
   window.addEventListener('scroll',()=>{
     header.classList.toggle('scrolled',window.scrollY>80);
     
-    // Parallax animation for ornament
+    // Parallax animation - ornament rotates 45 degrees clockwise and moves up
     if(ornament){
       const rect = heroSection.getBoundingClientRect();
       const scrollProgress = Math.max(0, Math.min(1, -rect.top / (rect.height - window.innerHeight)));
       
-      // Slide up and fade out as you scroll
-      const translateY = scrollProgress * 150; // Move up 150px
-      const scale = 1 + scrollProgress * 0.3; // Grow slightly
-      const opacity = 0.35 - scrollProgress * 0.2; // Fade out
+      const rotate = scrollProgress * 45; // Rotate 45 degrees
+      const translateY = scrollProgress * 200; // Move up
+      const opacity = 0.4 - scrollProgress * 0.15; // Fade slightly
       
-      ornament.style.transform = `translateY(-${translateY}px) scale(${scale})`;
+      ornament.style.transform = `translateY(-${translateY}px) rotate(${rotate}deg)`;
       ornament.style.opacity = opacity;
     }
   });
