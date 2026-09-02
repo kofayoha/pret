@@ -121,6 +121,84 @@
   }
   .btn:hover{opacity:.7}
 
+  /* ---------- JOURNEY (GALLERY) ---------- */
+  .journey{
+    background:var(--cream);
+    padding:120px 48px;
+    position:relative;
+  }
+  .journey .head{
+    display:flex;justify-content:space-between;align-items:center;
+    margin-bottom:60px;max-width:100%;
+  }
+  .journey h2{
+    font-size:clamp(44px,7vw,90px);font-style:italic;font-weight:400;
+    font-family:'Averia Serif Libre',serif;
+  }
+  .journey .head a{
+    text-decoration:underline;text-underline-offset:6px;
+    color:var(--ink);font-size:16px;font-style:italic;
+  }
+  
+  /* Dynamic grid gallery */
+  .grid{
+    display:grid;
+    grid-auto-rows:300px;
+    grid-auto-flow:dense;
+    gap:20px;
+    grid-template-columns:repeat(auto-fit, minmax(280px, 1fr));
+  }
+  .card{
+    border-radius:0;
+    overflow:hidden;
+    position:relative;
+    display:block;
+    transition:transform .4s ease, box-shadow .4s ease;
+  }
+  .card:hover{
+    transform:translateY(-8px);
+    box-shadow:0 20px 50px rgba(43,24,16,.12);
+  }
+  .card img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    display:block;
+  }
+  .card:nth-child(1){
+    grid-column:span 2;
+    grid-row:span 2;
+  }
+  .card:nth-child(4){
+    grid-column:span 2;
+    grid-row:span 2;
+  }
+
+  /* ---------- PORTRAIT SLIDE ---------- */
+  .portrait-slide{
+    position:relative;
+    height:100vh;
+    overflow:hidden;
+    will-change:transform;
+  }
+  .portrait-slide img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    display:block;
+    will-change:transform;
+  }
+  .portrait-overlay{
+    position:absolute;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background:rgba(0,0,0,0);
+    will-change:background;
+    pointer-events:none;
+  }
+
   /* ---------- ARTIST ---------- */
   .artist{
     background:var(--pink);
@@ -172,43 +250,6 @@
     width:100%;height:auto;display:block;
   }
 
-  /* ---------- JOURNEY ---------- */
-  .journey{
-    background:var(--cream);
-    padding:120px 48px;
-    position:relative;
-  }
-  .journey .head{
-    display:flex;justify-content:space-between;align-items:center;
-    margin-bottom:60px;max-width:1300px;margin-left:auto;margin-right:auto;
-  }
-  .journey h2{
-    font-size:clamp(44px,7vw,90px);font-style:italic;font-weight:400;
-    font-family:'Averia Serif Libre',serif;
-  }
-  .journey .head a{
-    text-decoration:underline;text-underline-offset:6px;
-    color:var(--ink);font-size:16px;font-style:italic;
-  }
-  .grid{
-    display:grid;
-    grid-template-columns:repeat(4,1fr);
-    grid-template-rows:360px 320px;
-    gap:24px;
-    max-width:1300px;margin:0 auto;
-  }
-  .card{
-    border-radius:8px;overflow:hidden;position:relative;
-    display:block;
-    transition:transform .4s ease, box-shadow .4s ease;
-  }
-  .card:hover{transform:translateY(-8px);box-shadow:0 20px 50px rgba(43,24,16,.12)}
-  .card img{
-    width:100%;height:100%;object-fit:cover;display:block;
-  }
-  .card:nth-child(1){grid-row:span 2}
-  .card:nth-child(4){grid-row:span 2}
-
   /* ---------- FOOTER ---------- */
   footer{
     background:var(--orange);
@@ -237,6 +278,16 @@
   }
 
   /* ---------- RESPONSIVE ---------- */
+  @media(max-width:1024px){
+    .grid{
+      grid-template-columns:repeat(auto-fit, minmax(200px, 1fr));
+    }
+    .card:nth-child(1),.card:nth-child(4){
+      grid-column:span 1;
+      grid-row:span 1;
+    }
+  }
+  
   @media(max-width:900px){
     header{padding:20px 24px}
     nav{gap:20px}
@@ -246,11 +297,6 @@
     .ornament{width:clamp(600px,120vw,1000px);right:-20%;bottom:-5%}
     .artist .content-row{flex-direction:column}
     .artist .bottom-text{text-align:left}
-    .grid{
-      grid-template-columns:1fr 1fr;
-      grid-template-rows:auto;
-    }
-    .card:nth-child(1),.card:nth-child(4){grid-row:span 1}
     footer .inner{flex-direction:column}
   }
   
@@ -264,7 +310,7 @@
   <a class="logo" href="#top">prët</a>
   <nav>
     <a href="#journey" data-en="Gallery" data-ru="Галерея">Gallery</a>
-    <a href="shop.html" data-en="Shop" data-ru="Магазин">Shop</a>
+    <a href="./shop.html" data-en="Shop" data-ru="Магазин">Shop</a>
     <a href="#artist" data-en="About" data-ru="О себе">About</a>
     <a href="#contact" data-en="Contact" data-ru="Контакты">Contact</a>
     <span class="lang-toggle" onclick="toggleLanguage()">RU</span>
@@ -282,24 +328,6 @@
   <div class="inner reveal">
     <h2 data-en="My purpose, my meaning, and the ability to live—creating sparks" data-ru="Моя цель, мой смысл и возможность жить — создавать искры">My purpose, my meaning, and the ability to live—creating sparks</h2>
     <a class="btn" href="#artist" data-en="Explore Now" data-ru="Узнать больше">Explore Now</a>
-  </div>
-</section>
-
-<!-- ARTIST -->
-<section class="artist" id="artist">
-  <div class="container reveal">
-    <h3 data-en="I am an artist" data-ru="Я — художница">I am an artist</h3>
-    <div class="content-row">
-      <div class="lead" data-en="I work with material that is always present: the body, the line, the energy" data-ru="Я работаю с материалом, который есть всегда: с телом, с линией, с энергией">
-        I work with material that is always present: the body, the line, the energy
-      </div>
-      <div class="bottom-text">
-        <p data-en="Using body painting" data-ru="Использую телесную живопись">Using body painting</p>
-      </div>
-    </div>
-  </div>
-  <div class="visual reveal">
-    <img src="img/portrait.jpg" alt="Portrait" onerror="this.style.display='none'">
   </div>
 </section>
 
@@ -325,6 +353,30 @@
   </div>
 </section>
 
+<!-- PORTRAIT SLIDE -->
+<section class="portrait-slide" id="portrait">
+  <div class="portrait-overlay"></div>
+  <img src="img/portrait.jpg" alt="Portrait">
+</section>
+
+<!-- ARTIST -->
+<section class="artist" id="artist">
+  <div class="container reveal">
+    <h3 data-en="I am an artist" data-ru="Я — художница">I am an artist</h3>
+    <div class="content-row">
+      <div class="lead" data-en="I work with material that is always present: the body, the line, the energy" data-ru="Я работаю с материалом, который есть всегда: с телом, с линией, с энергией">
+        I work with material that is always present: the body, the line, the energy
+      </div>
+      <div class="bottom-text">
+        <p data-en="Using body painting" data-ru="Использую телесную живопись">Using body painting</p>
+      </div>
+    </div>
+  </div>
+  <div class="visual reveal">
+    <img src="img/portrait.jpg" alt="Portrait" onerror="this.style.display='none'">
+  </div>
+</section>
+
 <!-- FOOTER -->
 <footer id="contact">
   <div class="inner reveal">
@@ -334,13 +386,13 @@
       <a href="https://instagram.com/kofayoha" target="_blank">@kofayoha</a>
     </div>
     <div class="right">
-      <a href="/cdn-cgi/l/email-protection#254e4a43445c4a4d44654248444c490b464a48"><span class="__cf_email__" data-cfemail="157e7a73746c7a7d74557278747c793b767a78">[email&#160;protected]</span></a>
+      <a href="mailto:kofayoha@gmail.com">kofayoha@gmail.com</a>
     </div>
   </div>
   <p class="copy">© 2026 prët — art & energy</p>
 </footer>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<script>
   let currentLang = 'en';
   
   function toggleLanguage() {
@@ -361,21 +413,38 @@
   const header = document.querySelector('header');
   const ornament = document.querySelector('.ornament');
   const heroSection = document.querySelector('.hero');
+  const portraitOverlay = document.querySelector('.portrait-overlay');
+  const portraitImg = document.querySelector('.portrait-slide img');
+  const portraitSlide = document.querySelector('.portrait-slide');
   
   window.addEventListener('scroll',()=>{
     header.classList.toggle('scrolled',window.scrollY>80);
     
-    // Parallax animation - ornament rotates 45 degrees clockwise and moves up
+    // Parallax animation - ornament rotates 45 degrees and moves up (LONGER ANIMATION)
     if(ornament){
       const rect = heroSection.getBoundingClientRect();
       const scrollProgress = Math.max(0, Math.min(1, -rect.top / (rect.height - window.innerHeight)));
       
       const rotate = scrollProgress * 45; // Rotate 45 degrees
-      const translateY = scrollProgress * 200; // Move up
-      const opacity = 0.4 - scrollProgress * 0.15; // Fade slightly
+      const translateY = scrollProgress * 350; // Move up MORE (was 200px)
+      const opacity = 0.4 - scrollProgress * 0.2; // Fade more gradually
       
       ornament.style.transform = `translateY(-${translateY}px) rotate(${rotate}deg)`;
       ornament.style.opacity = opacity;
+    }
+    
+    // Portrait slide parallax and overlay effect
+    if(portraitSlide && portraitImg && portraitOverlay){
+      const rect = portraitSlide.getBoundingClientRect();
+      const progress = Math.max(0, Math.min(1, (window.innerHeight - rect.top) / (window.innerHeight + rect.height)));
+      
+      // Image moves up with parallax
+      const translateY = progress * 150;
+      portraitImg.style.transform = `translateY(${translateY}px)`;
+      
+      // Overlay darkens as you scroll through
+      const overlayOpacity = progress * 0.4;
+      portraitOverlay.style.backgroundColor = `rgba(0,0,0,${overlayOpacity})`;
     }
   });
   
