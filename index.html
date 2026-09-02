@@ -163,19 +163,19 @@
     font-style:italic;
   }
 
-  /* ---------- PORTRAIT SLIDE ---------- */
+  /* ---------- PORTRAIT SLIDE WITH MOSAIC EFFECT ---------- */
   .portrait-slide{
     position:relative;
     height:100vh;
     overflow:hidden;
-    will-change:transform;
+    background:var(--cream);
   }
   .portrait-slide img{
     width:100%;
     height:100%;
     object-fit:cover;
     display:block;
-    will-change:transform;
+    will-change:clip-path;
   }
   .portrait-overlay{
     position:absolute;
@@ -183,13 +183,11 @@
     left:0;
     width:100%;
     height:100%;
-    background:rgba(0,0,0,0);
-    will-change:background;
     pointer-events:none;
     z-index:1;
   }
 
-  /* ---------- JOURNEY (GALLERY) - SMALLER BLOCKS ---------- */
+  /* ---------- JOURNEY (GALLERY) ---------- */
   .journey{
     background:var(--cream);
     padding:80px 48px;
@@ -268,7 +266,7 @@
     font-family:'IBM Plex Sans',sans-serif;
   }
 
-  /* ---------- RESPONSIVE ---------- */
+  /* ---------- MOBILE OPTIMIZATIONS ---------- */
   @media(max-width:1024px){
     .grid{
       grid-template-columns:repeat(auto-fit, minmax(180px, 1fr));
@@ -281,15 +279,95 @@
   }
   
   @media(max-width:900px){
-    header{padding:20px 24px}
-    nav{gap:20px}
+    header{
+      padding:16px 20px;
+    }
+    .logo{font-size:28px}
+    nav{gap:16px;flex-wrap:wrap}
     nav a{font-size:11px}
-    .hero{padding:140px 24px 48px;justify-content:center;align-items:center;min-height:100vh}
-    .hero h1{text-align:center;max-width:100%}
-    .ornament{width:clamp(600px,120vw,1000px);right:-20%;bottom:-5%}
-    .artist .content-row{flex-direction:column}
-    .artist .bottom-text{text-align:left}
-    footer .inner{flex-direction:column}
+    .lang-toggle{font-size:12px;padding:4px 10px}
+    
+    .hero{
+      padding:120px 20px 40px;
+      justify-content:center;
+      align-items:center;
+      min-height:100vh;
+    }
+    .hero h1{
+      text-align:center;
+      max-width:100%;
+      font-size:clamp(48px,15vw,80px);
+    }
+    .ornament{
+      width:clamp(500px,140vw,800px);
+      right:-25%;
+      bottom:-5%;
+    }
+    
+    .manifest{
+      padding:50px 20px 60px;
+    }
+    .manifest h2{
+      font-size:clamp(28px,7vw,48px);
+    }
+    
+    .artist{
+      padding:50px 20px;
+    }
+    .artist h3{
+      font-size:clamp(40px,10vw,70px);
+    }
+    .artist .content-row{
+      flex-direction:column;
+      gap:24px;
+    }
+    .artist .lead{
+      font-size:clamp(16px,4vw,20px);
+    }
+    .artist .bottom-text{
+      text-align:left;
+    }
+    
+    .journey{
+      padding:60px 20px;
+    }
+    .journey h2{
+      font-size:clamp(32px,8vw,60px);
+    }
+    .journey .head{
+      flex-direction:column;
+      align-items:flex-start;
+      gap:20px;
+    }
+    .grid{
+      grid-template-columns:repeat(auto-fit, minmax(140px, 1fr));
+      grid-auto-rows:180px;
+      gap:12px;
+    }
+    
+    footer{
+      padding:80px 20px 40px;
+    }
+    footer .inner{
+      flex-direction:column;
+      gap:30px;
+    }
+    footer .left h2{
+      font-size:clamp(40px,12vw,80px);
+    }
+    footer .left a, footer .right a{
+      font-size:clamp(16px,4vw,20px);
+    }
+  }
+  
+  @media(max-width:600px){
+    .hero h1{
+      font-size:clamp(40px,12vw,60px);
+    }
+    .grid{
+      grid-template-columns:1fr;
+      grid-auto-rows:220px;
+    }
   }
   
   .reveal{opacity:0;transform:translateY(40px);transition:opacity 1s ease,transform 1s ease}
@@ -338,7 +416,7 @@
   </div>
 </section>
 
-<!-- PORTRAIT SLIDE -->
+<!-- PORTRAIT SLIDE WITH MOSAIC EFFECT -->
 <section class="portrait-slide" id="portrait">
   <div class="portrait-overlay"></div>
   <img src="img/portrait.jpg" alt="Portrait">
@@ -402,14 +480,13 @@
   const header = document.querySelector('header');
   const ornament = document.querySelector('.ornament');
   const heroSection = document.querySelector('.hero');
-  const portraitOverlay = document.querySelector('.portrait-overlay');
   const portraitImg = document.querySelector('.portrait-slide img');
   const portraitSlide = document.querySelector('.portrait-slide');
   
   window.addEventListener('scroll',()=>{
     header.classList.toggle('scrolled',window.scrollY>80);
     
-    // Hero ornament - longer animation with rotation
+    // Hero ornament animation
     if(ornament){
       const rect = heroSection.getBoundingClientRect();
       const scrollProgress = Math.max(0, Math.min(1, -rect.top / (rect.height - window.innerHeight)));
@@ -422,16 +499,41 @@
       ornament.style.opacity = opacity;
     }
     
-    // Portrait slide parallax effect
-    if(portraitSlide && portraitImg && portraitOverlay){
+    // Portrait mosaic reveal effect
+    if(portraitSlide && portraitImg){
       const rect = portraitSlide.getBoundingClientRect();
       const progress = Math.max(0, Math.min(1, (window.innerHeight - rect.top) / (window.innerHeight + rect.height)));
       
-      const translateY = progress * 150;
-      portraitImg.style.transform = `translateY(${translateY}px)`;
+      // Create mosaic clip-path that reveals from tiles
+      const gridSize = 8;
+      const revealProgress = progress * 1.5; // Speed up reveal
       
-      const overlayOpacity = progress * 0.4;
-      portraitOverlay.style.backgroundColor = `rgba(0,0,0,${overlayOpacity})`;
+      if(revealProgress < 1) {
+        const paths = [];
+        for(let i = 0; i < gridSize; i++) {
+          for(let j = 0; j < gridSize; j++) {
+            const delay = (i + j) / (gridSize * 2);
+            const tileProgress = Math.max(0, Math.min(1, (revealProgress - delay) * 3));
+            
+            if(tileProgress > 0) {
+              const x = (i / gridSize) * 100;
+              const y = (j / gridSize) * 100;
+              const size = (100 / gridSize) * tileProgress;
+              const centerX = x + (100 / gridSize) / 2;
+              const centerY = y + (100 / gridSize) / 2;
+              const halfSize = size / 2;
+              
+              paths.push(`polygon(${centerX - halfSize}% ${centerY - halfSize}%, ${centerX + halfSize}% ${centerY - halfSize}%, ${centerX + halfSize}% ${centerY + halfSize}%, ${centerX - halfSize}% ${centerY + halfSize}%)`);
+            }
+          }
+        }
+        
+        if(paths.length > 0) {
+          portraitImg.style.clipPath = paths.join(', ');
+        }
+      } else {
+        portraitImg.style.clipPath = 'none';
+      }
     }
   });
   
