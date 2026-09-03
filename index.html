@@ -411,13 +411,13 @@
       <a href="https://instagram.com/kofayoha" target="_blank">@kofayoha</a>
     </div>
     <div class="right">
-      <a href="mailto:kofayoha@gmail.com">kofayoha@gmail.com</a>
+      <a href="/cdn-cgi/l/email-protection#5833373e3921373039183f35393134763b3735"><span class="__cf_email__" data-cfemail="177c7871766e787f7657707a767e7b3974787a">[email&#160;protected]</span></a>
     </div>
   </div>
   <p class="copy">© 2026 prët — art &amp; energy</p>
 </footer>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
   let currentLang = 'en';
   let currentPage = 0;
   
@@ -468,39 +468,96 @@
     }
   };
   
-  const header = document.querySelector('header');
-  const ornament = document.querySelector('.ornament');
-  const heroSection = document.querySelector('.hero');
+  // Portrait canvas — vertical diagonal strips (Squarespace "Lines" effect)
+  // Strips run top-to-bottom at a slight diagonal; alternate strips shift up/down on scroll
+  const canvas = document.getElementById('portraitCanvas');
+  const ctx = canvas.getContext('2d');
   const portraitSlide = document.querySelector('.portrait-slide');
-  
-  window.addEventListener('scroll',()=>{
-    header.classList.toggle('scrolled',window.scrollY>80);
-    
+  const NUM_STRIPS = 12;
+  const SKEW = 0.18; // horizontal skew per pixel of height (controls diagonal angle)
+  let scrollProg = 0;
+
+  function resizeCanvas(){
+    canvas.width  = portraitSlide.offsetWidth;
+    canvas.height = portraitSlide.offsetHeight;
+  }
+  window.addEventListener('resize', () => { resizeCanvas(); drawStrips(scrollProg); });
+  resizeCanvas();
+
+  const src = new Image();
+  src.src = 'img/portrait.jpg';
+  src.onload = () => drawStrips(0);
+
+  function drawStrips(prog){
+    if(!src.complete || !src.naturalWidth) return;
+    const W = canvas.width, H = canvas.height;
+    ctx.clearRect(0, 0, W, H);
+
+    // How wide each strip is at the top edge
+    const stripW = W / NUM_STRIPS;
+    // Max vertical shift per strip on full scroll
+    const MAX_SHIFT = 180;
+
+    // Scale image to cover canvas
+    const scale = Math.max(W / src.width, H / src.height);
+    const iw = src.width * scale;
+    const ih = src.height * scale;
+    const ix = (W - iw) / 2;
+    const iy = (H - ih) / 2;
+
+    for(let i = 0; i < NUM_STRIPS; i++){
+      const dir   = i % 2 === 0 ? 1 : -1;
+      const shift = dir * prog * MAX_SHIFT;
+
+      // Left and right x at top and bottom, creating the diagonal
+      const xTopL  = i * stripW;
+      const xTopR  = (i + 1) * stripW;
+      const xBotL  = xTopL  + H * SKEW;
+      const xBotR  = xTopR  + H * SKEW;
+
+      ctx.save();
+
+      // Clip to this parallelogram strip
+      ctx.beginPath();
+      ctx.moveTo(xTopL, shift);
+      ctx.lineTo(xTopR, shift);
+      ctx.lineTo(xBotR, H + shift);
+      ctx.lineTo(xBotL, H + shift);
+      ctx.closePath();
+      ctx.clip();
+
+      // Draw full image shifted vertically for this strip
+      ctx.drawImage(src, ix, iy + shift, iw, ih);
+
+      ctx.restore();
+    }
+  }
+
+  // Scroll listener
+  const header      = document.querySelector('header');
+  const ornament    = document.querySelector('.ornament');
+  const heroSection = document.querySelector('.hero');
+
+  window.addEventListener('scroll', () => {
+    header.classList.toggle('scrolled', window.scrollY > 80);
+
     if(ornament){
       const rect = heroSection.getBoundingClientRect();
-      const scrollProgress = Math.max(0, Math.min(1, -rect.top / (rect.height - window.innerHeight)));
-      
-      const rotate = scrollProgress * 45;
-      const translateY = scrollProgress * 350;
-      const opacity = 0.4 - scrollProgress * 0.2;
-      
-      ornament.style.transform = `translateY(-${translateY}px) rotate(${rotate}deg)`;
-      ornament.style.opacity = opacity;
+      const p    = Math.max(0, Math.min(1, -rect.top / (rect.height - window.innerHeight)));
+      ornament.style.transform = `translateY(-${p * 350}px) rotate(${p * 45}deg)`;
+      ornament.style.opacity   = 0.4 - p * 0.2;
     }
-    
+
     if(portraitSlide){
-      const rect = portraitSlide.getBoundingClientRect();
-      const progress = (window.innerHeight - rect.top) / (window.innerHeight + rect.height);
-      const clampedProgress = Math.max(0, Math.min(1, progress));
-      
-      const lines = portraitLines.querySelectorAll('.portrait-line');
-      lines.forEach((line, index) => {
-        const direction = index % 2 === 0 ? 1 : -1;
-        const offset = clampedProgress * 120 * direction;
-        line.style.transform = `translateX(${offset}px)`;
-      });
+      const r = portraitSlide.getBoundingClientRect();
+      const p = Math.max(0, Math.min(1,
+        (window.innerHeight - r.top) / (window.innerHeight + r.height)
+      ));
+      scrollProg = p;
+      drawStrips(p);
     }
   });
+
   
   const io=new IntersectionObserver(e=>{
     e.forEach(el=>{if(el.isIntersecting)el.target.classList.add('visible')});
