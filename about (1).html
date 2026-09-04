@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>О себе — prët</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Averia+Serif+Libre:ital,wght@0,400;1,400&family=Lora:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --orange:#FF6B47;
+    --pink:#FFA6E6;
+    --cream:#FFF9F5;
+    --ink:#2B1810;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:'Lora',Georgia,serif;
+    color:var(--ink);
+    background:var(--cream);
+    line-height:1.6;
+    overflow-x:hidden;
+  }
+  
+  header{
+    position:fixed;top:0;left:0;right:0;z-index:100;
+    display:flex;justify-content:space-between;align-items:center;
+    padding:24px 48px;
+    background:rgba(255,249,245,.95);
+    backdrop-filter:blur(8px);
+  }
+  .logo{font-family:'Averia Serif Libre',serif;font-size:32px;font-style:italic;text-decoration:none;color:var(--ink);font-weight:400}
+  nav{display:flex;gap:36px;align-items:center}
+  nav a{
+    text-decoration:none;color:var(--ink);font-size:13px;letter-spacing:.12em;
+    text-transform:uppercase;font-weight:500;font-family:'IBM Plex Sans',Arial,sans-serif;
+  }
+  nav a:hover{opacity:.6}
+  
+  .lang-toggle{
+    cursor:pointer;
+    font-size:14px;
+    padding:6px 12px;
+    border:1px solid var(--ink);
+    border-radius:4px;
+    font-family:'IBM Plex Sans',sans-serif;
+    font-weight:500;
+    transition:background .3s, color .3s;
+  }
+  .lang-toggle:hover{
+    background:var(--ink);
+    color:var(--cream);
+  }
+
+  .about-hero{
+    min-height:60vh;
+    background:var(--orange);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:120px 48px 80px;
+  }
+  .about-hero h1{
+    font-size:clamp(60px,10vw,120px);
+    font-style:italic;
+    font-weight:400;
+    font-family:'Averia Serif Libre',serif;
+    text-align:center;
+    line-height:1;
+  }
+
+  .intro{
+    background:var(--pink);
+    padding:80px 48px;
+  }
+  .intro .container{
+    max-width:900px;
+    margin:0 auto;
+  }
+  .intro p{
+    font-size:clamp(18px,2vw,24px);
+    line-height:1.6;
+    margin-bottom:24px;
+  }
+  .intro p:first-of-type{
+    font-size:clamp(22px,2.5vw,32px);
+    font-style:italic;
+    margin-bottom:40px;
+  }
+
+  .journey-section{
+    background:var(--cream);
+    padding:80px 48px;
+  }
+  .journey-section .container{
+    max-width:1200px;
+    margin:0 auto;
+  }
+  .journey-section h2{
+    font-size:clamp(44px,7vw,80px);
+    font-style:italic;
+    font-weight:400;
+    font-family:'Averia Serif Libre',serif;
+    margin-bottom:48px;
+  }
+  .journey-section p{
+    font-size:clamp(16px,1.8vw,20px);
+    line-height:1.7;
+    margin-bottom:20px;
+  }
+
+  /* Креативное оформление навыков */
+  .skills{
+    background:var(--pink);
+    padding:80px 48px;
+    position:relative;
+  }
+  .skills .container{
+    max-width:1200px;
+    margin:0 auto;
+  }
+  .skills h2{
+    font-size:clamp(44px,7vw,80px);
+    font-style:italic;
+    font-weight:400;
+    font-family:'Averia Serif Libre',serif;
+    margin-bottom:60px;
+    text-align:center;
+  }
+  
+  .skills-creative{
+    display:flex;
+    flex-wrap:wrap;
+    gap:20px;
+    justify-content:center;
+  }
+  .skill-tag{
+    padding:12px 24px;
+    background:var(--cream);
+    border-radius:50px;
+    font-size:clamp(14px,1.5vw,18px);
+    font-family:'IBM Plex Sans',sans-serif;
+    font-weight:500;
+    transition:transform .3s, box-shadow .3s;
+    cursor:default;
+  }
+  .skill-tag:hover{
+    transform:translateY(-4px) rotate(-2deg);
+    box-shadow:0 8px 20px rgba(43,24,16,.15);
+  }
+  .skill-tag.large{
+    font-size:clamp(16px,1.8vw,22px);
+    padding:16px 32px;
+    background:var(--orange);
+    color:var(--ink);
+  }
+
+  .extras{
+    background:var(--orange);
+    padding:80px 48px;
+  }
+  .extras .container{
+    max-width:1000px;
+    margin:0 auto;
+  }
+  .extras h2{
+    font-size:clamp(44px,7vw,80px);
+    font-style:italic;
+    font-weight:400;
+    font-family:'Averia Serif Libre',serif;
+    margin-bottom:40px;
+  }
+  .extras p{
+    font-size:clamp(16px,1.8vw,20px);
+    line-height:1.7;
+    margin-bottom:16px;
+  }
+
+  footer{
+    background:var(--cream);
+    padding:60px 48px 40px;
+    text-align:center;
+  }
+  footer p{
+    font-size:14px;
+    opacity:.6;
+    font-family:'IBM Plex Sans',sans-serif;
+    letter-spacing:.08em;
+    text-transform:uppercase;
+  }
+
+  @media(max-width:900px){
+    header{padding:14px 20px}
+    .logo{font-size:20px}
+    nav{gap:8px}
+    nav a{font-size:8px}
+    .lang-toggle{font-size:9px;padding:3px 6px}
+    
+    .about-hero{padding:100px 20px 60px}
+    .intro{padding:50px 20px}
+    .journey-section{padding:50px 20px}
+    .skills{padding:50px 20px}
+    .extras{padding:50px 20px}
+    
+    .skill-tag{
+      font-size:clamp(12px,3.5vw,14px);
+      padding:10px 18px;
+    }
+    .skill-tag.large{
+      font-size:clamp(14px,4vw,16px);
+      padding:12px 22px;
+    }
+  }
+
+  .reveal{opacity:0;transform:translateY(40px);transition:opacity 1s ease,transform 1s ease}
+  .reveal.visible{opacity:1;transform:none}
+</style>
+</head>
+<body>
+
+<header>
+  <a class="logo" href="./index.html">prët</a>
+  <nav>
+    <a href="./index.html#journey">Галерея</a>
+    <a href="./shop.html">Магазин</a>
+    <a href="./about.html">О&nbsp;себе</a>
+    <a href="./index.html#contact">Контакты</a>
+    <span class="lang-toggle" onclick="toggleLanguage()">EN</span>
+  </nav>
+</header>
+
+<section class="about-hero">
+  <h1 data-en="Maria Balayan" data-ru="Мария Балаян">Мария Балаян</h1>
+</section>
+
+<section class="intro">
+  <div class="container reveal">
+    <p data-en="I decided to create my portfolio because it's interesting. Plus, I can do a lot and I want to show it." data-ru="Я решила запариться с оформлением своего портфолио, потому что это интересно. плюс я много чего умею и могу это показать.">
+      Я&nbsp;решила запариться с&nbsp;оформлением своего портфолио, потому что это интересно. плюс я&nbsp;много чего умею и&nbsp;могу это показать.
+    </p>
+  </div>
+</section>
+
+<section class="journey-section">
+  <div class="container reveal">
+    <h2>Путь</h2>
+    <p>Почти всю жизнь я&nbsp;проучилась в&nbsp;Вальдорфской Школе. Для тех, кто знает&nbsp;— это уже много о&nbsp;чем говорит. Начиная с&nbsp;8-го класса я&nbsp;делала проекты связанные с&nbsp;фотографией, танцами и&nbsp;дизайном.</p>
+    <p>Дойдя до&nbsp;11-го класса я&nbsp;четко решила: либо философия либо дизайн. По&nbsp;подсказке учителя все таки пошла на&nbsp;«Коммуникационный дизайн» в&nbsp;Высшую Школу Экономики и&nbsp;Школу Дизайна.</p>
+    <p>Для подготовки к&nbsp;поступлению я&nbsp;делала вручную зины и&nbsp;только перед самой подачей проекта решила быстро освоить Фигму. Моим проектом на&nbsp;конкурс был ребрендинг платформы «Bereg», за&nbsp;который мне поставили 75&nbsp;баллов из&nbsp;100.</p>
+    <p>Первым проектом на&nbsp;первом курсе стала разработка выдуманного бренда, построенного на&nbsp;принципе передачи энергии под названием «chenergy».</p>
+    <p>К&nbsp;концу 2-го курса я&nbsp;вдруг поняла, что дизайн&nbsp;— это всегда дизайн чего-то. Дизайн не&nbsp;может быть искусством сам по&nbsp;себе. Я&nbsp;поняла, что хочу создавать это что-то.</p>
+    <p>Я&nbsp;перешла на&nbsp;современное искусство. Единственное, чему я&nbsp;благодарна&nbsp;— это возможность создать перформанс «Посестрие».</p>
+    <p>Через полгода я, сверкая пятками, убежала на&nbsp;«Ивент Дизайн. Театр. Перформанс».</p>
+    <p>Я&nbsp;очень благодарна всем случайностям и&nbsp;людям, которые меня туда привели. Все таки я&nbsp;рукотворный человек, можно сказать ремесленник. Мне надо быть в&nbsp;контакте.</p>
+    <p>В&nbsp;данный период моей жизни я&nbsp;аккумулирую ресурс для создания народного фестиваля искусств в&nbsp;качестве диплома.</p>
+  </div>
+</section>
+
+<section class="skills">
+  <div class="container reveal">
+    <h2>Навыки</h2>
+    <div class="skills-creative">
+      <span class="skill-tag large">Adobe Photoshop</span>
+      <span class="skill-tag">Illustrator</span>
+      <span class="skill-tag">Indesign</span>
+      <span class="skill-tag large">Figma</span>
+      <span class="skill-tag">Lightroom</span>
+      <span class="skill-tag">Premiere</span>
+      <span class="skill-tag">After Effects</span>
+      <span class="skill-tag large">Cinema 4D</span>
+      <span class="skill-tag">Blender</span>
+      <span class="skill-tag">Ableton</span>
+      <span class="skill-tag large">Брендинг</span>
+      <span class="skill-tag">Айдентика</span>
+      <span class="skill-tag">Создание логотипа</span>
+      <span class="skill-tag">Верстка изданий</span>
+      <span class="skill-tag large">Мокапы</span>
+      <span class="skill-tag">Readymag</span>
+      <span class="skill-tag">Tilda</span>
+      <span class="skill-tag">Программирование</span>
+      <span class="skill-tag large">Фотография</span>
+      <span class="skill-tag">Каллиграфия</span>
+      <span class="skill-tag">Линогравюра</span>
+      <span class="skill-tag large">Керамика</span>
+      <span class="skill-tag">Шитье</span>
+      <span class="skill-tag">Вязание</span>
+      <span class="skill-tag">Бисер</span>
+      <span class="skill-tag large">Работа с&nbsp;деревом</span>
+      <span class="skill-tag">Барабаны</span>
+      <span class="skill-tag">Блок-флейта</span>
+      <span class="skill-tag large">Перформанс</span>
+      <span class="skill-tag">Эвритмия</span>
+    </div>
+  </div>
+</section>
+
+<section class="extras">
+  <div class="container reveal">
+    <h2>В&nbsp;дополнение</h2>
+    <p>В&nbsp;продолжение рассказа хочу поделиться своими другими сферами интересов. Я&nbsp;уже упоминала, что не&nbsp;раз участвовала в&nbsp;фотосессиях и&nbsp;съемках. Однажды даже побывав на&nbsp;роли продюссера съемки.</p>
+    <p>В&nbsp;вышке я&nbsp;также модульно пробовала каллиграфию, саунд-арт, шитье, создание объектов из&nbsp;пластика, линогравюру, цианотипию, штамповку, керамику, гипс, формовку. Помимо прочего изучала джаз.</p>
+    <p>Из&nbsp;того, что я&nbsp;осваивала дома&nbsp;— бижутерия, бисер, различны украшения из&nbsp;проволоки, вышивка бисером, вязание, плетение фенечек (в&nbsp;школе делали ковры кстати и&nbsp;помимо всего прочего вязали себе жилетки, шапки, пеналы и&nbsp;даже шили одежду).</p>
+    <p>Забыла сказать&nbsp;— умею работать с&nbsp;деревом, у&nbsp;нас был труд в&nbsp;школе. Вырезала кучу посуды маме из&nbsp;дерева, почти сделала навесную полку. с&nbsp;инструментами обращаться умею.</p>
+    <p>Ковала меч.</p>
+    <p>Умею играть на&nbsp;барабанной установке вполне сносно. Играла в&nbsp;школе в&nbsp;рок группе.</p>
+    <p>На&nbsp;протяжении всей школы я&nbsp;играла в&nbsp;эвритмических спектаклях (на&nbsp;первых ролях).</p>
+    <p>Неоднократно бывала в&nbsp;деревне, при запросе могу подоить корову.</p>
+    <p>Играю на&nbsp;блок флейте!! Могу импровизировать)</p>
+    <p>А&nbsp;вообще я&nbsp;художник, у&nbsp;меня с&nbsp;трёх лет в&nbsp;руках кисть.</p>
+    <p>Если осталось ещё что-то, что я&nbsp;не&nbsp;охватила в&nbsp;своих навыках&nbsp;— дайте 2&nbsp;дня. Будет.</p>
+  </div>
+</section>
+
+<footer>
+  <p>© 2026 prët — maria balayan</p>
+</footer>
+
+<script>
+  let currentLang = 'ru';
+  
+  function toggleLanguage() {
+    currentLang = currentLang === 'en' ? 'ru' : 'en';
+    const langToggle = document.querySelector('.lang-toggle');
+    langToggle.textContent = currentLang === 'en' ? 'RU' : 'EN';
+    
+    document.querySelectorAll('[data-en]').forEach(el => {
+      const text = el.getAttribute(`data-${currentLang}`);
+      if (text) {
+        el.innerHTML = text;
+      }
+    });
+    
+    document.documentElement.lang = currentLang;
+  }
+  
+  const io=new IntersectionObserver(e=>{
+    e.forEach(el=>{if(el.isIntersecting)el.target.classList.add('visible')});
+  },{threshold:0.15});
+  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+</script>
+</body>
+</html>

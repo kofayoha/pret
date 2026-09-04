@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>prët — Мария Балаян | искусство prët</title>
+<meta name="description" content="prët — портфолио Марии Балаян. Художница, дизайнер, перформанс. Я работаю с материалом, который есть всегда: с телом, с линией, с энергией.">
+<meta name="keywords" content="prët, pret, prёt, Мария Балаян, Maria Balayan, искусство prët, художница Мария, дизайнер, перформанс, современное искусство">
+<meta name="author" content="Maria Balayan">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Averia+Serif+Libre:ital,wght@0,400;1,400&family=Lora:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --orange:#FF6B47;
+    --pink:#FFA6E6;
+    --cream:#FFF9F5;
+    --ink:#2B1810;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:'Lora',Georgia,serif;
+    color:var(--ink);
+    background:var(--cream);
+    line-height:1.6;
+    overflow-x:hidden;
+  }
+
+  header{
+    position:fixed;top:0;left:0;right:0;z-index:100;
+    display:flex;justify-content:space-between;align-items:center;
+    padding:24px 48px;
+    transition:background .4s;
+  }
+  header.scrolled{background:rgba(255,249,245,.95);backdrop-filter:blur(8px)}
+  .logo{font-family:'Averia Serif Libre',serif;font-size:32px;font-style:italic;text-decoration:none;color:var(--ink);font-weight:400}
+  nav{display:flex;gap:36px;align-items:center}
+  nav a{
+    text-decoration:none;color:var(--ink);font-size:13px;letter-spacing:.12em;
+    text-transform:uppercase;font-weight:500;font-family:'IBM Plex Sans',Arial,sans-serif;
+  }
+  nav a:hover{opacity:.6}
+
+  .lang-toggle{
+    cursor:pointer;
+    font-size:14px;
+    padding:6px 12px;
+    border:1px solid var(--ink);
+    border-radius:4px;
+    font-family:'IBM Plex Sans',sans-serif;
+    font-weight:500;
+    transition:background .3s, color .3s;
+  }
+  .lang-toggle:hover{
+    background:var(--ink);
+    color:var(--cream);
+  }
+
+  .hero{
+    min-height:145vh;
+    background:var(--orange);
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:flex-start;
+    position:relative;
+    overflow:hidden;
+    padding:0 48px 48px;
+  }
+  .hero h1{
+    font-size:clamp(64px,12vw,140px);
+    font-style:italic;
+    color:var(--ink);
+    line-height:0.95;
+    z-index:2;
+    font-weight:400;
+    letter-spacing:-0.02em;
+    font-family:'Averia Serif Libre',serif;
+    position:relative;
+    max-width:60%;
+  }
+
+  .ornament{
+    position:absolute;
+    width:clamp(800px,100vw,1400px);
+    bottom:-10%;
+    right:-15%;
+    opacity:.4;
+    pointer-events:none;
+    will-change:transform,opacity;
+    z-index:1;
+    transform-origin:center center;
+  }
+
+  .manifest{
+    background:var(--orange);
+    padding:60px 48px 80px;
+    position:relative;
+    overflow:hidden;
+  }
+  .manifest .inner{
+    max-width:700px;margin:0 auto;
+    display:flex;flex-direction:column;align-items:center;
+  }
+  .manifest h2{
+    font-size:clamp(32px,5vw,64px);
+    line-height:1.3;font-weight:400;text-align:center;
+    margin-bottom:48px;color:var(--ink);
+  }
+  .btn{
+    padding:14px 40px;
+    background:transparent;border:none;
+    text-decoration:underline;text-underline-offset:6px;
+    color:var(--ink);
+    font-size:16px;letter-spacing:.08em;
+    font-family:'Averia Serif Libre',serif;font-style:italic;
+    cursor:pointer;transition:opacity .3s;
+  }
+  .btn:hover{opacity:.7}
+
+  .artist{
+    background:var(--pink);
+    padding:110px 48px;
+    position:relative;
+    overflow:hidden;
+    min-height:60vh;
+    display:flex;
+    align-items:center;
+  }
+  .artist .container{
+    max-width:1200px;
+    margin:0 auto;
+    width:100%;
+    display:grid;
+    grid-template-columns:1.1fr 1fr;
+    grid-template-rows:auto auto;
+    gap:40px 80px;
+    align-items:start;
+  }
+  .artist h3{
+    font-size:clamp(60px,8vw,120px);
+    font-weight:400;
+    font-style:italic;
+    line-height:0.95;
+    font-family:'Averia Serif Libre',serif;
+    grid-column:1;
+    grid-row:1 / 3;
+    align-self:start;
+  }
+  .artist .lead{
+    font-size:clamp(18px,2vw,28px);
+    line-height:1.4;
+    grid-column:2;
+    grid-row:1;
+    align-self:end;
+    text-align:left;
+  }
+  .artist .bottom-text{
+    grid-column:2;
+    grid-row:2;
+    align-self:end;
+    text-align:left;
+    margin-top:14px;
+  }
+  .artist .bottom-text p{
+    font-size:clamp(15px,1.6vw,20px);
+    font-style:italic;
+  }
+
+  .portrait-slide{
+    position:relative;
+    height:110vh;
+    overflow:hidden;
+    background:linear-gradient(to bottom, var(--pink) 0%, var(--cream) 100%);
+  }
+  #portraitCanvas{
+    position:absolute;
+    top:0;left:0;
+    width:100%;height:100%;
+    display:block;
+  }
+
+  .journey{
+    background:var(--cream);
+    padding:90px 48px;
+    position:relative;
+  }
+  .journey .head{
+    display:flex;justify-content:space-between;align-items:center;
+    margin-bottom:50px;
+  }
+  .journey h2{
+    font-size:clamp(40px,6vw,80px);font-style:italic;font-weight:400;
+    font-family:'Averia Serif Libre',serif;
+  }
+  .journey .head a{
+    text-decoration:underline;text-underline-offset:6px;
+    color:var(--ink);font-size:16px;font-style:italic;
+  }
+
+  .gallery-container{
+    position:relative;
+    overflow:hidden;
+  }
+  .gallery-track{
+    display:flex;
+    transition:transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .gallery-page{
+    min-width:100%;
+    display:grid;
+    grid-template-columns:repeat(3, 1fr);
+    gap:20px;
+  }
+  .card{
+    border-radius:12px;
+    overflow:hidden;
+    position:relative;
+    display:block;
+    aspect-ratio:3/4;
+    transition:transform .4s ease, box-shadow .4s ease;
+  }
+  .card:hover{
+    transform:translateY(-8px);
+    box-shadow:0 20px 50px rgba(43,24,16,.15);
+  }
+  .card img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    display:block;
+  }
+
+  .carousel-nav{
+    display:flex;
+    justify-content:center;
+    gap:12px;
+    margin-top:40px;
+  }
+  .carousel-dot{
+    width:10px;
+    height:10px;
+    border-radius:50%;
+    background:var(--ink);
+    opacity:.3;
+    cursor:pointer;
+    transition:opacity .3s, transform .3s;
+  }
+  .carousel-dot:hover{
+    transform:scale(1.2);
+  }
+  .carousel-dot.active{
+    opacity:1;
+  }
+
+  footer{
+    background:var(--orange);
+    padding:120px 48px 60px;
+    position:relative;
+  }
+  footer .inner{
+    max-width:1300px;margin:0 auto;
+    display:flex;justify-content:space-between;align-items:flex-start;
+    flex-wrap:wrap;gap:40px;
+  }
+  footer .left h2{
+    font-size:clamp(52px,9vw,120px);
+    font-style:italic;margin-bottom:32px;font-weight:400;
+    font-family:'Averia Serif Libre',serif;
+  }
+  footer .left a,footer .right a{
+    color:var(--ink);text-decoration:none;
+    font-size:clamp(18px,2.2vw,24px);display:block;margin:12px 0;
+  }
+  footer a:hover{opacity:.7}
+  footer .copy{
+    margin-top:100px;font-size:13px;letter-spacing:.12em;
+    text-transform:uppercase;opacity:.5;text-align:center;
+    font-family:'IBM Plex Sans',sans-serif;
+  }
+
+  /* ---------- MOBILE REDESIGN ---------- */
+  @media(max-width:900px){
+    header{padding:14px 20px}
+    .logo{font-size:20px}
+    nav{gap:8px}
+    nav a{font-size:8px;letter-spacing:.06em}
+    .lang-toggle{font-size:9px;padding:3px 6px}
+
+    /* 1) Заголовок наверх налево, анимация наверх */
+    .hero{
+      padding:80px 20px 30px;
+      min-height:100vh;
+      justify-content:flex-start;
+      align-items:flex-start;
+    }
+    .hero h1{
+      font-size:clamp(38px,11vw,56px);
+      max-width:85%;
+      text-align:left;
+      margin-top:30px;
+    }
+    /* 2) Орнамент наверху слева, поворачивается вниз при скролле */
+    .ornament{
+      width:clamp(280px,75vw,420px);
+      top:12%;
+      left:-20%;
+      bottom:auto;
+      right:auto;
+      opacity:.5;
+      transform-origin:50% 50%;
+    }
+
+    .manifest{
+      padding:38px 20px 46px;
+    }
+    .manifest h2{
+      font-size:clamp(20px,5.2vw,29px);
+      margin-bottom:26px;
+    }
+    .btn{padding:10px 24px;font-size:13px}
+
+    /* 3) Я художница: квадратное расположение */
+    .artist{padding:50px 20px}
+    .artist .container{
+      grid-template-columns:1fr 1fr;
+      grid-template-rows:auto auto;
+      gap:18px 16px;
+      max-width:100%;
+    }
+    .artist h3{
+      font-size:clamp(30px,8vw,50px);
+      grid-column:1;
+      grid-row:1;
+      line-height:1;
+    }
+    .artist .lead{
+      font-size:clamp(11px,3vw,13px);
+      grid-column:2;
+      grid-row:1;
+      align-self:start;
+      line-height:1.35;
+    }
+    .artist .bottom-text{
+      grid-column:2;
+      grid-row:2;
+      text-align:right;
+      margin-top:0;
+      align-self:end;
+    }
+    .artist .bottom-text p{font-size:clamp(11px,3vw,13px)}
+
+    .portrait-slide{height:75vh}
+
+    .journey{padding:50px 20px}
+    .journey h2{font-size:clamp(26px,7vw,42px)}
+    .journey .head{
+      flex-direction:column;
+      align-items:flex-start;
+      gap:14px;
+      margin-bottom:28px;
+    }
+
+    /* 7) Галерея: свайп влево-вправо, 3 работы видны */
+    .gallery-container{
+      touch-action:pan-y;
+      overflow:visible;
+    }
+    .gallery-track{
+      display:flex;
+      gap:0;
+    }
+    .gallery-page{
+      min-width:100%;
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:12px;
+      padding:0 4px;
+    }
+    .card{
+      border-radius:8px;
+      aspect-ratio:3/4;
+    }
+    .carousel-nav{margin-top:26px}
+
+    /* 4) Подвал уже */
+    footer{padding:50px 20px 26px}
+    footer .inner{
+      flex-direction:column;
+      gap:20px;
+      max-width:320px;
+      margin:0 auto;
+    }
+    footer .left h2{font-size:clamp(32px,8.5vw,56px);margin-bottom:16px}
+    footer .left a, footer .right a{font-size:clamp(14px,3.6vw,16px);margin:6px 0}
+    footer .copy{margin-top:34px;font-size:9px}
+  }
+
+  .reveal{opacity:0;transform:translateY(40px);transition:opacity 1s ease,transform 1s ease}
+  .reveal.visible{opacity:1;transform:none}
+</style>
+</head>
+<body>
+
+<header>
+  <a class="logo" href="#top">prët</a>
+  <nav>
+    <a href="#journey" data-en="Gallery" data-ru="Галерея">Галерея</a>
+    <a href="./shop.html" data-en="Shop" data-ru="Магазин">Магазин</a>
+    <a href="./about.html" data-en="About" data-ru="О&nbsp;себе">О&nbsp;себе</a>
+    <a href="#contact" data-en="Contact" data-ru="Контакты">Контакты</a>
+    <span class="lang-toggle" onclick="toggleLanguage()">EN</span>
+  </nav>
+</header>
+
+<div class="hero" id="top">
+  <img class="ornament" src="img/ornament.jpg" alt="">
+  <h1 data-en="The Art of prët" data-ru="Искусство prët">Искусство&nbsp;prët</h1>
+</div>
+
+<section class="manifest" id="manifest">
+  <div class="inner reveal">
+    <h2 data-en="My purpose, my meaning, and the ability to live—creating sparks" data-ru="Моя цель, мой смысл и&nbsp;возможность жить — создавать искры">Моя&nbsp;цель, мой&nbsp;смысл и&nbsp;возможность жить — создавать искры</h2>
+    <a class="btn" href="#artist" data-en="Explore Now" data-ru="Узнать больше">Узнать больше</a>
+  </div>
+</section>
+
+<section class="artist" id="artist" style="scroll-margin-top:80px">
+  <div class="container reveal">
+    <h3 data-en="I am an artist" data-ru="Я — художница">Я&nbsp;— художница</h3>
+    <div class="lead" data-en="I work with material that is always present: the body, the line, the energy" data-ru="Я работаю с&nbsp;материалом, который есть всегда: с&nbsp;телом, с&nbsp;линией, с&nbsp;энергией">
+      Я&nbsp;работаю с&nbsp;материалом, который есть всегда: с&nbsp;телом, с&nbsp;линией, с&nbsp;энергией
+    </div>
+    <div class="bottom-text">
+      <p data-en="Using body painting" data-ru="Использую телесную живопись">Использую телесную живопись</p>
+    </div>
+  </div>
+</section>
+
+<section class="portrait-slide" id="portrait">
+  <canvas id="portraitCanvas"></canvas>
+</section>
+
+<section class="journey" id="journey">
+  <div class="head reveal">
+    <h2 data-en="Follow my Journey" data-ru="Моя галерея">Моя&nbsp;галерея</h2>
+    <a href="https://www.behance.net/kofayoha" target="_blank">Behance →</a>
+  </div>
+  <div class="gallery-container" id="galleryContainer">
+    <div class="gallery-track" id="galleryTrack">
+      <div class="gallery-page">
+        <a class="card reveal" href="https://hsedesign.ru/project/posestrie-fdd4656391a44e98b69133c583dda03f" target="_blank">
+          <img src="img/posestrie.jpg" alt="Посестрие">
+        </a>
+        <a class="card reveal" href="https://www.behance.net/gallery/242102615/Elian-script" target="_blank">
+          <img src="img/elian.jpg" alt="Элианский шрифт">
+        </a>
+        <a class="card reveal" href="https://www.behance.net/gallery/242108047/dzhazovyj-festival" target="_blank">
+          <img src="img/jazz.jpg" alt="Джазовый фестиваль">
+        </a>
+      </div>
+      <div class="gallery-page">
+        <a class="card reveal" href="https://www.behance.net/gallery/242092697/Chenergy" target="_blank">
+          <img src="img/chenergy.jpg" alt="Chenergy">
+        </a>
+        <a class="card reveal" href="https://hsedesign.ru/project/posestrie-b7607978d5fb46828f213abeb44d5003" target="_blank">
+          <img src="img/posestrie2.jpg" alt="Посестрие 2">
+        </a>
+        <a class="card reveal" href="https://hsedesign.ru/project/20fde7d552894e3ab208171906388f3d" target="_blank">
+          <img src="img/city.jpg" alt="Город">
+        </a>
+      </div>
+      <div class="gallery-page">
+        <a class="card reveal" href="http://hsedesign.ru/project/1947070780544d21889e203d6e2ff548" target="_blank">
+          <img src="img/shadow.jpg" alt="Тень">
+        </a>
+        <a class="card reveal" href="https://hsedesign.ru/project/24aa67ae77f24a5d96496677a6ca3dc4" target="_blank">
+          <img src="img/lines.jpg" alt="Линии">
+        </a>
+        <a class="card reveal" href="https://www.behance.net/kofayoha" target="_blank">
+          <img src="img/posestrie.jpg" alt="Ещё работы">
+        </a>
+      </div>
+    </div>
+  </div>
+  <div class="carousel-nav">
+    <span class="carousel-dot active" data-page="0"></span>
+    <span class="carousel-dot" data-page="1"></span>
+    <span class="carousel-dot" data-page="2"></span>
+  </div>
+</section>
+
+<footer id="contact">
+  <div class="inner reveal">
+    <div class="left">
+      <h2 data-en="Get in Touch!" data-ru="Пишите!">Пишите!</h2>
+      <a href="https://t.me/kofayoha" target="_blank">t.me/kofayoha</a>
+      <a href="https://instagram.com/kofayoha" target="_blank">@kofayoha</a>
+    </div>
+    <div class="right">
+      <a href="/cdn-cgi/l/email-protection#274c4841465e484f4667404a464e4b0944484a"><span class="__cf_email__" data-cfemail="8fe4e0e9eef6e0e7eecfe8e2eee6e3a1ece0e2">[email&#160;protected]</span></a>
+    </div>
+  </div>
+  <p class="copy">© 2026 prët — art &amp; energy</p>
+</footer>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+  let currentLang = 'ru';
+  let currentPage = 0;
+
+  function toggleLanguage() {
+    currentLang = currentLang === 'en' ? 'ru' : 'en';
+    const langToggle = document.querySelector('.lang-toggle');
+    langToggle.textContent = currentLang === 'en' ? 'RU' : 'EN';
+
+    document.querySelectorAll('[data-en]').forEach(el => {
+      const text = el.getAttribute(`data-${currentLang}`);
+      if (text) {
+        el.innerHTML = text;
+      }
+    });
+
+    document.documentElement.lang = currentLang;
+  }
+
+  const galleryTrack = document.getElementById('galleryTrack');
+  const galleryContainer = document.getElementById('galleryContainer');
+  const dots = document.querySelectorAll('.carousel-dot');
+  let startX = 0;
+  let currentX = 0;
+  let isDragging = false;
+
+  // Touch swipe для мобильной галереи
+  if(window.innerWidth <= 900){
+    galleryContainer.addEventListener('touchstart', e => {
+      startX = e.touches[0].clientX;
+      isDragging = true;
+    });
+
+    galleryContainer.addEventListener('touchmove', e => {
+      if(!isDragging) return;
+      currentX = e.touches[0].clientX;
+      const diff = currentX - startX;
+      galleryTrack.style.transition = 'none';
+      galleryTrack.style.transform = `translateX(calc(-${currentPage * 100}% + ${diff}px))`;
+    });
+
+    galleryContainer.addEventListener('touchend', e => {
+      if(!isDragging) return;
+      isDragging = false;
+      const diff = currentX - startX;
+      
+      if(Math.abs(diff) > 50){
+        if(diff > 0 && currentPage > 0){
+          currentPage--;
+        } else if(diff < 0 && currentPage < 2){
+          currentPage++;
+        }
+      }
+      
+      galleryTrack.style.transition = 'transform 0.5s cubic-bezier(0.4, 0, 0.2, 1)';
+      galleryTrack.style.transform = `translateX(-${currentPage * 100}%)`;
+      
+      dots.forEach((d,i) => d.classList.toggle('active', i === currentPage));
+    });
+  }
+
+  dots.forEach(dot => {
+    dot.addEventListener('click', () => {
+      const page = parseInt(dot.getAttribute('data-page'));
+      currentPage = page;
+      galleryTrack.style.transform = `translateX(-${page * 100}%)`;
+
+      dots.forEach(d => d.classList.remove('active'));
+      dot.classList.add('active');
+    });
+  });
+
+  const canvas = document.getElementById('portraitCanvas');
+  const ctx = canvas.getContext('2d');
+  const portraitSlide = document.querySelector('.portrait-slide');
+  const NUM_STRIPS = 12;
+  const SKEW = 0.18;
+  let scrollProg = 0;
+
+  function resizeCanvas(){
+    canvas.width  = portraitSlide.offsetWidth;
+    canvas.height = portraitSlide.offsetHeight;
+  }
+  window.addEventListener('resize', () => { resizeCanvas(); drawStrips(scrollProg); });
+  resizeCanvas();
+
+  const src = new Image();
+  src.src = 'img/portrait.jpg';
+  src.onload = () => drawStrips(0);
+
+  function drawStrips(prog){
+    if(!src.complete || !src.naturalWidth) return;
+    const W = canvas.width, H = canvas.height;
+    ctx.clearRect(0, 0, W, H);
+
+    const stripW = W / NUM_STRIPS;
+    const MAX_SHIFT = 180;
+
+    const scale = Math.max(W / src.width, H / src.height);
+    const iw = src.width * scale;
+    const ih = src.height * scale;
+    const ix = (W - iw) / 2;
+    const iy = (H - ih) / 2;
+
+    for(let i = 0; i < NUM_STRIPS; i++){
+      const dir   = i % 2 === 0 ? 1 : -1;
+      const shift = dir * prog * MAX_SHIFT;
+
+      const xTopL  = i * stripW;
+      const xTopR  = (i + 1) * stripW;
+      const xBotL  = xTopL  + H * SKEW;
+      const xBotR  = xTopR  + H * SKEW;
+
+      ctx.save();
+      ctx.beginPath();
+      ctx.moveTo(xTopL, shift);
+      ctx.lineTo(xTopR, shift);
+      ctx.lineTo(xBotR, H + shift);
+      ctx.lineTo(xBotL, H + shift);
+      ctx.closePath();
+      ctx.clip();
+
+      ctx.drawImage(src, ix, iy + shift, iw, ih);
+      ctx.restore();
+    }
+  }
+
+  const header      = document.querySelector('header');
+  const ornament    = document.querySelector('.ornament');
+  const heroSection = document.querySelector('.hero');
+
+  window.addEventListener('scroll', () => {
+    header.classList.toggle('scrolled', window.scrollY > 80);
+
+    if(ornament){
+      const rect = heroSection.getBoundingClientRect();
+      const isMobile = window.innerWidth <= 900;
+      
+      if(isMobile){
+        // Мобильная версия: орнамент поворачивается вниз-вправо
+        const scrollRange = rect.height * 1.3;
+        const p = Math.max(0, Math.min(1, -rect.top / scrollRange));
+        ornament.style.transform = `translate(${p * 60}%, ${p * 80}%) rotate(${p * 90}deg)`;
+        ornament.style.opacity = 0.5 - p * 0.3;
+      } else {
+        // Десктоп версия
+        const scrollRange = rect.height * 1.6;
+        const p = Math.max(0, Math.min(1, -rect.top / scrollRange));
+        ornament.style.transform = `translateY(-${p * 380}px) rotate(${p * 50}deg)`;
+        ornament.style.opacity = 0.4 - p * 0.25;
+      }
+    }
+
+    if(portraitSlide){
+      const r = portraitSlide.getBoundingClientRect();
+      const p = Math.max(0, Math.min(1,
+        (window.innerHeight - r.top) / (window.innerHeight + r.height)
+      ));
+      scrollProg = p;
+      drawStrips(p);
+    }
+  });
+
+  const io = new IntersectionObserver(e=>{
+    e.forEach(el=>{if(el.isIntersecting)el.target.classList.add('visible')});
+  },{threshold:0.15});
+  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+</script>
+</body>
+</html>
