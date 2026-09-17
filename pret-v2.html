@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>prët</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,400;0,500;1,400;1,500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#0B1E3C;      /* тёмно-синий титул */
+    --red:#D62828;       /* красные плашки */
+    --cream:#FFF9F5;
+    --ink:#1B1208;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:'Cormorant',Georgia,serif;
+    color:var(--ink);
+    background:var(--cream);
+    line-height:1.5;
+    overflow-x:hidden;
+  }
+
+  /* ---------- HEADER ---------- */
+  header{
+    position:fixed;top:0;left:0;right:0;z-index:100;
+    display:flex;justify-content:space-between;align-items:center;
+    padding:24px 48px;
+    transition:background .4s;
+  }
+  header.scrolled{background:rgba(255,249,245,.95);backdrop-filter:blur(8px)}
+  .logo{font-family:'Cormorant',serif;font-size:32px;font-style:italic;text-decoration:none;color:var(--cream);font-weight:400;transition:color .4s}
+  header.scrolled .logo{color:var(--ink)}
+  nav{display:flex;gap:36px;align-items:center}
+  nav a{
+    text-decoration:none;color:var(--cream);font-size:13px;letter-spacing:.12em;
+    text-transform:uppercase;font-weight:500;font-family:'IBM Plex Sans',Arial,sans-serif;
+    transition:color .4s;
+  }
+  header.scrolled nav a{color:var(--ink)}
+  nav a:hover{opacity:.6}
+  .lang{
+    border:1.5px solid var(--cream);border-radius:3px;
+    padding:5px 12px;font-size:12px;letter-spacing:.08em;
+    text-decoration:none;color:var(--cream);
+    font-family:'IBM Plex Sans',Arial,sans-serif;font-weight:500;
+    transition:color .4s,border-color .4s;
+  }
+  header.scrolled .lang{color:var(--ink);border-color:var(--ink)}
+
+  .menu-toggle{
+    display:none;background:none;border:none;cursor:pointer;font-size:24px;
+    color:var(--cream);transition:color .4s;
+  }
+  header.scrolled .menu-toggle{color:var(--ink)}
+  nav.mobile-open{
+    position:fixed;top:60px;left:0;right:0;
+    flex-direction:column;background:rgba(255,249,245,.98);
+    padding:20px;gap:0;z-index:99;
+  }
+  nav.mobile-open a{padding:12px 0;border-bottom:1px solid rgba(27,18,8,.1);color:var(--ink)}
+
+  /* ---------- HERO ---------- */
+  .hero{
+    min-height:100vh;
+    background:var(--navy);
+    display:flex;flex-direction:column;justify-content:center;align-items:center;
+    text-align:center;position:relative;overflow:hidden;
+    padding:120px 24px 80px;
+  }
+  .hero h1{
+    font-size:clamp(64px,12vw,180px);
+    font-style:italic;color:var(--cream);
+    line-height:0.95;z-index:2;font-weight:400;
+    letter-spacing:-0.02em;
+  }
+  /* фон-рисунок (параллакс при скролле) */
+  .ornament{
+    position:absolute;width:clamp(500px,60vw,900px);
+    top:50%;left:50%;
+    opacity:.30;pointer-events:none;
+    will-change:transform;
+    max-width:90%;height:auto;
+    filter:invert(1);
+    mix-blend-mode:screen;
+  }
+  /* рисунок вместо второго абзаца — «М» */
+  .hero-mark{
+    width:clamp(110px,16vw,230px);
+    height:auto;display:block;margin-top:48px;z-index:2;
+    filter:invert(1);
+    mix-blend-mode:screen;
+    animation:markSpin 40s linear infinite;
+    will-change:transform;
+  }
+  @keyframes markSpin{
+    from{transform:rotate(0deg)}
+    to{transform:rotate(360deg)}
+  }
+
+  /* ---------- MANIFEST ---------- */
+  .manifest{
+    background:var(--navy);
+    padding:100px 48px 120px;
+    position:relative;
+    overflow:hidden;
+  }
+  .manifest .inner{
+    max-width:700px;margin:0 auto;
+    display:flex;flex-direction:column;align-items:center;
+  }
+  .manifest h2{
+    font-size:clamp(32px,5vw,64px);
+    line-height:1.3;font-weight:400;text-align:center;
+    margin-bottom:48px;color:var(--cream);
+  }
+  /* Видео с рукописной анимацией вместо текста манифеста */
+  .manifest .manifest-video{
+    width:100%;max-width:900px;
+    height:auto;display:block;
+    margin:0 auto 24px;
+    /* белый фон видео → прозрачный на тёмно-синем */
+    mix-blend-mode:screen;
+    filter:invert(1);
+    pointer-events:none;
+  }
+  .btn{
+    padding:14px 40px;
+    background:transparent;border:none;
+    text-decoration:underline;text-underline-offset:6px;
+    color:var(--cream);
+    font-size:16px;letter-spacing:.08em;
+    font-family:'Cormorant',serif;font-style:italic;
+    cursor:pointer;transition:opacity .3s;
+  }
+  .btn:hover{opacity:.7}
+
+  /* ---------- ARTIST (красная плашка) ---------- */
+  .artist{
+    background:var(--red);
+    padding:0;position:relative;overflow:hidden;
+  }
+  .artist .bar{
+    padding:60px 0;
+    white-space:nowrap;
+    overflow:hidden;
+  }
+  .artist .bar-content{
+    display:inline-block;
+    animation:ticker 40s linear infinite;
+  }
+  @keyframes ticker{
+    0%{transform:translateX(0)}
+    100%{transform:translateX(-50%)}
+  }
+  /* рисунок вместо «Я — художница» */
+  .artist .script{
+    display:inline-block;
+    width:clamp(600px,72vw,1300px);
+    height:auto;vertical-align:middle;
+    margin-right:60px;
+    mix-blend-mode:multiply;
+  }
+  .artist .lead{
+    padding:0 48px 48px;
+    font-size:clamp(24px,3vw,42px);line-height:1.35;
+    max-width:1100px;color:var(--cream);
+  }
+  .artist .visual{width:100%;height:auto;display:block}
+  .artist .visual img{width:100%;height:auto;display:block}
+
+  /* ---------- JOURNEY ---------- */
+  .journey{
+    background:var(--cream);
+    padding:120px 48px;
+    position:relative;
+  }
+  .journey .head{
+    display:flex;justify-content:space-between;align-items:center;
+    margin-bottom:60px;max-width:1300px;margin-left:auto;margin-right:auto;
+  }
+  .journey h2{font-size:clamp(44px,7vw,90px);font-style:italic;font-weight:400}
+  .journey .head a{
+    text-decoration:underline;text-underline-offset:6px;
+    color:var(--ink);font-size:16px;font-style:italic;
+  }
+  .grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    grid-template-rows:360px 320px;
+    gap:24px;
+    max-width:1300px;margin:0 auto;
+  }
+  .card{
+    border-radius:8px;overflow:hidden;position:relative;
+    display:block;
+    transition:transform .4s ease, box-shadow .4s ease;
+  }
+  .card:hover{transform:translateY(-8px);box-shadow:0 20px 50px rgba(27,18,8,.12)}
+  .card img{width:100%;height:100%;object-fit:cover;display:block}
+  .card:nth-child(1){grid-row:span 2}
+  .card:nth-child(4){grid-row:span 2}
+
+  /* ---------- FOOTER ---------- */
+  footer{
+    background:var(--red);
+    padding:120px 48px 60px;
+    position:relative;
+  }
+  footer .inner{
+    max-width:1300px;margin:0 auto;
+    display:flex;justify-content:space-between;align-items:flex-start;
+    flex-wrap:wrap;gap:40px;
+  }
+  footer .left h2{
+    font-size:clamp(52px,9vw,120px);
+    font-style:italic;margin-bottom:32px;font-weight:400;color:var(--cream);
+  }
+  footer .left a,footer .right a{
+    color:var(--cream);text-decoration:none;
+    font-size:clamp(18px,2.2vw,24px);display:block;margin:12px 0;
+  }
+  footer a:hover{opacity:.7}
+  footer .copy{
+    margin-top:100px;font-size:13px;letter-spacing:.12em;
+    text-transform:uppercase;opacity:.6;text-align:center;color:var(--cream);
+    font-family:'IBM Plex Sans',sans-serif;
+  }
+
+  /* ---------- REVEAL ---------- */
+  .reveal{opacity:0;transform:translateY(40px);transition:opacity 1s ease,transform 1s ease}
+  .reveal.visible{opacity:1;transform:none}
+
+  /* ---------- RESPONSIVE ---------- */
+  @media(max-width:1024px){
+    header{padding:18px 24px}
+    nav{gap:24px}
+    nav a{font-size:12px}
+    .hero h1{font-size:clamp(48px,10vw,100px)}
+    .manifest{padding:80px 24px 100px}
+    .artist .lead{padding:0 24px 40px;font-size:clamp(18px,2.5vw,32px)}
+    .journey{padding:80px 24px}
+    .journey .head{flex-direction:column;align-items:flex-start;gap:20px;margin-bottom:40px}
+    .grid{grid-template-columns:repeat(2,1fr);grid-template-rows:auto;gap:16px;max-width:100%}
+    .card:nth-child(1),.card:nth-child(4){grid-row:span 1}
+    footer{padding:80px 24px 40px}
+    footer .inner{flex-direction:column;gap:30px}
+    footer .left h2{font-size:clamp(40px,8vw,80px);margin-bottom:24px}
+    footer .copy{margin-top:60px;font-size:11px}
+  }
+
+  @media(max-width:768px){
+    header{padding:16px}
+    .logo{font-size:24px}
+    .menu-toggle{display:block}
+    nav{display:none;gap:0}
+    nav.mobile-open{display:flex}
+    .hero{min-height:90vh;padding:100px 16px 60px}
+    .hero h1{font-size:clamp(40px,9vw,80px);line-height:1}
+    .hero-mark{width:clamp(90px,26vw,150px);margin-top:36px}
+    .ornament{width:clamp(300px,80vw,600px)}
+    .manifest h2{font-size:clamp(24px,4vw,48px);margin-bottom:36px}
+    .btn{font-size:14px;padding:12px 32px}
+    .artist .bar{padding:36px 0}
+    .artist .script{width:clamp(420px,88vw,900px);margin-right:36px}
+    .artist .lead{padding:0 20px 32px;font-size:clamp(16px,2.2vw,26px);line-height:1.3}
+    .journey h2{font-size:clamp(32px,6vw,56px)}
+    .journey .head a{font-size:14px}
+    .grid{grid-template-columns:1fr;gap:12px}
+    footer{padding:60px 20px 30px}
+    footer .left h2{font-size:clamp(32px,7vw,64px)}
+    footer .left a,footer .right a{font-size:clamp(16px,2vw,20px)}
+  }
+
+  @media(max-width:480px){
+    .hero h1{font-size:clamp(32px,8vw,60px)}
+    .ornament{width:clamp(250px,85vw,500px)}
+    .manifest{padding:60px 16px 80px}
+    .manifest h2{font-size:clamp(20px,3.5vw,36px);margin-bottom:28px;line-height:1.2}
+    .btn{font-size:12px;padding:10px 28px}
+    .artist .lead{padding:0 16px 24px;font-size:clamp(14px,2vw,22px);line-height:1.25}
+    .journey{padding:60px 16px}
+    .journey h2{font-size:clamp(24px,5vw,42px)}
+    .grid{gap:10px}
+    footer{padding:50px 16px 24px}
+    footer .left h2{font-size:clamp(28px,6vw,52px);margin-bottom:20px}
+    footer .copy{margin-top:40px;font-size:10px}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <a class="logo" href="#top">prët</a>
+  <button class="menu-toggle">☰</button>
+  <nav>
+    <a href="#journey">Галерея</a>
+    <a href="#journey">Магазин</a>
+    <a href="#artist">О себе</a>
+    <a href="#contact">Контакты</a>
+    <a class="lang" href="#">EN</a>
+  </nav>
+</header>
+
+<!-- HERO — ТИТУЛЬНЫЙ СЛАЙД -->
+<div class="hero" id="top">
+  <img class="ornament" src="img/ornament.jpg" alt="" onerror="this.style.display='none'">
+  <h1>Искусство prët</h1>
+  <img class="hero-mark" src="img/fig1.jpg" alt="" onerror="this.style.display='none'">
+</div>
+
+<!-- МАНИФЕСТ -->
+<section class="manifest" id="manifest">
+  <div class="inner reveal">
+    <video class="manifest-video" src="img/manifest.mp4"
+           autoplay muted loop playsinline preload="auto"></video>
+    <a class="btn" href="#artist">Узнать больше</a>
+  </div>
+</section>
+
+<!-- ХУДОЖНИЦА -->
+<section class="artist" id="artist">
+  <div class="bar">
+    <div class="bar-content">
+      <img class="script" src="img/fig2.jpg" alt="" onerror="this.style.display='none'">
+      <img class="script" src="img/fig2.jpg" alt="" onerror="this.style.display='none'">
+    </div>
+  </div>
+  <div class="lead reveal">
+    Я работаю с материалом, который есть всегда: с телом, с линией, с энергией
+  </div>
+  <div class="visual reveal">
+    <img src="img/portrait.jpg" alt="Портрет" onerror="this.style.display='none'">
+  </div>
+</section>
+
+<!-- ГАЛЕРЕЯ -->
+<section class="journey" id="journey">
+  <div class="head reveal">
+    <h2>Follow my Journey</h2>
+    <a href="https://www.behance.net/kofayoha" target="_blank" rel="noopener">Behance →</a>
+  </div>
+  <div class="grid">
+    <a class="card reveal" href="https://hsedesign.ru/project/posestrie-fdd4656391a44e98b69133c583dda03f" target="_blank" rel="noopener">
+      <img src="img/posestrie.jpg" alt="Посестрие">
+    </a>
+    <a class="card reveal" href="https://www.behance.net/gallery/242102615/Elian-script" target="_blank" rel="noopener">
+      <img src="img/elian.jpg" alt="Elian script">
+    </a>
+    <a class="card reveal" href="https://www.behance.net/gallery/242108047/dzhazovyj-festival" target="_blank" rel="noopener">
+      <img src="img/jazz.jpg" alt="Джазовый фестиваль">
+    </a>
+    <a class="card reveal" href="https://www.behance.net/gallery/242092697/Chenergy" target="_blank" rel="noopener">
+      <img src="img/chenergy.jpg" alt="Chenergy">
+    </a>
+  </div>
+</section>
+
+<!-- КОНТАКТЫ -->
+<footer id="contact">
+  <div class="inner reveal">
+    <div class="left">
+      <h2>Пишите!</h2>
+      <a href="https://t.me/kofayoha" target="_blank" rel="noopener">t.me/kofayoha</a>
+      <a href="https://instagram.com/kofayoha" target="_blank" rel="noopener">@kofayoha</a>
+    </div>
+    <div class="right">
+      <a href="/cdn-cgi/l/email-protection#522137333e3b3c36333a3d27213712353f333b3e7c313d3f"><span class="__cf_email__" data-cfemail="8efdebefe2e7e0eaefe6e1fbfdebcee9e3efe7e2a0ede1e3">[email&#160;protected]</span></a>
+    </div>
+  </div>
+  <p class="copy">© 2026 prët — art & energy</p>
+</footer>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+  const header = document.querySelector('header');
+  const ornament = document.querySelector('.ornament');
+  const heroSection = document.querySelector('.hero');
+  const menuToggle = document.querySelector('.menu-toggle');
+  const nav = document.querySelector('nav');
+
+  if(menuToggle){
+    menuToggle.addEventListener('click',()=>nav.classList.toggle('mobile-open'));
+    nav.querySelectorAll('a').forEach(a=>{
+      a.addEventListener('click',()=>nav.classList.remove('mobile-open'));
+    });
+  }
+
+  window.addEventListener('scroll',()=>{
+    header.classList.toggle('scrolled',window.scrollY>80);
+
+    // Параллакс фонового рисунка: увеличение, поворот 45°, уход на следующий блок
+    if(ornament){
+      const rect = heroSection.getBoundingClientRect();
+      const progress = Math.max(0, Math.min(1,(window.innerHeight - rect.top)/(window.innerHeight + rect.height)));
+      const scale = 1 + progress*0.4;
+      const rotate = progress*45;
+      const translateY = progress*150;
+      ornament.style.transform = `translate(-50%, calc(-50% + ${translateY}px)) rotate(${rotate}deg) scale(${scale})`;
+    }
+  });
+
+  const io = new IntersectionObserver(entries=>{
+    entries.forEach(e=>{if(e.isIntersecting) e.target.classList.add('visible')});
+  },{threshold:0.15});
+  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+  // Страховка: если видео манифеста не загрузилось — показать текстовую версию
+  const mv = document.querySelector('.manifest-video');
+  if(mv){
+    mv.addEventListener('error',()=>{
+      mv.remove();
+      const h2 = document.createElement('h2');
+      h2.textContent = 'Моя цель, мой смысл и возможность жить — создавать искры';
+      document.querySelector('.manifest .inner').prepend(h2);
+    });
+  }
+</script>
+</body>
+</html>
