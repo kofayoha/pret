@@ -16,8 +16,6 @@
     --ink:#2B1810;
     --display:'Playfair Display','Averia Serif Libre',Georgia,serif;
     --hand:'Caveat','Comic Sans MS',cursive;
-
-    /* цвета папок в стилистике фото 4 */
     --f1:#F2836B; --f2:#7FA6C9; --f3:#E8C547; --f4:#9BC4A0;
     --f5:#D9A5B3; --f6:#8B7EC8; --f7:#E89B6C; --f8:#6BA8A0;
     --f9:#C77B94; --f10:#5D8AA8; --f11:#D4A373; --f12:#A8B8D0;
@@ -67,152 +65,96 @@
   }
 
   /* ================= ПУТЬ — ИНФОГРАФИКА ================= */
-  .path-section{
-    background:var(--cream);
-    padding:90px 48px 40px;
-    position:relative;
-  }
+  .path-section{background:var(--cream);padding:90px 48px 40px;position:relative}
   .path-section h2{
     font-size:clamp(44px,7vw,80px);
     font-style:italic;font-weight:400;font-family:var(--display);
-    margin-bottom:20px;text-align:center;
+    margin-bottom:30px;text-align:center;
   }
-  .path-wrap{
-    position:relative;
-    max-width:1100px;
-    margin:0 auto;
-  }
-  /* SVG-слой с волнистыми линиями — растягивается на всю высоту */
+  .path-wrap{position:relative;max-width:1100px;margin:0 auto}
   .path-svg{
-    position:absolute;
-    top:0;left:0;
+    position:absolute;top:0;left:0;
     width:100%;height:100%;
-    pointer-events:none;
-    z-index:0;
-    overflow:visible;
+    pointer-events:none;z-index:2;overflow:visible;
   }
   .path-list{
-    position:relative;
-    z-index:1;
-    display:flex;
-    flex-direction:column;
-    gap:34px;
-    padding:30px 0 40px;
+    position:relative;z-index:1;
+    display:flex;flex-direction:column;gap:30px;
+    padding:40px 0 60px;
   }
   .path-item{
-    max-width:56%;
+    max-width:54%;
     background:var(--cream);
-    padding:18px 24px;
+    padding:20px 26px;
     border-radius:14px;
     position:relative;
-    box-shadow:0 2px 0 rgba(43,24,16,.04);
+    box-shadow:0 2px 10px rgba(43,24,16,.06);
   }
-  /* чередуем стороны — зигзаг слева/справа */
-  .path-item:nth-child(odd){align-self:flex-start;border-left:3px solid var(--ink);}
-  .path-item:nth-child(even){align-self:flex-end;border-right:3px solid var(--ink);text-align:right;}
+  .path-item:nth-child(odd){align-self:flex-start;border-left:3px solid var(--navy)}
+  .path-item:nth-child(even){align-self:flex-end;border-right:3px solid var(--navy);text-align:right}
   .path-item h3{
     font-family:var(--hand);
-    font-size:clamp(22px,2.6vw,34px);
-    font-weight:600;
-    margin-bottom:6px;
-    color:var(--navy);
+    font-size:clamp(24px,2.8vw,38px);
+    font-weight:700;margin-bottom:4px;color:var(--navy);line-height:1.1;
   }
   .path-item p{font-size:clamp(14px,1.6vw,18px);line-height:1.55}
-  /* финальный человечек */
   .path-figure{
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    gap:14px;
-    padding:50px 0 20px;
-    position:relative;
-    z-index:1;
+    display:flex;flex-direction:column;align-items:center;gap:14px;
+    padding:70px 0 20px;position:relative;z-index:3;
   }
   .path-figure svg{
-    width:clamp(120px,16vw,200px);
-    height:auto;
+    width:clamp(120px,16vw,190px);height:auto;
     animation:figureFloat 5s ease-in-out infinite;
   }
-  @keyframes figureFloat{
-    0%,100%{transform:translateY(0)}
-    50%{transform:translateY(-10px)}
-  }
+  @keyframes figureFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
   .path-figure .cap{
-    font-family:var(--hand);
-    font-size:clamp(20px,2.2vw,30px);
-    color:var(--navy);
+    font-family:var(--hand);font-size:clamp(22px,2.4vw,34px);color:var(--navy);
   }
 
   /* ================= НАВЫКИ — ПАПКИ ================= */
-  .skills{background:var(--cream);padding:90px 48px;position:relative}
+  .skills{background:var(--cream);padding:90px 48px}
   .skills h2{
     font-size:clamp(44px,7vw,80px);
     font-style:italic;font-weight:400;font-family:var(--display);
     margin-bottom:60px;text-align:center;
   }
   .skills-folders{
-    display:grid;
-    grid-template-columns:repeat(auto-fill, minmax(190px, 1fr));
-    gap:34px;
-    max-width:1250px;margin:0 auto;
+    display:grid;grid-template-columns:repeat(auto-fill, minmax(200px,1fr));
+    gap:40px;max-width:1250px;margin:0 auto;
   }
-  .folder{
-    position:relative;
-    aspect-ratio:1.15/1;
-    cursor:pointer;
-  }
-  /* передняя часть папки — форма с вырезанным окном */
-  .folder-shape{
-    position:absolute;
-    inset:0;
-    transition:transform .35s ease;
-    filter:drop-shadow(0 6px 14px rgba(43,24,16,.18));
-  }
-  /* задняя часть — тёмная, видна при приподнимании */
+  .folder{position:relative;aspect-ratio:1.1/1;cursor:pointer}
   .folder-back{
-    position:absolute;
-    inset:6% 3% 0 3%;
-    background:#2B1810;
-    border-radius:6px;
+    position:absolute;inset:8% 2% 0 2%;
+    background:#1B1208;border-radius:8px 8px 6px 6px;
+  }
+  .folder-shape{
+    position:absolute;inset:0;
+    transition:transform .35s ease;
+    filter:drop-shadow(0 8px 16px rgba(43,24,16,.22));
   }
   .folder-shape svg{width:100%;height:100%;display:block}
-  .folder:hover .folder-shape{transform:translateY(-10px) rotate(-1deg)}
-  /* слово в вырезанном окне */
+  .folder:hover .folder-shape{transform:translateY(-12px) rotate(-1.2deg)}
   .folder-word{
-    position:absolute;
-    left:50%;top:56%;
+    position:absolute;left:50%;top:52%;
     transform:translate(-50%,-50%);
     font-family:var(--hand);
-    font-size:clamp(17px,1.9vw,26px);
-    font-weight:700;
-    color:var(--cream);
-    text-align:center;
-    pointer-events:none;
-    width:80%;
-    line-height:1.05;
+    font-size:clamp(20px,2.1vw,32px);
+    font-weight:700;color:var(--cream);
+    text-align:center;pointer-events:none;
+    width:78%;line-height:1;
+    text-shadow:0 1px 3px rgba(0,0,0,.15);
     z-index:2;
   }
-  /* картинки, вылетающие при наведении */
   .folder-images{
-    position:absolute;
-    bottom:100%;
-    left:50%;
-    transform:translateX(-50%) translateY(10px);
-    display:flex;
-    gap:8px;
-    opacity:0;
-    pointer-events:none;
+    position:absolute;bottom:100%;left:50%;
+    transform:translateX(-50%) translateY(12px);
+    display:flex;gap:8px;opacity:0;pointer-events:none;
     transition:opacity .3s ease, transform .35s ease;
-    z-index:3;
-    margin-bottom:8px;
+    z-index:4;margin-bottom:6px;
   }
-  .folder:hover .folder-images{
-    opacity:1;
-    transform:translateX(-50%) translateY(0);
-  }
+  .folder:hover .folder-images{opacity:1;transform:translateX(-50%) translateY(0)}
   .folder-images span{
-    width:46px;height:46px;
-    border-radius:5px;
+    width:48px;height:48px;border-radius:5px;
     border:2px solid var(--cream);
     box-shadow:0 4px 10px rgba(43,24,16,.25);
     background:var(--blue);
@@ -224,61 +166,49 @@
   .extras{
     background:var(--navy);
     padding:120px 48px;
-    min-height:100vh;
     display:flex;align-items:center;justify-content:center;
     position:relative;overflow:hidden;
   }
   .letter-scene{
-    position:relative;
-    width:min(760px,100%);
-    display:flex;
-    flex-direction:column;
-    align-items:center;
+    position:relative;width:min(720px,100%);
+    display:flex;flex-direction:column;align-items:center;
   }
   .letter-hint{
     font-family:var(--hand);
-    font-size:clamp(18px,2vw,26px);
-    color:var(--cream);
-    opacity:.65;
-    margin-bottom:26px;
-    text-align:center;
+    font-size:clamp(20px,2.2vw,30px);
+    color:var(--cream);opacity:.7;
+    margin-bottom:30px;text-align:center;
+    transition:opacity .3s;
   }
-
-  /* Конверт */
   .envelope-wrap{
-    position:relative;
-    width:100%;
-    cursor:pointer;
-    perspective:1400px;
+    position:relative;width:100%;
+    cursor:pointer;perspective:1400px;
   }
   .envelope{
-    position:relative;
-    width:100%;
+    position:relative;width:100%;
     aspect-ratio:1.55/1;
-    max-height:460px;
   }
-  /* нижняя часть конверта (карман) */
+  /* стопка листов — вне конверта, чтобы вылезать наружу */
+  .sheets{
+    position:absolute;left:50%;
+    bottom:8%;transform:translateX(-50%);
+    width:84%;z-index:1;
+  }
   .env-body{
     position:absolute;inset:0;
-    background:#EFE4D2;
-    border-radius:8px;
-    box-shadow:0 24px 60px rgba(0,0,0,.4);
-    overflow:hidden;
+    background:#EFE4D2;border-radius:10px;
+    box-shadow:0 24px 60px rgba(0,0,0,.45);
+    overflow:hidden;z-index:2;
   }
   .env-body::before{
-    /* боковые сгибы конверта */
-    content:'';
-    position:absolute;inset:0;
+    content:'';position:absolute;inset:0;
     background:
-      linear-gradient(to bottom right, transparent 49.6%, #DCCBB2 49.9%, #DCCBB2 50.3%, transparent 50.6%),
-      linear-gradient(to bottom left,  transparent 49.6%, #DCCBB2 49.9%, #DCCBB2 50.3%, transparent 50.6%);
-    opacity:.85;
+      linear-gradient(to bottom right, transparent 49.5%, #DCCBB2 49.9%, #DCCBB2 50.2%, transparent 50.6%),
+      linear-gradient(to bottom left,  transparent 49.5%, #DCCBB2 49.9%, #DCCBB2 50.2%, transparent 50.6%);
+    opacity:.9;
   }
-  /* клапан сверху */
   .env-flap{
-    position:absolute;
-    top:0;left:0;
-    width:100%;height:58%;
+    position:absolute;top:0;left:0;width:100%;height:58%;
     background:#E2D3BA;
     clip-path:polygon(0 0, 50% 100%, 100% 0);
     transform-origin:top center;
@@ -286,78 +216,39 @@
     z-index:4;
     box-shadow:0 4px 14px rgba(0,0,0,.12);
   }
-  .envelope-wrap.open .env-flap{
-    transform:rotateX(180deg);
-    z-index:0;
-  }
-  /* надпись от руки на конверте */
+  .envelope-wrap.open .env-flap{transform:rotateX(180deg);z-index:0}
   .env-label{
-    position:absolute;
-    left:50%;top:62%;
+    position:absolute;left:50%;top:66%;
     transform:translate(-50%,-50%) rotate(-3deg);
     font-family:var(--hand);
-    font-size:clamp(28px,3.6vw,52px);
-    font-weight:700;
-    color:var(--navy);
-    z-index:5;
-    transition:opacity .4s ease;
-    pointer-events:none;
-    white-space:nowrap;
+    font-size:clamp(32px,4.2vw,62px);
+    font-weight:700;color:var(--navy);
+    z-index:5;transition:opacity .4s ease;
+    pointer-events:none;white-space:nowrap;
   }
   .envelope-wrap.open .env-label{opacity:0}
 
-  /* Листы, выезжающие из конверта */
-  .sheets{
-    position:absolute;
-    left:50%;
-    bottom:6%;
-    transform:translateX(-50%);
-    width:82%;
-    z-index:2;
-  }
   .sheet{
     position:absolute;
-    bottom:0;left:0;
-    width:100%;
-    background:var(--cream);
-    border-radius:6px;
-    padding:34px 34px 40px;
-    box-shadow:0 14px 34px rgba(0,0,0,.3);
-    opacity:0;
-    transform:translateY(0) scale(.96);
-    transition:opacity .5s ease, transform .55s cubic-bezier(.34,1.4,.5,1);
+    bottom:0;left:0;width:100%;
+    background:var(--cream);border-radius:8px;
+    padding:38px 38px 46px;
+    box-shadow:0 14px 34px rgba(0,0,0,.35);
+    opacity:0;transform:translateY(0) scale(.96);
+    transition:opacity .45s ease, transform .5s cubic-bezier(.34,1.3,.5,1);
     pointer-events:none;
   }
-  .sheet.active{
-    opacity:1;
-    transform:translateY(var(--lift,0px));
-    pointer-events:auto;
-    cursor:pointer;
-    z-index:5;
-  }
-  .sheet p{
-    font-size:clamp(14px,1.55vw,19px);
-    line-height:1.65;
-    color:var(--ink);
-  }
+  .sheet.active{opacity:1;transform:translateY(var(--lift,-80px));pointer-events:auto;cursor:pointer}
+  .sheet p{font-size:clamp(15px,1.6vw,20px);line-height:1.6;color:var(--ink)}
   .sheet-num{
-    position:absolute;
-    right:22px;bottom:14px;
-    font-family:'IBM Plex Sans',sans-serif;
-    font-size:11px;
-    letter-spacing:.12em;
-    color:var(--ink);
-    opacity:.35;
+    position:absolute;right:24px;bottom:16px;
+    font-family:'IBM Plex Sans',sans-serif;font-size:11px;
+    letter-spacing:.12em;color:var(--ink);opacity:.35;
   }
 
-  footer{
-    background:var(--cream);
-    padding:60px 48px 40px;
-    text-align:center;
-  }
+  footer{background:var(--cream);padding:60px 48px 40px;text-align:center}
   footer p{
-    font-size:14px;opacity:.6;
-    font-family:'IBM Plex Sans',sans-serif;
+    font-size:14px;opacity:.6;font-family:'IBM Plex Sans',sans-serif;
     letter-spacing:.08em;text-transform:uppercase;
   }
 
@@ -372,23 +263,20 @@
     .about-hero{padding:100px 20px 60px}
 
     .path-section{padding:60px 20px 20px}
-    .path-item{max-width:88%;padding:14px 16px}
+    .path-item{max-width:86%;padding:16px 18px}
     .path-item:nth-child(even){text-align:left}
-    .path-figure{padding:30px 0 10px}
+    .path-figure{padding:40px 0 10px}
 
     .skills{padding:60px 20px}
-    .skills-folders{grid-template-columns:repeat(auto-fill, minmax(140px,1fr));gap:20px}
-    .folder-word{font-size:clamp(14px,4vw,18px)}
+    .skills-folders{grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:26px}
+    .folder-word{font-size:clamp(16px,4.4vw,22px)}
 
-    .extras{padding:70px 18px;min-height:auto}
-    .envelope{aspect-ratio:1.4/1}
-    .sheet{padding:22px 20px 30px;position:relative}
-    .sheets{width:88%}
+    .extras{padding:70px 18px}
+    .envelope{aspect-ratio:1.35/1}
+    .sheets{width:90%}
+    .sheet{padding:24px 22px 34px}
     .sheet p{font-size:14px}
   }
-
-  .reveal{opacity:0;transform:translateY(40px);transition:opacity 1s ease,transform 1s ease}
-  .reveal.visible{opacity:1;transform:none}
 </style>
 </head>
 <body>
@@ -405,110 +293,91 @@
 </header>
 
 <section class="about-hero">
-  <h1 data-en="Maria Balayan" data-ru="Мария Балаян">Мария Балаян</h1>
+  <h1>Мария Балаян</h1>
 </section>
 
-<!-- ============ ПУТЬ — ИНФОГРАФИКА ============ -->
 <section class="path-section">
   <h2>Путь</h2>
   <div class="path-wrap" id="pathWrap">
-    <!--连线: волнистые линии, сплетающиеся к человечку -->
-    <svg class="path-svg" id="pathSvg" viewBox="0 0 1000 1000" preserveAspectRatio="none"></svg>
+    <svg class="path-svg" id="pathSvg" preserveAspectRatio="none"></svg>
 
     <div class="path-list" id="pathList">
-      <div class="path-item reveal">
+      <div class="path-item">
         <h3>Вальдорфская школа</h3>
-        <p>Почти всю жизнь я&nbsp;проучилась в&nbsp;Вальдорфской Школе. Для тех, кто знает&nbsp;— это уже много о&nbsp;чем говорит.</p>
+        <p>Почти всю жизнь я&nbsp;проучилась в&nbsp;Вальдорфской Школе. Для тех, кто знает&nbsp;— это уже много о&nbsp;чём говорит.</p>
       </div>
-      <div class="path-item reveal">
+      <div class="path-item">
         <h3>8 класс</h3>
         <p>Начиная с&nbsp;8-го класса я&nbsp;делала проекты, связанные с&nbsp;фотографией, танцами и&nbsp;дизайном.</p>
       </div>
-      <div class="path-item reveal">
+      <div class="path-item">
         <h3>11 класс</h3>
-        <p>Дойдя до&nbsp;11-го класса, я&nbsp;четко решила: либо философия, либо дизайн. По&nbsp;подсказке учителя всё-таки пошла на&nbsp;«Коммуникационный дизайн» в&nbsp;ВШЭ и&nbsp;Школу Дизайна.</p>
+        <p>Дойдя до&nbsp;11-го класса, я&nbsp;чётко решила: либо философия, либо дизайн. По&nbsp;подсказке учителя всё-таки пошла на&nbsp;«Коммуникационный дизайн».</p>
       </div>
-      <div class="path-item reveal">
+      <div class="path-item">
         <h3>Поступление</h3>
-        <p>Для подготовки я&nbsp;делала вручную зины и&nbsp;только перед самой подачей решила быстро освоить Фигму. Проектом был ребрендинг платформы «Bereg» — 75&nbsp;баллов из&nbsp;100.</p>
+        <p>Для подготовки я&nbsp;делала вручную зины и&nbsp;только перед самой подачей решила быстро освоить Фигму. Проектом был ребрендинг «Bereg» — 75&nbsp;баллов из&nbsp;100.</p>
       </div>
-      <div class="path-item reveal">
+      <div class="path-item">
         <h3>1 курс</h3>
         <p>Первым проектом стала разработка выдуманного бренда, построенного на&nbsp;принципе передачи энергии, под названием «chenergy».</p>
       </div>
-      <div class="path-item reveal">
+      <div class="path-item">
         <h3>2 курс</h3>
-        <p>К&nbsp;концу 2-го курса я&nbsp;вдруг поняла, что дизайн&nbsp;— это всегда дизайн чего-то. Дизайн не&nbsp;может быть искусством сам по&nbsp;себе.</p>
+        <p>К&nbsp;концу 2-го курса я&nbsp;поняла: дизайн&nbsp;— это всегда дизайн чего-то. Дизайн не&nbsp;может быть искусством сам по&nbsp;себе.</p>
       </div>
-      <div class="path-item reveal">
+      <div class="path-item">
         <h3>Современное искусство</h3>
-        <p>Я&nbsp;перешла на&nbsp;современное искусство. Единственное, чему я&nbsp;благодарна&nbsp;— это возможность создать перформанс «Посестрие».</p>
+        <p>Я&nbsp;перешла на&nbsp;современное искусство. Единственное, чему я&nbsp;благодарна&nbsp;— возможность создать перформанс «Посестрие».</p>
       </div>
-      <div class="path-item reveal">
+      <div class="path-item">
         <h3>Разворот</h3>
         <p>Через полгода я, сверкая пятками, убежала на&nbsp;«Ивент Дизайн. Театр. Перформанс».</p>
       </div>
-      <div class="path-item reveal">
+      <div class="path-item">
         <h3>Сейчас</h3>
-        <p>Я&nbsp;очень благодарна всем случайностям и&nbsp;людям, которые меня туда привели. В&nbsp;данный период я&nbsp;аккумулирую ресурс для создания народного фестиваля искусств в&nbsp;качестве диплома.</p>
+        <p>Аккумулирую ресурс для создания народного фестиваля искусств в&nbsp;качестве диплома.</p>
       </div>
     </div>
 
-    <!-- человечек в полный рост -->
-    <div class="path-figure">
-      <svg viewBox="0 0 160 340" fill="none" stroke="var(--navy)" stroke-width="3.5"
-           stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
-        <!-- голова -->
-        <circle cx="80" cy="42" r="30"/>
-        <!-- волосы: короткое каре, как на иллюстрации -->
-        <path d="M 50 34 Q 52 6 80 4 Q 108 6 110 34"/>
-        <path d="M 50 34 Q 44 52 48 66"/>
-        <path d="M 110 34 Q 116 52 112 66"/>
-        <path d="M 62 34 Q 80 22 98 34"/>
-        <!-- шея -->
-        <path d="M 70 70 L 70 84 M 90 70 L 90 84"/>
-        <!-- плечи и тело -->
-        <path d="M 70 84 Q 46 90 42 116 L 38 190 Q 40 214 52 216 L 108 216 Q 120 214 122 190 L 118 116 Q 114 90 90 84"/>
-        <!-- матросский воротник -->
-        <path d="M 68 86 L 80 108 L 92 86"/>
-        <!-- руки -->
-        <path d="M 44 118 Q 24 150 26 186"/>
-        <path d="M 116 118 Q 136 150 134 186"/>
-        <!-- кисть в правой руке (с трёх лет кисть) -->
-        <path d="M 134 186 L 142 176" stroke-width="4"/>
-        <path d="M 142 176 L 152 158" stroke-width="6"/>
-        <path d="M 152 158 L 158 138" stroke-width="3"/>
-        <!-- ноги -->
-        <path d="M 66 216 L 62 288 L 54 336"/>
-        <path d="M 94 216 L 98 288 L 106 336"/>
-        <!-- ступни -->
-        <path d="M 54 336 L 40 338"/>
-        <path d="M 106 336 L 120 338"/>
-        <!-- блики на щеках -->
-        <circle cx="62" cy="48" r="5" fill="#F2836B" stroke="none" opacity=".6"/>
-        <circle cx="98" cy="48" r="5" fill="#F2836B" stroke="none" opacity=".6"/>
-        <!-- глаза -->
-        <path d="M 66 40 L 76 40" stroke-width="3"/>
-        <path d="M 84 40 L 94 40" stroke-width="3"/>
+    <div class="path-figure" id="pathFigure">
+      <svg viewBox="0 0 170 350" fill="none" xmlns="http://www.w3.org/2000/svg"
+           stroke="#0B1E3C" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="85" cy="46" r="32"/>
+        <path d="M 53 38 Q 55 6 85 4 Q 115 6 117 38"/>
+        <path d="M 53 38 Q 46 58 51 74"/>
+        <path d="M 117 38 Q 124 58 119 74"/>
+        <path d="M 66 38 Q 85 26 104 38"/>
+        <path d="M 74 78 L 74 92 M 96 78 L 96 92"/>
+        <path d="M 74 92 Q 48 98 44 124 L 40 198 Q 42 222 54 224 L 116 224 Q 128 222 130 198 L 126 124 Q 122 98 96 92"/>
+        <path d="M 72 94 L 85 118 L 98 94"/>
+        <path d="M 46 126 Q 24 160 27 196"/>
+        <path d="M 128 126 Q 150 160 147 196"/>
+        <path d="M 147 196 L 154 184" stroke-width="4"/>
+        <path d="M 154 184 L 164 164" stroke-width="6"/>
+        <path d="M 164 164 L 170 142" stroke-width="3"/>
+        <path d="M 70 224 L 65 296 L 57 342"/>
+        <path d="M 100 224 L 105 296 L 113 342"/>
+        <path d="M 57 342 L 42 344"/>
+        <path d="M 113 342 L 128 344"/>
+        <circle cx="66" cy="54" r="5.5" fill="#F2836B" stroke="none" opacity=".55"/>
+        <circle cx="104" cy="54" r="5.5" fill="#F2836B" stroke="none" opacity=".55"/>
+        <path d="M 68 44 L 79 44" stroke-width="3.4"/>
+        <path d="M 91 44 L 102 44" stroke-width="3.4"/>
       </svg>
       <div class="cap">и вот — я</div>
     </div>
   </div>
 </section>
 
-<!-- ============ НАВЫКИ — ПАПКИ ============ -->
 <section class="skills">
-  <div class="reveal">
-    <h2>Навыки</h2>
-    <div class="skills-folders" id="skillsFolders"></div>
-  </div>
+  <h2>Навыки</h2>
+  <div class="skills-folders" id="skillsFolders"></div>
 </section>
 
-<!-- ============ ПИСЬМО ============ -->
 <section class="extras">
-  <div class="letter-scene reveal">
+  <div class="letter-scene">
     <div class="letter-hint" id="letterHint">нажмите на конверт</div>
-
     <div class="envelope-wrap" id="envelopeWrap">
       <div class="envelope">
         <div class="sheets" id="sheets"></div>
@@ -525,155 +394,126 @@
 </footer>
 
 <script>
-  /* ---------- язык ---------- */
+  /* ================= ЯЗЫК ================= */
   let currentLang = 'ru';
   function toggleLanguage(){
     currentLang = currentLang === 'en' ? 'ru' : 'en';
     document.querySelector('.lang-toggle').textContent = currentLang === 'en' ? 'RU' : 'EN';
-    document.querySelectorAll('[data-en]').forEach(el=>{
-      const t = el.getAttribute('data-'+currentLang);
-      if(t) el.innerHTML = t;
-    });
     document.documentElement.lang = currentLang;
   }
 
-  /* ---------- ПУТЬ: рисование волнистых линий ---------- */
-  const pathSvg  = document.getElementById('pathSvg');
-  const pathList = document.getElementById('pathList');
-  const pathWrap = document.getElementById('pathWrap');
+  /* ================= ПУТЬ: ВОЛНИСТЫЕ ЛИНИИ ================= */
+  const pathSvg    = document.getElementById('pathSvg');
+  const pathList   = document.getElementById('pathList');
+  const pathWrap   = document.getElementById('pathWrap');
 
   function drawPathLines(){
-    if(!pathSvg || !pathWrap) return;
-    const items = Array.from(pathList.querySelectorAll('.path-item'));
+    const items = pathList.querySelectorAll('.path-item');
     if(!items.length) return;
 
-    const wrapRect = pathWrap.getBoundingClientRect();
+    const wr = pathWrap.getBoundingClientRect();
+    if(!wr.width || !wr.height) return;
+
     const W = 1000, H = 1000;
     pathSvg.setAttribute('viewBox', `0 0 ${W} ${H}`);
 
-    // позиции каждого блока в координатах viewBox
-    const nodes = items.map((el,i)=>{
+    // точка стыка у каждого блока: нечётные — справа, чётные — слева
+    const nodes = Array.from(items).map((el,i)=>{
       const r = el.getBoundingClientRect();
-      const x = ((i % 2 === 0)
-                  ? r.left + r.width * 0.85      // нечётные — соединение справа
-                  : r.left + r.width * 0.15)     // чётные — слева
-                - wrapRect.left;
-      const y = r.top + r.height/2 - wrapRect.top;
-      return { x: x / wrapRect.width * W, y: y / wrapRect.height * H };
+      const px = (i % 2 === 0) ? r.left + r.width*0.78 : r.left + r.width*0.22;
+      return {
+        x: (px - wr.left) / wr.width * W,
+        y: (r.top + r.height/2 - wr.top) / wr.height * H
+      };
     });
 
-    // финальная точка — человечек (центр внизу)
-    const figureEl = pathWrap.querySelector('.path-figure');
-    const fr = figureEl.getBoundingClientRect();
+    // финальная точка — человечек
+    const fig = document.getElementById('pathFigure').getBoundingClientRect();
     const end = {
-      x: (fr.left + fr.width/2 - wrapRect.left) / wrapRect.width * W,
-      y: (fr.top - wrapRect.top + 20) / wrapRect.height * H
+      x: (fig.left + fig.width/2 - wr.left) / wr.width * W,
+      y: (fig.top - wr.top + 30) / wr.height * H
     };
 
-    // «рукописная» дрожащая линия между двумя точками
-    function handLine(a, b, wobble){
-      const dx = b.x - a.x, dy = b.y - a.y;
-      const len = Math.hypot(dx, dy) || 1;
-      const nx = -dy/len, ny = dx/len;           // нормаль
-      const segs = 3;
+    // «рукописная» дрожащая линия
+    function handLine(a, b, wob){
+      const dx = b.x-a.x, dy = b.y-a.y;
+      const len = Math.hypot(dx,dy) || 1;
+      const nx = -dy/len, ny = dx/len;
       const pts = [[a.x, a.y]];
-      for(let i=1;i<=segs;i++){
-        const t = i/segs;
-        const jitter = (i===segs?0:1) * wobble * (Math.sin(i*2.7 + a.x*0.01));
-        pts.push([ a.x + dx*t + nx*jitter, a.y + dy*t + ny*jitter ]);
+      for(let i=1;i<=3;i++){
+        const t = i/3;
+        const j = (i===3) ? 0 : wob * Math.sin(i*2.3 + a.x*0.013);
+        pts.push([ a.x + dx*t + nx*j, a.y + dy*t + ny*j ]);
       }
-      // сглаживание квадратичными кривыми
       let d = `M ${pts[0][0].toFixed(1)} ${pts[0][1].toFixed(1)}`;
       for(let i=1;i<pts.length;i++){
         const p0 = pts[i-1], p1 = pts[i];
         const mx = (p0[0]+p1[0])/2, my = (p0[1]+p1[1])/2;
         d += ` Q ${p0[0].toFixed(1)} ${p0[1].toFixed(1)} ${mx.toFixed(1)} ${my.toFixed(1)}`;
       }
-      d += ` T ${pts[pts.length-1][0].toFixed(1)} ${pts[pts.length-1][1].toFixed(1)}`;
+      const last = pts[pts.length-1];
+      d += ` T ${last[0].toFixed(1)} ${last[1].toFixed(1)}`;
       return d;
     }
 
-    // собираем все линии: каждый блок → следующий, последний → человечек
     const chain = nodes.concat([end]);
     let html = '';
     for(let i=0;i<chain.length-1;i++){
-      html += `<path d="${handLine(chain[i], chain[i+1], 34)}"
-                 fill="none" stroke="#2B1810" stroke-width="3"
-                 stroke-linecap="round" opacity="0.55"/>`;
+      html += `<path d="${handLine(chain[i], chain[i+1], 38)}"
+        fill="none" stroke="#2B1810" stroke-width="2.6"
+        stroke-linecap="round" opacity="0.5"/>`;
     }
-    // «сплетение»: две дополнительные дуги внизу к человечку
-    html += `<path d="M ${nodes[nodes.length-1].x} ${nodes[nodes.length-1].y}
-                       Q ${W*0.72} ${end.y-100} ${end.x} ${end.y}"
-               fill="none" stroke="#2B1810" stroke-width="3"
-               stroke-linecap="round" opacity="0.35"/>`;
-    html += `<path d="M ${nodes[0].x} ${nodes[0].y}
-                       Q ${W*0.3} ${end.y-160} ${end.x} ${end.y}"
-               fill="none" stroke="#2B1810" stroke-width="2.5"
-               stroke-linecap="round" opacity="0.22"/>`;
+    // «сплетение» — две дуги от начала и конца к человечку
+    html += `<path d="M ${chain[0].x} ${chain[0].y} Q ${W*0.28} ${end.y-140} ${end.x} ${end.y}"
+      fill="none" stroke="#2B1810" stroke-width="2.2" stroke-linecap="round" opacity="0.2"/>`;
+    html += `<path d="M ${nodes[nodes.length-1].x} ${nodes[nodes.length-1].y} Q ${W*0.74} ${end.y-90} ${end.x} ${end.y}"
+      fill="none" stroke="#2B1810" stroke-width="2.6" stroke-linecap="round" opacity="0.34"/>`;
+
     pathSvg.innerHTML = html;
-
-    pathSvg.style.height = wrapRect.height + 'px';
   }
 
-  window.addEventListener('load', drawPathLines);
-  window.addEventListener('resize', ()=>{ clearTimeout(window._pt); window._pt = setTimeout(drawPathLines, 200); });
-  setTimeout(drawPathLines, 600);
+  window.addEventListener('load', ()=>setTimeout(drawPathLines, 120));
+  window.addEventListener('resize', ()=>{ clearTimeout(window._pt); window._pt = setTimeout(drawPathLines, 220); });
 
-  /* ---------- ПАПКИ ---------- */
-  // абстрактные формы-вырезы (в стилистике фото 5)
-  const CUT_SHAPES = [
-    // волна с полукругами
-    `<path fill-rule="evenodd" d="M0,0 H120 V120 H0 Z M20,26 h12 a10,10 0 0,1 20,0 h12 a10,10 0 0,1 20,0 h12 v68 H20 Z" clip-rule="evenodd"/>`,
-    // капля/цветок
-    `<path fill-rule="evenodd" d="M0,0 H120 V120 H0 Z M60,24 c14,0 22,10 22,22 c0,10 -6,16 -10,20 a12,12 0 1,1 -24,0 c-4,-4 -10,-10 -10,-20 c0,-12 8,-22 22,-22 Z"/>`,
-    // гриб/зонт
-    `<path fill-rule="evenodd" d="M0,0 H120 V120 H0 Z M60,22 c18,0 30,12 30,24 H30 c0,-12 12,-24 30,-24 Z M56,50 h8 v34 h-8 Z"/>`,
-    // пузырь с тремя шариками
-    `<path fill-rule="evenodd" d="M0,0 H120 V120 H0 Z M30,40 a14,14 0 1,0 28,0 a14,14 0 1,0 -28,0 Z M64,40 a14,14 0 1,0 28,0 a14,14 0 1,0 -28,0 Z M47,72 a14,14 0 1,0 28,0 a14,14 0 1,0 -28,0 Z"/>`,
-    // птица на руке (упрощённо)
-    `<path fill-rule="evenodd" d="M0,0 H120 V120 H0 Z M34,84 c0,-14 10,-22 22,-22 c6,0 10,2 12,5 c4,-10 12,-16 20,-18 c-2,8 -2,16 2,22 c6,2 10,6 10,13 H34 Z"/>`,
-    // волна-медуза
-    `<path fill-rule="evenodd" d="M0,0 H120 V120 H0 Z M24,60 c0,-16 16,-30 36,-30 s36,14 36,30 c0,6 -6,10 -10,14 c-4,-8 -10,-12 -14,-6 c-3,5 -4,10 -8,10 s-6,-6 -9,-10 c-4,-6 -10,-4 -13,4 c-2,4 -8,2 -10,-2 c-3,-4 -8,-6 -8,-10 Z"/>`
+  /* ================= ПАПКИ ================= */
+  const CUT = [
+    `<path fill-rule="evenodd" d="M0,0 H120 V120 H0 Z M22,28 h10 a9,9 0 0,1 18,0 h10 a9,9 0 0,1 18,0 h10 v64 H22 Z"/>`,
+    `<path fill-rule="evenodd" d="M0,0 H120 V120 H0 Z M60,22 c15,0 24,11 24,23 c0,10 -6,16 -10,20 a13,13 0 1,1 -28,0 c-4,-4 -10,-10 -10,-20 c0,-12 9,-23 24,-23 Z"/>`,
+    `<path fill-rule="evenodd" d="M0,0 H120 V120 H0 Z M60,20 c19,0 32,13 32,26 H28 c0,-13 13,-26 32,-26 Z M55,51 h10 v36 h-10 Z"/>`,
+    `<path fill-rule="evenodd" d="M0,0 H120 V120 H0 Z M26,38 a15,15 0 1,0 30,0 a15,15 0 1,0 -30,0 Z M64,38 a15,15 0 1,0 30,0 a15,15 0 1,0 -30,0 Z M45,74 a15,15 0 1,0 30,0 a15,15 0 1,0 -30,0 Z"/>`,
+    `<path fill-rule="evenodd" d="M0,0 H120 V120 H0 Z M32,86 c0,-15 11,-24 24,-24 c6,0 10,2 13,5 c4,-11 13,-18 22,-20 c-3,9 -3,17 2,24 c6,2 11,6 11,15 Z"/>`,
+    `<path fill-rule="evenodd" d="M0,0 H120 V120 H0 Z M22,58 c0,-17 17,-31 38,-31 s38,14 38,31 c0,7 -7,11 -12,15 c-4,-9 -11,-13 -15,-7 c-3,5 -5,11 -9,11 s-6,-7 -10,-11 c-4,-6 -11,-4 -14,5 c-2,4 -9,2 -11,-2 c-3,-4 -5,-7 -5,-11 Z"/>`
   ];
 
-  // навыки: цвет папки + форма выреза
   const SKILLS = [
-    {word:'Photoshop',    color:'var(--f1)',  shape:0},
-    {word:'Illustrator',  color:'var(--f2)',  shape:2},
-    {word:'Figma',        color:'var(--f3)',  shape:1},
-    {word:'Cinema 4D',    color:'var(--f4)',  shape:4},
-    {word:'Брендинг',     color:'var(--f5)',  shape:3},
-    {word:'Фотография',   color:'var(--f6)',  shape:5},
-    {word:'Керамика',     color:'var(--f7)',  shape:1},
-    {word:'Каллиграфия',  color:'var(--f8)',  shape:0},
-    {word:'Перформанс',   color:'var(--f9)',  shape:4},
-    {word:'Барабаны',     color:'var(--f10)', shape:2},
-    {word:'Шитье',        color:'var(--f11)', shape:3},
-    {word:'Дерево',       color:'var(--f12)', shape:5}
+    {w:'Photoshop',   c:'var(--f1)',  s:0},
+    {w:'Illustrator', c:'var(--f2)',  s:2},
+    {w:'Figma',       c:'var(--f3)',  s:1},
+    {w:'Cinema 4D',   c:'var(--f4)',  s:4},
+    {w:'Брендинг',    c:'var(--f5)',  s:3},
+    {w:'Фотография',  c:'var(--f6)',  s:5},
+    {w:'Керамика',    c:'var(--f7)',  s:1},
+    {w:'Каллиграфия', c:'var(--f8)',  s:0},
+    {w:'Перформанс',  c:'var(--f9)',  s:4},
+    {w:'Барабаны',    c:'var(--f10)', s:2},
+    {w:'Шитье',       c:'var(--f11)', s:3},
+    {w:'Дерево',      c:'var(--f12)', s:5}
   ];
 
-  const foldersBox = document.getElementById('skillsFolders');
-  if(foldersBox){
-    foldersBox.innerHTML = SKILLS.map(s=>`
-      <div class="folder">
-        <div class="folder-back"></div>
-        <div class="folder-shape">
-          <svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
-            <g fill="${s.color}">
-              ${CUT_SHAPES[s.shape]}
-            </g>
-          </svg>
-        </div>
-        <div class="folder-word">${s.word}</div>
-        <div class="folder-images">
-          <span></span><span></span><span></span>
-        </div>
+  document.getElementById('skillsFolders').innerHTML = SKILLS.map(k=>`
+    <div class="folder">
+      <div class="folder-back"></div>
+      <div class="folder-shape">
+        <svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+          <g fill="${k.c}">${CUT[k.s]}</g>
+        </svg>
       </div>
-    `).join('');
-  }
+      <div class="folder-word">${k.w}</div>
+      <div class="folder-images"><span></span><span></span><span></span></div>
+    </div>`).join('');
 
-  /* ---------- ПИСЬМО ---------- */
-  const PARAGRAPHS = [
+  /* ================= ПИСЬМО ================= */
+  const PARAS = [
     'В продолжение рассказа хочу поделиться своими другими сферами интересов. Я уже упоминала, что не раз участвовала в фотосессиях и съемках. Однажды даже побывав на роли продюссера съемки.',
     'В вышке я также модульно пробовала каллиграфию, саунд-арт, шитье, создание объектов из пластика, линогравюру, цианотипию, штамповку, керамику, гипс, формовку. Помимо прочего изучала джаз.',
     'Из того, что я осваивала дома — бижутерия, бисер, различны украшения из проволоки, вышивка бисером, вязание, плетение фенечек (в школе делали ковры кстати и помимо всего прочего вязали себе жилетки, шапки, пеналы и даже шили одежду).',
@@ -688,66 +528,56 @@
   ];
 
   const sheetsBox = document.getElementById('sheets');
-  if(sheetsBox){
-    // листы идут снизу вверх: последний абзац — самый верхний
-    sheetsBox.innerHTML = PARAGRAPHS.map((txt,i)=>`
-      <div class="sheet" data-index="${i}">
-        <p>${txt}</p>
-        <span class="sheet-num">${i+1} / ${PARAGRAPHS.length}</span>
-      </div>
-    `).join('');
-  }
+  sheetsBox.innerHTML = PARAS.map((t,i)=>`
+    <div class="sheet" data-i="${i}">
+      <p>${t}</p>
+      <span class="sheet-num">${i+1} / ${PARAS.length}</span>
+    </div>`).join('');
 
   const wrap = document.getElementById('envelopeWrap');
   const hint = document.getElementById('letterHint');
-  let stage = 'closed';   // closed | opened | reading | done
-  let idx = 0;
+  let opened = false;
+  let idx = -1;
 
-  function clearActive(){
-    sheetsBox.querySelectorAll('.sheet').forEach(s=>{
-      s.classList.remove('active');
-      s.style.removeProperty('--lift');
-      s.style.zIndex = '';
-    });
-  }
-
-  function showSheet(i){
-    clearActive();
-    const all = sheetsBox.querySelectorAll('.sheet');
-    const sheet = all[i];
-    // каждый следующий лист вылезает чуть выше предыдущего
-    sheet.style.setProperty('--lift', `-${88 + i * 46}px`);
-    sheet.style.zIndex = 5 + i;
-    sheet.classList.add('active');
-  }
-
-  function nextStep(){
-    if(stage === 'closed'){
-      // 1. открываем конверт
+  wrap.addEventListener('click', ()=>{
+    // 1. первый клик — открыть конверт и показать первый лист
+    if(!opened){
       wrap.classList.add('open');
-      stage = 'opened';
+      opened = true;
+      idx = 0;
+      showSheet(0);
       hint.textContent = 'нажмите на лист';
-      setTimeout(()=>{ showSheet(0); stage = 'reading'; }, 620);
       return;
     }
-    if(stage === 'reading'){
-      // 2. перелистываем
-      if(idx < PARAGRAPHS.length - 1){
-        idx++;
-        showSheet(idx);
-        if(idx === PARAGRAPHS.length - 1) hint.textContent = 'ещё нажатие — закрыть';
-      } else {
-        // 3. закрываем письмо
-        clearActive();
-        wrap.classList.remove('open');
-        stage = 'closed';
-        idx = 0;
-        hint.textContent = 'нажмите на конверт';
-      }
+    // 2. следующие клики — перелистываем
+    if(idx < PARAS.length - 1){
+      idx++;
+      showSheet(idx);
+      hint.textContent = (idx === PARAS.length - 1) ? 'ещё нажатие — закрыть' : 'нажмите на лист';
+    } else {
+      // 3. дошли до конца — закрываем
+      sheetsBox.querySelectorAll('.sheet').forEach(s=>{
+        s.classList.remove('active');
+        s.style.removeProperty('--lift');
+      });
+      wrap.classList.remove('open');
+      opened = false;
+      idx = -1;
+      hint.textContent = 'нажмите на конверт';
     }
-  }
+  });
 
-  wrap.addEventListener('click', nextStep);
+  function showSheet(i){
+    const all = sheetsBox.querySelectorAll('.sheet');
+    all.forEach(s=>{
+      if(+s.dataset.i === i){
+        s.style.setProperty('--lift', `-${150 + i*34}px`);
+        s.classList.add('active');
+      } else {
+        s.classList.remove('active');
+      }
+    });
+  }
 </script>
 </body>
 </html>
