@@ -9,8 +9,8 @@
 <link href="https://fonts.googleapis.com/css2?family=Averia+Serif+Libre:ital,wght@0,400;1,400&family=Lora:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
   :root{
-    --orange:#FF6B47;
-    --pink:#FFA6E6;
+    --navy:#0B1E3C;
+    --red:#D62828;
     --cream:#FFF9F5;
     --ink:#2B1810;
   }
@@ -56,7 +56,7 @@
 
   .shop-hero{
     min-height:50vh;
-    background:var(--orange);
+    background:var(--navy);
     display:flex;
     align-items:center;
     justify-content:center;
@@ -69,10 +69,11 @@
     font-family:'Averia Serif Libre',serif;
     text-align:center;
     line-height:1;
+    color:var(--cream);
   }
 
   .shop-intro{
-    background:var(--pink);
+    background:var(--red);
     padding:60px 48px;
     text-align:center;
   }
@@ -81,6 +82,7 @@
     font-style:italic;
     max-width:800px;
     margin:0 auto;
+    color:var(--cream);
   }
 
   .products{
@@ -107,7 +109,7 @@
   }
 
   .product-card{
-    background:var(--pink);
+    background:var(--red);
     border-radius:12px;
     overflow:hidden;
     transition:transform .4s ease, box-shadow .4s ease;
@@ -120,14 +122,14 @@
   .product-image{
     width:100%;
     aspect-ratio:3/4;
-    background:var(--cream);
+    background:var(--navy);
     display:flex;
     align-items:center;
     justify-content:center;
     font-size:48px;
     font-style:italic;
-    color:var(--ink);
-    opacity:.3;
+    color:var(--cream);
+    opacity:.8;
   }
   .product-info{
     padding:24px;
@@ -137,20 +139,23 @@
     font-style:italic;
     font-family:'Averia Serif Libre',serif;
     margin-bottom:12px;
+    color:var(--cream);
   }
   .product-info p{
     font-size:clamp(14px,1.5vw,16px);
     margin-bottom:16px;
-    opacity:.8;
+    opacity:.9;
+    color:var(--cream);
   }
   .product-price{
     font-size:clamp(18px,2vw,24px);
     font-weight:600;
     font-family:'IBM Plex Sans',sans-serif;
+    color:var(--cream);
   }
 
   .coming-soon{
-    background:var(--orange);
+    background:var(--navy);
     padding:100px 48px;
     text-align:center;
   }
@@ -160,15 +165,17 @@
     font-weight:400;
     font-family:'Averia Serif Libre',serif;
     margin-bottom:30px;
+    color:var(--cream);
   }
   .coming-soon p{
     font-size:clamp(18px,2vw,24px);
     max-width:700px;
     margin:0 auto 40px;
+    color:var(--cream);
   }
   .notify-btn{
     padding:16px 40px;
-    background:var(--ink);
+    background:var(--red);
     color:var(--cream);
     border:none;
     border-radius:50px;
@@ -180,7 +187,7 @@
   }
   .notify-btn:hover{
     transform:translateY(-4px);
-    box-shadow:0 8px 20px rgba(43,24,16,.3);
+    box-shadow:0 8px 20px rgba(214,40,40,.4);
   }
 
   footer{
