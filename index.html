@@ -9,13 +9,16 @@
 <meta name="author" content="Maria Balayan">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Averia+Serif+Libre:ital,wght@0,400;1,400&family=Lora:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<!-- Playfair Display = акцентный шрифт с кириллицей, близкий по духу к Averia Serif Libre -->
+<link href="https://fonts.googleapis.com/css2?family=Averia+Serif+Libre:ital,wght@0,400;1,400&family=Playfair+Display:ital,wght@0,400;0,500;1,400;1,500&family=Lora:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
   :root{
     --navy:#0B1E3C;
     --blue:#4A7BA7;
     --cream:#FFF9F5;
     --ink:#2B1810;
+    /* акцентный шрифт: работает и с кириллицей, и с латиницей */
+    --display:'Playfair Display','Averia Serif Libre',Georgia,serif;
   }
   *{margin:0;padding:0;box-sizing:border-box}
   html{scroll-behavior:smooth}
@@ -35,7 +38,7 @@
     transition:background .4s;
   }
   header.scrolled{background:rgba(255,249,245,.95);backdrop-filter:blur(8px)}
-  .logo{font-family:'Averia Serif Libre',serif;font-size:32px;font-style:italic;text-decoration:none;color:var(--cream);font-weight:400;transition:color .4s}
+  .logo{font-family:var(--display);font-size:32px;font-style:italic;text-decoration:none;color:var(--cream);font-weight:400;transition:color .4s}
   header.scrolled .logo{color:var(--ink)}
   nav{display:flex;gap:36px;align-items:center}
   nav a{
@@ -55,7 +58,7 @@
   header.scrolled .lang-toggle{border-color:var(--ink);color:var(--ink)}
   .lang-toggle:hover{background:var(--ink);color:var(--cream);border-color:var(--ink)}
 
-  /* HERO — ТИТУЛЬНЫЙ СЛАЙД (тёмно-синий) */
+  /* HERO */
   .hero{
     min-height:145vh;
     background:var(--navy);
@@ -69,7 +72,7 @@
     font-style:italic;color:var(--cream);
     line-height:0.95;z-index:2;
     font-weight:400;letter-spacing:-0.02em;
-    font-family:'Averia Serif Libre',serif;
+    font-family:var(--display);
     position:relative;max-width:60%;
   }
   .ornament{
@@ -92,10 +95,10 @@
     filter:invert(1);
     mix-blend-mode:screen;
   }
-  .btn{padding:14px 40px;background:transparent;border:none;text-decoration:underline;text-underline-offset:6px;color:var(--cream);font-size:16px;letter-spacing:.08em;font-family:'Averia Serif Libre',serif;font-style:italic;cursor:pointer;transition:opacity .3s}
+  .btn{padding:14px 40px;background:transparent;border:none;text-decoration:underline;text-underline-offset:6px;color:var(--cream);font-size:16px;letter-spacing:.08em;font-family:var(--display);font-style:italic;cursor:pointer;transition:opacity .3s}
   .btn:hover{opacity:.7}
 
-  /* ARTIST — новая верстка: рисунок на всю плашку, текст ниже */
+  /* ARTIST */
   .artist{background:var(--blue);padding:0;position:relative;overflow:hidden}
   .artist-flourish-wrap{
     width:100%;
@@ -137,14 +140,10 @@
     color:var(--cream);
   }
 
-  /* PORTRAIT */
-  .portrait-slide{position:relative;height:110vh;overflow:hidden;background:linear-gradient(to bottom,var(--blue) 0%,var(--cream) 100%)}
-  #portraitCanvas{position:absolute;top:0;left:0;width:100%;height:100%;display:block}
-
-  /* GALLERY — desktop с подписями категорий */
+  /* GALLERY */
   .journey{background:var(--cream);padding:90px 48px;position:relative}
   .journey .head{display:flex;justify-content:space-between;align-items:center;margin-bottom:50px}
-  .journey h2{font-size:clamp(40px,6vw,80px);font-style:italic;font-weight:400;font-family:'Averia Serif Libre',serif}
+  .journey h2{font-size:clamp(40px,6vw,80px);font-style:italic;font-weight:400;font-family:var(--display)}
   .journey .head a{text-decoration:underline;text-underline-offset:6px;color:var(--ink);font-size:16px;font-style:italic}
 
   .gallery-container{position:relative;overflow:hidden}
@@ -173,10 +172,72 @@
   .carousel-item:hover .carousel-label,
   .carousel-item.active .carousel-label{opacity:1}
 
+  /* ===== КОЛЛАБОРАЦИИ ===== */
+  .collab{background:var(--navy);padding:120px 0;position:relative;overflow:hidden}
+  .collab .head{
+    padding:0 48px;
+    margin-bottom:60px;
+    display:flex;
+    justify-content:center;
+  }
+  /* Рукописный заголовок, который пишется и стирается */
+  .collab-title{
+    font-family:var(--display);
+    font-style:italic;
+    font-size:clamp(44px,8vw,110px);
+    color:var(--cream);
+    line-height:1;
+    text-align:center;
+    border-right:3px solid var(--cream);
+    padding-right:8px;
+    white-space:nowrap;
+    overflow:hidden;
+    animation:typewriter 7s steps(24) infinite;
+  }
+  @keyframes typewriter{
+    0%   {width:0;border-color:var(--cream)}
+    35%  {width:100%;border-color:var(--cream)}
+    75%  {width:100%;border-color:transparent}
+    88%  {width:0;border-color:transparent}
+    100% {width:0;border-color:transparent}
+  }
+
+  /* Карусель работ */
+  .collab-marquee{
+    display:flex;
+    width:max-content;
+    animation:marquee 45s linear infinite;
+  }
+  .collab:hover .collab-marquee{animation-play-state:paused}
+  @keyframes marquee{
+    from{transform:translateX(0)}
+    to{transform:translateX(-50%)}
+  }
+  .collab-track{
+    display:flex;
+    gap:28px;
+    padding:0 14px;
+  }
+  .collab-card{
+    width:clamp(280px,32vw,460px);
+    height:clamp(340px,38vw,560px);
+    border-radius:14px;
+    flex-shrink:0;
+    transition:transform .4s ease,box-shadow .4s ease;
+  }
+  .collab-card:hover{transform:scale(1.03);box-shadow:0 20px 50px rgba(0,0,0,.35)}
+  /* временные цветные плашки — потом замените на <img> */
+  .collab-card:nth-child(6n+1){background:#4A7BA7}
+  .collab-card:nth-child(6n+2){background:#F5EDE0}
+  .collab-card:nth-child(6n+3){background:#2B1810}
+  .collab-card:nth-child(6n+4){background:#7FA6C9}
+  .collab-card:nth-child(6n+5){background:#0B1E3C;border:1px solid rgba(255,249,245,.25)}
+  .collab-card:nth-child(6n+6){background:#C8B89F}
+
   /* FOOTER */
   footer{background:var(--blue);padding:120px 48px 60px;position:relative}
   footer .inner{max-width:1300px;margin:0 auto;display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:40px}
-  footer .left h2{font-size:clamp(52px,9vw,120px);font-style:italic;margin-bottom:32px;font-weight:400;font-family:'Averia Serif Libre',serif;color:var(--cream)}
+  footer .left h2{font-size:clamp(52px,9vw,120px);font-style:italic;margin-bottom:32px;font-weight:400;font-family:var(--display);color:var(--cream)}
   footer .left a,footer .right a{color:var(--cream);text-decoration:none;font-size:clamp(18px,2.2vw,24px);display:block;margin:12px 0}
   footer a:hover{opacity:.7}
   footer .copy{margin-top:100px;font-size:13px;letter-spacing:.12em;text-transform:uppercase;opacity:.6;text-align:center;font-family:'IBM Plex Sans',sans-serif;color:var(--cream)}
@@ -227,8 +288,6 @@
       font-size:clamp(13px,2.2vw,16px);
     }
 
-    .portrait-slide{height:72vh}
-
     .journey{padding:48px 20px}
     .journey h2{font-size:clamp(26px,7vw,40px)}
     .journey .head{flex-direction:column;align-items:flex-start;gap:14px;margin-bottom:28px}
@@ -270,6 +329,15 @@
     .card-nav.next{right:10px}
 
     .carousel-nav{display:none}
+
+    .collab{padding:70px 0}
+    .collab .head{padding:0 20px;margin-bottom:36px}
+    .collab-title{font-size:clamp(30px,9vw,52px);animation-duration:6s}
+    .collab-card{
+      width:clamp(220px,70vw,300px);
+      height:clamp(280px,88vw,380px);
+    }
+    .collab-track{gap:16px;padding:0 8px}
 
     footer{padding:48px 20px 26px}
     footer .inner{flex-direction:column;gap:20px;max-width:300px;margin:0}
@@ -326,10 +394,6 @@
   </div>
 </section>
 
-<section class="portrait-slide" id="portrait">
-  <canvas id="portraitCanvas"></canvas>
-</section>
-
 <section class="journey" id="journey">
   <div class="head reveal">
     <h2 data-en="Follow my Journey" data-ru="Моя галерея">Моя&nbsp;галерея</h2>
@@ -339,7 +403,6 @@
   <div class="gallery-container" id="galleryContainer">
     <div class="gallery-track" id="galleryTrack">
 
-      <!-- Страница 1: Перформанс -->
       <div class="gallery-page active-page" id="desktopPage0">
         <a class="card reveal" href="https://hsedesign.ru/project/posestrie-fdd4656391a44e98b69133c583dda03f" target="_blank">
           <img src="img/posestrie.jpg" alt="Посестрие">
@@ -352,7 +415,6 @@
         </a>
       </div>
 
-      <!-- Страница 2: Брендинг -->
       <div class="gallery-page" id="desktopPage1">
         <a class="card reveal" href="https://www.behance.net/gallery/242092697/Chenergy" target="_blank">
           <img src="img/chenergy.jpg" alt="Chenergy">
@@ -365,7 +427,6 @@
         </a>
       </div>
 
-      <!-- Страница 3: Иллюстрация -->
       <div class="gallery-page" id="desktopPage2">
         <a class="card reveal" href="https://www.behance.net/gallery/242102615/Elian-script" target="_blank">
           <img src="img/elian.jpg" alt="Элианский шрифт">
@@ -397,6 +458,33 @@
   </div>
 </section>
 
+<!-- КОЛЛАБОРАЦИИ -->
+<section class="collab" id="collab">
+  <div class="head">
+    <h2 class="collab-title" data-en="Collaborations" data-ru="Коллаборации">Коллаборации</h2>
+  </div>
+
+  <div class="collab-marquee">
+    <!-- дублируем трек для бесшовной прокрутки -->
+    <div class="collab-track">
+      <div class="collab-card"></div>
+      <div class="collab-card"></div>
+      <div class="collab-card"></div>
+      <div class="collab-card"></div>
+      <div class="collab-card"></div>
+      <div class="collab-card"></div>
+    </div>
+    <div class="collab-track" aria-hidden="true">
+      <div class="collab-card"></div>
+      <div class="collab-card"></div>
+      <div class="collab-card"></div>
+      <div class="collab-card"></div>
+      <div class="collab-card"></div>
+      <div class="collab-card"></div>
+    </div>
+  </div>
+</section>
+
 <footer id="contact">
   <div class="inner reveal">
     <div class="left">
@@ -423,55 +511,47 @@
     document.documentElement.lang = currentLang;
   }
 
+  /* Видео манифеста: проигрывается ОДИН раз и замирает на последнем кадре.
+     Возобновляется только когда секция ушла из вида и снова вернулась. */
   const mv = document.getElementById('manifestVideo');
   if(mv){
+    mv.loop = false;            // без зацикливания
+    mv.pause();                 // ждём, пока секция появится в кадре
+
+    let wasInView = false;
+
+    const videoObserver = new IntersectionObserver(entries=>{
+      entries.forEach(entry=>{
+        if(entry.isIntersecting){
+          // вернулись в секцию после ухода → начинаем сначала
+          if(!wasInView){
+            mv.currentTime = 0;
+            mv.play().catch(()=>{});
+          }
+          wasInView = true;
+        } else {
+          // ушли из секции → сбрасываем флаг, чтобы при возврате проиграть заново
+          if(entry.boundingClientRect.top > 0 || entry.boundingClientRect.bottom < 0){
+            wasInView = false;
+          }
+        }
+      });
+    },{threshold:0.4});
+
+    videoObserver.observe(mv);
+
+    // запасной вариант: когда видео закончилось — держим последний кадр
+    mv.addEventListener('ended', ()=>{ mv.pause(); });
+
     mv.addEventListener('error', ()=>{
       mv.remove();
       const h2 = document.createElement('h2');
       h2.setAttribute('data-en','My purpose, my meaning, and the ability to live—creating sparks');
       h2.setAttribute('data-ru','Моя цель, мой смысл и&nbsp;возможность жить — создавать искры');
-      h2.style.cssText = 'font-size:clamp(32px,5vw,64px);line-height:1.3;font-weight:400;text-align:center;margin-bottom:48px;color:var(--cream)';
+      h2.style.cssText = 'font-size:clamp(32px,5vw,64px);line-height:1.3;font-weight:400;text-align:center;margin-bottom:48px;color:var(--cream);font-family:Playfair Display,Georgia,serif;font-style:italic';
       h2.innerHTML = h2.getAttribute('data-'+currentLang);
       document.getElementById('manifestInner').prepend(h2);
     });
-  }
-
-  const canvas = document.getElementById('portraitCanvas');
-  const ctx = canvas.getContext('2d');
-  const portraitSlide = document.querySelector('.portrait-slide');
-  const NUM_STRIPS = 12, SKEW = 0.18;
-  let scrollProg = 0;
-
-  function resizeCanvas(){
-    canvas.width = portraitSlide.offsetWidth;
-    canvas.height = portraitSlide.offsetHeight;
-  }
-  window.addEventListener('resize',()=>{ resizeCanvas(); drawStrips(scrollProg); });
-  resizeCanvas();
-
-  const src = new Image();
-  src.src = 'img/portrait.jpg';
-  src.onload = ()=>drawStrips(0);
-
-  function drawStrips(prog){
-    if(!src.complete||!src.naturalWidth) return;
-    const W=canvas.width, H=canvas.height;
-    ctx.clearRect(0,0,W,H);
-    const sw=W/NUM_STRIPS, ms=180;
-    const sc=Math.max(W/src.width,H/src.height);
-    const iw=src.width*sc, ih=src.height*sc;
-    const ix=(W-iw)/2, iy=(H-ih)/2;
-    for(let i=0;i<NUM_STRIPS;i++){
-      const dir=i%2===0?1:-1, sh=dir*prog*ms;
-      const x0=i*sw, x1=x0+sw;
-      ctx.save();
-      ctx.beginPath();
-      ctx.moveTo(x0,sh); ctx.lineTo(x1,sh);
-      ctx.lineTo(x1+H*SKEW,H+sh); ctx.lineTo(x0+H*SKEW,H+sh);
-      ctx.closePath(); ctx.clip();
-      ctx.drawImage(src,ix,iy+sh,iw,ih);
-      ctx.restore();
-    }
   }
 
   const header = document.querySelector('header');
@@ -495,14 +575,6 @@
         ornament.style.transform = `translateY(-${p*380}px) rotate(${p*50}deg)`;
         ornament.style.opacity   = 0.45 - p*0.25;
       }
-    }
-
-    if(portraitSlide){
-      const r = portraitSlide.getBoundingClientRect();
-      const p = Math.max(0, Math.min(1,
-        (window.innerHeight - r.top) / (window.innerHeight + r.height)));
-      scrollProg = p;
-      drawStrips(p);
     }
   });
 
