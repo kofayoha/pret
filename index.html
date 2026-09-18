@@ -13,8 +13,6 @@
   ЕДИНЫЙ ШРИФТ САЙТА
   латиница  → Averia Serif Libre Italic
   кириллица → PT Serif Caption Italic (аналог, у Averia нет кириллицы)
-  Такой же стек стоит в about.html, поэтому «Мария Балаян» и все
-  заголовки выглядят одинаково на обеих страницах.
 -->
 <link href="https://fonts.googleapis.com/css2?family=Averia+Serif+Libre:ital,wght@0,400;1,400&family=PT+Serif+Caption:ital@0;1&family=Lora:ital,wght@0,400;0,500;1,400;1,500&family=IBM+Plex+Sans:wght@400;500;600&family=Caveat:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
@@ -129,24 +127,15 @@
     max-width:1200px;margin:0 auto;
     display:flex;flex-direction:column;gap:52px;
   }
-  /* первая фраза — СПРАВА, вторая — слева и ниже: зигзаг для взгляда */
   .artist-text .lead{
-    align-self:flex-end;
-    text-align:right;
-    max-width:54%;
-    font-size:clamp(20px,2.6vw,38px);
-    line-height:1.25;
-    font-style:italic;
-    color:var(--cream);
+    align-self:flex-end;text-align:right;max-width:54%;
+    font-size:clamp(20px,2.6vw,38px);line-height:1.25;
+    font-style:italic;color:var(--cream);
   }
   .artist-text .bottom{
-    align-self:flex-start;
-    text-align:left;
-    max-width:42%;
+    align-self:flex-start;text-align:left;max-width:42%;
     font-size:clamp(16px,1.8vw,23px);
-    font-style:italic;
-    color:var(--cream);
-    margin-top:6px;
+    font-style:italic;color:var(--cream);margin-top:6px;
   }
 
   /* ── ГАЛЕРЕЯ ── */
@@ -165,7 +154,7 @@
   }
 
   .gallery-container{position:relative;overflow:hidden}
-  .gallery-track{display:flex;transition:transform .5s cubic-bezier(.4,0,.2,1)}
+  .gallery-track{display:flex;transition:transform .55s cubic-bezier(.4,0,.2,1)}
   .gallery-page{min-width:100%;display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
 
   .card{
@@ -176,15 +165,14 @@
   .card:hover{transform:translateY(-8px);box-shadow:0 20px 50px rgba(43,24,16,.15)}
   .card img{width:100%;height:100%;object-fit:cover;display:block}
 
-  .card-nav{display:none}
-
   .carousel-nav{
     display:flex;justify-content:center;gap:34px;
-    margin-top:40px;align-items:center;
+    margin-top:42px;align-items:center;flex-wrap:wrap;
   }
   .carousel-item{
     display:flex;flex-direction:column;align-items:center;gap:8px;
-    cursor:pointer;
+    cursor:pointer;background:none;border:none;padding:0;
+    font:inherit;color:inherit;
   }
   .carousel-dot{
     width:10px;height:10px;border-radius:50%;
@@ -211,16 +199,21 @@
     padding:0 48px;margin-bottom:70px;
     display:flex;justify-content:center;
   }
-  /* заголовок тем же шрифтом, что «Мария Балаян»; наклоняется от скролла */
+  /* Заголовок: каждая буква — отдельный inline-block.
+     Буквы наклоняются влево-вправо как курсив, но само слово
+     стоит по оси ровно — контейнер не поворачивается. */
   .collab-title{
     font-family:var(--display);
     font-style:italic;
     font-size:clamp(48px,9vw,120px);
     color:var(--cream);
-    line-height:1;
+    line-height:1.1;
     text-align:center;
+  }
+  .collab-title .ltr{
+    display:inline-block;
     will-change:transform;
-    transition:transform .12s linear;
+    transform-origin:50% 80%;
   }
 
   /* карусель */
@@ -228,9 +221,9 @@
   .collab-marquee{
     display:flex;width:max-content;
     animation:marquee 48s linear infinite;
-    animation-play-state:paused;         /* по умолчанию стоит */
+    animation-play-state:paused;
   }
-  .collab:hover .collab-marquee{animation-play-state:running}  /* едет при наведении */
+  .collab:hover .collab-marquee{animation-play-state:running}
   @keyframes marquee{
     from{transform:translateX(0)}
     to{transform:translateX(-50%)}
@@ -268,12 +261,15 @@
     font-size:.6em;vertical-align:super;
     opacity:.75;margin-left:2px;
   }
+  /* Сноска — узкий блок, чуть шире ника @kofayoha */
   .disclaimer{
-    max-width:1300px;margin:34px auto 0;
+    max-width:250px;
+    margin-top:14px;
     font-family:var(--ui);
-    font-size:12px;line-height:1.55;
-    color:rgba(255,249,245,.5);
-    letter-spacing:.02em;
+    font-size:11px;
+    line-height:1.5;
+    color:rgba(255,249,245,.55);
+    letter-spacing:.01em;
   }
   footer .copy{
     margin-top:70px;font-size:12px;letter-spacing:.14em;
@@ -311,54 +307,56 @@
     .artist-flourish-wrap{padding:48px 20px 32px}
     .artist-text{padding:0 20px 52px}
     .artist-text .lead{
-      align-self:flex-end;
-      max-width:80%;text-align:right;
-      font-size:clamp(17px,4.6vw,24px);
+      align-self:flex-end;max-width:80%;
+      text-align:right;font-size:clamp(17px,4.6vw,24px);
     }
     .artist-text .bottom{
-      align-self:flex-start;
-      max-width:75%;text-align:left;
-      font-size:clamp(14px,3.8vw,18px);
+      align-self:flex-start;max-width:75%;
+      text-align:left;font-size:clamp(14px,3.8vw,18px);
       margin-top:2px;
     }
 
+    /* ── ГАЛЕРЕЯ НА ТЕЛЕФОНЕ: категории-чипсы + вертикальный список ── */
     .journey{padding:48px 20px}
     .journey h2{font-size:clamp(26px,7vw,40px)}
-    .journey .head{flex-direction:column;align-items:flex-start;gap:14px;margin-bottom:28px}
+    .journey .head{flex-direction:column;align-items:flex-start;gap:14px;margin-bottom:24px}
 
     .gallery-container{overflow:visible}
-    .gallery-track{flex-direction:column;gap:16px;transform:none !important}
-    .gallery-page{min-width:100%;display:flex;flex-direction:column;gap:16px}
-    .gallery-page:not(.active-page){display:none}
-
-    .card-wrapper{position:relative;width:100%}
-    .card{border-radius:10px;aspect-ratio:4/3;width:100%;display:block}
-
-    .card-nav{
-      display:flex;align-items:center;justify-content:center;
-      position:absolute;top:50%;transform:translateY(-50%);
-      width:38px;height:38px;
-      background:rgba(255,249,245,.92);
-      border:none;border-radius:50%;
-      font-size:17px;color:var(--ink);
-      cursor:pointer;z-index:10;
-      box-shadow:0 2px 8px rgba(43,24,16,.15);
+    .gallery-track{display:block;transform:none !important}
+    /* показываем только выбранную категорию */
+    .gallery-page{display:none}
+    .gallery-page.active-page{
+      display:grid;
+      grid-template-columns:1fr !important;
+      gap:14px;
     }
-    .card-nav.prev{left:10px}
-    .card-nav.next{right:10px}
-    .carousel-nav{display:none}
+    .card{aspect-ratio:4/3;border-radius:10px}
+
+    .carousel-nav{
+      display:flex;justify-content:flex-start;
+      gap:8px;margin-top:22px;
+    }
+    .carousel-item{
+      flex-direction:row;
+      border:1px solid rgba(43,24,16,.22);
+      padding:7px 14px;border-radius:22px;
+      transition:background .25s,border-color .25s;
+    }
+    .carousel-item.active{
+      background:var(--ink);border-color:var(--ink);
+    }
+    .carousel-dot{display:none}
+    .carousel-label{font-size:12px;opacity:.7}
+    .carousel-item.active .carousel-label{opacity:1;color:var(--cream)}
 
     .collab{padding:70px 0 80px}
     .collab .head{padding:0 20px;margin-bottom:40px}
     .collab-title{font-size:clamp(34px,11vw,58px)}
 
-    /* на телефоне — обычный горизонтальный скролл карусели */
     .collab-scroll{overflow-x:auto;overflow-y:hidden;-webkit-overflow-scrolling:touch}
     .collab-marquee{animation:none !important;transform:none !important}
     .collab-track{padding:0 16px}
-    /* вторая дорожка (дубль для бесшовности) на телефоне не нужна */
     .collab-track[aria-hidden="true"]{display:none}
-    /* внутри дорожки картинки повторяются дважды — на телефоне оставляем по одной */
     .collab-card[aria-hidden="true"],
     .collab-card[tabindex="-1"]{display:none}
     .collab-card{width:clamp(240px,74vw,330px);height:clamp(300px,92vw,412px)}
@@ -366,10 +364,10 @@
     .collab-scroll::-webkit-scrollbar-thumb{background:rgba(255,249,245,.3);border-radius:3px}
 
     footer{padding:56px 20px 30px}
-    footer .inner{flex-direction:column;gap:20px;max-width:320px;margin:0}
+    footer .inner{flex-direction:column;gap:18px;max-width:340px;margin:0}
     footer .left h2{font-size:clamp(30px,8vw,52px);margin-bottom:14px}
     footer .left a,footer .right a{font-size:clamp(14px,3.6vw,16px);margin:6px 0}
-    .disclaimer{max-width:320px;font-size:10px;margin-top:24px}
+    .disclaimer{max-width:230px;font-size:10px;margin-top:10px}
     footer .copy{margin-top:30px;font-size:9px}
   }
 </style>
@@ -400,12 +398,11 @@
   </div>
 </section>
 
-<!-- ══ Я ХУДОЖНИЦА: зигзаг — справа выше, слева ниже ══ -->
+<!-- ══ Я ХУДОЖНИЦА ══ -->
 <section class="artist" id="artist">
   <div class="artist-flourish-wrap">
     <img class="artist-flourish" src="img/flourish.jpg" alt="">
   </div>
-
   <div class="artist-text">
     <div class="container">
       <div class="lead"
@@ -429,62 +426,10 @@
     <a href="https://www.behance.net/kofayoha" target="_blank" rel="noopener">Behance →</a>
   </div>
 
-  <div class="gallery-container" id="galleryContainer">
-    <div class="gallery-track" id="galleryTrack">
-
-      <!-- ПЕРФОРМАНС -->
-      <div class="gallery-page active-page" id="desktopPage0">
-        <a class="card" href="https://hsedesign.ru/project/posestrie-fdd4656391a44e98b69133c583dda03f" target="_blank" rel="noopener">
-          <img src="img/posestrie.jpg" alt="Посестрие">
-        </a>
-        <a class="card" href="https://hsedesign.ru/project/posestrie-b7607978d5fb46828f213abeb44d5003" target="_blank" rel="noopener">
-          <img src="img/posestrie2.jpg" alt="Посестрие 2">
-        </a>
-        <a class="card" href="https://hsedesign.ru/project/20fde7d552894e3ab208171906388f3d" target="_blank" rel="noopener">
-          <img src="img/city.jpg" alt="Город">
-        </a>
-      </div>
-
-      <!-- БРЕНДИНГ -->
-      <div class="gallery-page" id="desktopPage1">
-        <a class="card" href="https://www.behance.net/gallery/242092697/Chenergy" target="_blank" rel="noopener">
-          <img src="img/chenergy.jpg" alt="Chenergy">
-        </a>
-        <a class="card" href="https://www.behance.net/gallery/242108047/dzhazovyj-festival" target="_blank" rel="noopener">
-          <img src="img/jazz.jpg" alt="Джазовый фестиваль">
-        </a>
-        <a class="card" href="https://hsedesign.ru/project/24aa67ae77f24a5d96496677a6ca3dc4" target="_blank" rel="noopener">
-          <img src="img/lines.jpg" alt="Линии">
-        </a>
-      </div>
-
-      <!-- ИЛЛЮСТРАЦИЯ -->
-      <div class="gallery-page" id="desktopPage2">
-        <a class="card" href="https://www.behance.net/gallery/242102615/Elian-script" target="_blank" rel="noopener">
-          <img src="img/elian.jpg" alt="Элианский шрифт">
-        </a>
-        <a class="card" href="https://hsedesign.ru/project/1947070780544d21889e203d6e2ff548" target="_blank" rel="noopener">
-          <img src="img/shadow.jpg" alt="Тень">
-        </a>
-      </div>
-
-    </div>
+  <div class="gallery-container">
+    <div class="gallery-track" id="galleryTrack"></div>
   </div>
-
-  <div class="carousel-nav">
-    <div class="carousel-item active" data-page="0">
-      <span class="carousel-dot active"></span>
-      <span class="carousel-label" data-en="Performance" data-ru="Перформанс">Перформанс</span>
-    </div>
-    <div class="carousel-item" data-page="1">
-      <span class="carousel-dot"></span>
-      <span class="carousel-label" data-en="Branding" data-ru="Брендинг">Брендинг</span>
-    </div>
-    <div class="carousel-item" data-page="2">
-      <span class="carousel-dot"></span>
-      <span class="carousel-label" data-en="Illustration" data-ru="Иллюстрация">Иллюстрация</span>
-    </div>
-  </div>
+  <div class="carousel-nav" id="carouselNav"></div>
 </section>
 
 <!-- ══ КОЛЛАБОРАЦИИ ══ -->
@@ -495,35 +440,26 @@
 
   <div class="collab-scroll">
     <div class="collab-marquee" id="collabMarquee">
-      <!--
-        ВАШИ 4 РАБОТЫ. Сохраните картинки в папку img/ под такими именами:
-          collab-1.jpg — рука с кристаллами
-          collab-2.jpg — розовая гора со звездой
-          collab-3.jpg — синий пятнистый кот
-          collab-4.jpg — чёрная бабочка с розовым пятном
-        Внутри дорожки каждая повторяется дважды — так кольцо
-        прокрутки бесшовное на широких экранах.
-      -->
+      <!-- ваши работы: img/collab-1.png … img/collab-4.png -->
       <div class="collab-track">
-        <a class="collab-card" href="#"><img src="img/collab-1.jpg" alt="Кристаллы в руке"></a>
-        <a class="collab-card" href="#"><img src="img/collab-2.jpg" alt="Розовая гора"></a>
-        <a class="collab-card" href="#"><img src="img/collab-3.jpg" alt="Пятнистый кот"></a>
-        <a class="collab-card" href="#"><img src="img/collab-4.jpg" alt="Бабочка"></a>
-        <a class="collab-card" href="#" aria-hidden="true"><img src="img/collab-1.jpg" alt=""></a>
-        <a class="collab-card" href="#" aria-hidden="true"><img src="img/collab-2.jpg" alt=""></a>
-        <a class="collab-card" href="#" aria-hidden="true"><img src="img/collab-3.jpg" alt=""></a>
-        <a class="collab-card" href="#" aria-hidden="true"><img src="img/collab-4.jpg" alt=""></a>
+        <a class="collab-card" href="#"><img src="img/collab-1.png" alt="Кристаллы в руке"></a>
+        <a class="collab-card" href="#"><img src="img/collab-2.png" alt="Розовая гора"></a>
+        <a class="collab-card" href="#"><img src="img/collab-3.png" alt="Пятнистый кот"></a>
+        <a class="collab-card" href="#"><img src="img/collab-4.png" alt="Бабочка"></a>
+        <a class="collab-card" href="#" aria-hidden="true"><img src="img/collab-1.png" alt=""></a>
+        <a class="collab-card" href="#" aria-hidden="true"><img src="img/collab-2.png" alt=""></a>
+        <a class="collab-card" href="#" aria-hidden="true"><img src="img/collab-3.png" alt=""></a>
+        <a class="collab-card" href="#" aria-hidden="true"><img src="img/collab-4.png" alt=""></a>
       </div>
-      <!-- дубль дорожки для бесшовной прокрутки; на телефоне скрыт -->
       <div class="collab-track" aria-hidden="true">
-        <a class="collab-card" href="#" tabindex="-1"><img src="img/collab-1.jpg" alt=""></a>
-        <a class="collab-card" href="#" tabindex="-1"><img src="img/collab-2.jpg" alt=""></a>
-        <a class="collab-card" href="#" tabindex="-1"><img src="img/collab-3.jpg" alt=""></a>
-        <a class="collab-card" href="#" tabindex="-1"><img src="img/collab-4.jpg" alt=""></a>
-        <a class="collab-card" href="#" tabindex="-1"><img src="img/collab-1.jpg" alt=""></a>
-        <a class="collab-card" href="#" tabindex="-1"><img src="img/collab-2.jpg" alt=""></a>
-        <a class="collab-card" href="#" tabindex="-1"><img src="img/collab-3.jpg" alt=""></a>
-        <a class="collab-card" href="#" tabindex="-1"><img src="img/collab-4.jpg" alt=""></a>
+        <a class="collab-card" href="#" tabindex="-1"><img src="img/collab-1.png" alt=""></a>
+        <a class="collab-card" href="#" tabindex="-1"><img src="img/collab-2.png" alt=""></a>
+        <a class="collab-card" href="#" tabindex="-1"><img src="img/collab-3.png" alt=""></a>
+        <a class="collab-card" href="#" tabindex="-1"><img src="img/collab-4.png" alt=""></a>
+        <a class="collab-card" href="#" tabindex="-1"><img src="img/collab-1.png" alt=""></a>
+        <a class="collab-card" href="#" tabindex="-1"><img src="img/collab-2.png" alt=""></a>
+        <a class="collab-card" href="#" tabindex="-1"><img src="img/collab-3.png" alt=""></a>
+        <a class="collab-card" href="#" tabindex="-1"><img src="img/collab-4.png" alt=""></a>
       </div>
     </div>
   </div>
@@ -535,21 +471,21 @@
       <h2 data-en="Get in Touch!" data-ru="Пишите!">Пишите!</h2>
       <a href="https://t.me/kofayoha" target="_blank" rel="noopener">t.me/kofayoha</a>
       <a href="https://instagram.com/kofayoha" target="_blank" rel="noopener">@kofayoha<span class="ast">*</span></a>
+      <p class="disclaimer">
+        * Instagram — продукт компании Meta, признанной экстремистской
+        организацией, её деятельность запрещена на территории
+        Российской Федерации.
+      </p>
     </div>
     <div class="right">
-      <a href="/cdn-cgi/l/email-protection#d6bdb9b0b7afb9beb796b1bbb7bfbaf8b5b9bb"><span class="__cf_email__" data-cfemail="2b40444d4a5244434a6b4c464a424705484446">[email&#160;protected]</span></a>
+      <a href="mailto:kofayoha@gmail.com">kofayoha@gmail.com</a>
     </div>
   </div>
-
-  <p class="disclaimer">
-    * Instagram — продукт компании Meta, признанной экстремистской организацией,
-    её деятельность запрещена на территории Российской Федерации.
-  </p>
 
   <p class="copy">© 2026 prët — art &amp; energy</p>
 </footer>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<script>
   /* ═════ ИНТЕРФЕЙС ═════ */
   let currentLang = 'ru';
   function toggleLanguage(){
@@ -560,28 +496,26 @@
       if(t) el.innerHTML = t;
     });
     document.documentElement.lang = currentLang;
+    buildLetters();     // пересобираем буквы заголовка после смены языка
+    relabelNav();       // и подписи категорий галереи
   }
 
-  /* ═════ ВИДЕО: проиграть один раз, замереть, вернуться — заново ═════ */
+  /* ═════ ВИДЕО ═════ */
   const mv = document.getElementById('manifestVideo');
   if(mv){
     mv.loop = false;
     mv.pause();
     let inView = false;
-
     const vo = new IntersectionObserver(entries=>{
       entries.forEach(e=>{
         if(e.isIntersecting){
           if(!inView){ mv.currentTime = 0; mv.play().catch(()=>{}); }
           inView = true;
-        } else {
-          inView = false;
-        }
+        } else { inView = false; }
       });
     },{threshold:.4});
     vo.observe(mv);
     mv.addEventListener('ended', ()=> mv.pause());
-
     mv.addEventListener('error', ()=>{
       mv.remove();
       const h2 = document.createElement('h2');
@@ -590,135 +524,143 @@
       h2.style.cssText = "font-family:var(--display);font-style:italic;font-size:clamp(30px,4.6vw,58px);line-height:1.3;text-align:center;margin-bottom:44px;color:var(--cream)";
       h2.innerHTML = h2.getAttribute('data-'+currentLang);
       document.getElementById('manifestInner').prepend(h2);
+      buildLetters();
     });
   }
 
-  /* ═════ СКРОЛЛ: шапка, орнамент, наклон заголовка коллабораций ═════ */
-  const header  = document.querySelector('header');
+  /* ═════ СКРОЛЛ: шапка и орнамент ═════ */
+  const header = document.querySelector('header');
   const ornament = document.querySelector('.ornament');
   const heroSection = document.querySelector('.hero');
-  const collabTitle = document.getElementById('collabTitle');
 
   window.addEventListener('scroll', ()=>{
     header.classList.toggle('scrolled', window.scrollY > 80);
-
-    if(ornament){
-      const rect = heroSection.getBoundingClientRect();
-      const isMobile = window.innerWidth <= 900;
-      if(isMobile){
-        const p = Math.max(0, Math.min(1, -rect.top / (rect.height * 1.1)));
-        ornament.style.transform = `translate(${p*75}%, ${p*35}%) rotate(${p*92}deg)`;
-        ornament.style.opacity = 0.55 - p*0.3;
-      } else {
-        const p = Math.max(0, Math.min(1, -rect.top / (rect.height * 1.6)));
-        ornament.style.transform = `translateY(-${p*380}px) rotate(${p*50}deg)`;
-        ornament.style.opacity = 0.45 - p*0.25;
-      }
-    }
-
-    /* «Коллаборации» наклоняется вправо/влево по мере скролла */
-    if(collabTitle){
-      const r = collabTitle.getBoundingClientRect();
-      const p = (window.innerHeight - r.top) / (window.innerHeight + r.height);
-      const k = Math.max(-1, Math.min(1, (p - 0.5) * 2));
-      collabTitle.style.transform = `rotate(${(k * 11).toFixed(2)}deg)`;
+    if(!ornament) return;
+    const rect = heroSection.getBoundingClientRect();
+    if(window.innerWidth <= 900){
+      const p = Math.max(0, Math.min(1, -rect.top / (rect.height * 1.1)));
+      ornament.style.transform = `translate(${p*75}%, ${p*35}%) rotate(${p*92}deg)`;
+      ornament.style.opacity = 0.55 - p*0.3;
+    } else {
+      const p = Math.max(0, Math.min(1, -rect.top / (rect.height * 1.6)));
+      ornament.style.transform = `translateY(-${p*380}px) rotate(${p*50}deg)`;
+      ornament.style.opacity = 0.45 - p*0.25;
     }
   });
+
+  /* ═════ ЗАГОЛОВОК «КОЛЛАБОРАЦИИ»: покачивание букв ═════════
+     Каждая буква — отдельный inline-block и вращается вокруг
+     собственной нижней точки. Слово при этом не наклоняется
+     целиком: ось остаётся ровной, а «дышит» только рисунок курсива. */
+  const collabTitle = document.getElementById('collabTitle');
+  let letters = [];
+  let running = false;
+
+  function buildLetters(){
+    if(!collabTitle) return;
+    const txt = collabTitle.textContent.trim();
+    collabTitle.textContent = '';
+    letters = [];
+    [...txt].forEach(ch=>{
+      const s = document.createElement('span');
+      s.className = 'ltr';
+      s.textContent = (ch === ' ') ? '\u00A0' : ch;
+      collabTitle.appendChild(s);
+      letters.push(s);
+    });
+  }
+
+  function tick(now){
+    if(!running) return;
+    const t = now * 0.0011;
+    letters.forEach((el,i)=>{
+      const p = t + i * 0.55;
+      const rot   = Math.sin(p) * 7;      // наклон влево-вправо
+      const skew  = Math.sin(p) * -4;     // лёгкая курсивная скошенность
+      el.style.transform = `rotate(${rot.toFixed(2)}deg) skewX(${skew.toFixed(2)}deg)`;
+    });
+    requestAnimationFrame(tick);
+  }
+
+  buildLetters();
+  if('IntersectionObserver' in window && collabTitle){
+    new IntersectionObserver(entries=>{
+      entries.forEach(e=>{
+        if(e.isIntersecting && !running){ running = true; requestAnimationFrame(tick); }
+        else if(!e.isIntersecting){ running = false; }
+      });
+    },{threshold:.05}).observe(collabTitle);
+  } else {
+    running = true; requestAnimationFrame(tick);
+  }
 
   /* ═════ ГАЛЕРЕЯ ═════ */
-  let currentPage = 0;
-  const galleryTrack = document.getElementById('galleryTrack');
-
-  document.querySelectorAll('.carousel-item').forEach(item=>{
-    item.addEventListener('click',()=>{
-      currentPage = parseInt(item.getAttribute('data-page'), 10);
-      galleryTrack.style.transform = `translateX(-${currentPage*100}%)`;
-      document.querySelectorAll('.carousel-item').forEach(d=>d.classList.remove('active'));
-      document.querySelectorAll('.carousel-dot').forEach(d=>d.classList.remove('active'));
-      item.classList.add('active');
-      item.querySelector('.carousel-dot').classList.add('active');
-    });
-  });
-
-  /* мобильные карточки: по одной из каждой категории, листаются стрелками */
-  const allWorks = [
-    [
+  const CATEGORIES = [
+    { en:'Performance', ru:'Перформанс', works:[
       {img:'img/posestrie.jpg',  href:'https://hsedesign.ru/project/posestrie-fdd4656391a44e98b69133c583dda03f', alt:'Посестрие'},
-      {img:'img/chenergy.jpg',   href:'https://www.behance.net/gallery/242092697/Chenergy',                     alt:'Chenergy'},
-      {img:'img/elian.jpg',      href:'https://www.behance.net/gallery/242102615/Elian-script',                 alt:'Элианский шрифт'}
-    ],
-    [
       {img:'img/posestrie2.jpg', href:'https://hsedesign.ru/project/posestrie-b7607978d5fb46828f213abeb44d5003', alt:'Посестрие 2'},
-      {img:'img/jazz.jpg',       href:'https://www.behance.net/gallery/242108047/dzhazovyj-festival',           alt:'Джазовый фестиваль'},
-      {img:'img/shadow.jpg',     href:'https://hsedesign.ru/project/1947070780544d21889e203d6e2ff548',          alt:'Тень'}
-    ],
-    [
-      {img:'img/city.jpg',       href:'https://hsedesign.ru/project/20fde7d552894e3ab208171906388f3d',          alt:'Город'},
-      {img:'img/lines.jpg',      href:'https://hsedesign.ru/project/24aa67ae77f24a5d96496677a6ca3dc4',          alt:'Линии'},
-      {img:'img/posestrie.jpg',  href:'https://hsedesign.ru/project/posestrie-fdd4656391a44e98b69133c583dda03f', alt:'Посестрие'}
-    ]
+      {img:'img/city.jpg',       href:'https://hsedesign.ru/project/20fde7d552894e3ab208171906388f3d',          alt:'Город'}
+    ]},
+    { en:'Branding', ru:'Брендинг', works:[
+      {img:'img/chenergy.jpg', href:'https://www.behance.net/gallery/242092697/Chenergy',            alt:'Chenergy'},
+      {img:'img/jazz.jpg',     href:'https://www.behance.net/gallery/242108047/dzhazovyj-festival',  alt:'Джазовый фестиваль'},
+      {img:'img/lines.jpg',    href:'https://hsedesign.ru/project/24aa67ae77f24a5d96496677a6ca3dc4', alt:'Линии'}
+    ]},
+    { en:'Illustration', ru:'Иллюстрация', works:[
+      {img:'img/elian.jpg',  href:'https://www.behance.net/gallery/242102615/Elian-script',           alt:'Элианский шрифт'},
+      {img:'img/shadow.jpg', href:'https://hsedesign.ru/project/1947070780544d21889e203d6e2ff548',    alt:'Тень'}
+    ]}
   ];
-  const cardIdx = [0, 0, 0];
 
-  function buildMobileGallery(){
-    if(window.innerWidth > 900) return;
-    const page = document.querySelector('.gallery-page.active-page');
-    if(!page) return;
-    page.innerHTML = '';
+  const galleryTrack = document.getElementById('galleryTrack');
+  const carouselNav  = document.getElementById('carouselNav');
+  let currentPage = 0;
 
-    allWorks.forEach((pool, pos)=>{
-      const work = pool[cardIdx[pos]];
+  function renderGallery(){
+    galleryTrack.innerHTML = CATEGORIES.map((cat, ci)=>{
+      const cols = Math.min(cat.works.length, 3);
+      const cards = cat.works.map(w=>`
+        <a class="card" href="${w.href}" target="_blank" rel="noopener">
+          <img src="${w.img}" alt="${w.alt}">
+        </a>`).join('');
+      return `<div class="gallery-page${ci === 0 ? ' active-page' : ''}"
+                   data-page="${ci}"
+                   style="grid-template-columns:repeat(${cols},1fr)">${cards}</div>`;
+    }).join('');
 
-      const wrapper = document.createElement('div');
-      wrapper.className = 'card-wrapper';
+    carouselNav.innerHTML = CATEGORIES.map((cat, i)=>`
+      <button class="carousel-item${i === 0 ? ' active' : ''}" data-page="${i}" type="button">
+        <span class="carousel-dot${i === 0 ? ' active' : ''}"></span>
+        <span class="carousel-label" data-en="${cat.en}" data-ru="${cat.ru}">${cat.ru}</span>
+      </button>`).join('');
 
-      const a = document.createElement('a');
-      a.className = 'card';
-      a.href = work.href; a.target = '_blank'; a.rel = 'noopener';
-      const img = document.createElement('img');
-      img.src = work.img; img.alt = work.alt;
-      a.appendChild(img);
-
-      const prev = document.createElement('button');
-      prev.className = 'card-nav prev';
-      prev.innerHTML = '←';
-      prev.addEventListener('click', e=>{ e.preventDefault(); stepCard(pos,-1); });
-
-      const next = document.createElement('button');
-      next.className = 'card-nav next';
-      next.innerHTML = '→';
-      next.addEventListener('click', e=>{ e.preventDefault(); stepCard(pos,+1); });
-
-      wrapper.append(a, prev, next);
-      page.appendChild(wrapper);
+    carouselNav.querySelectorAll('.carousel-item').forEach(btn=>{
+      btn.addEventListener('click', ()=> goToPage(parseInt(btn.dataset.page, 10)));
     });
   }
 
-  function stepCard(pos, dir){
-    const pool = allWorks[pos];
-    cardIdx[pos] = (cardIdx[pos] + dir + pool.length) % pool.length;
-    const wrappers = document.querySelectorAll('.card-wrapper');
-    if(!wrappers[pos]) return;
-    const work = pool[cardIdx[pos]];
-    const a = wrappers[pos].querySelector('a.card');
-    a.href = work.href;
-    a.querySelector('img').src = work.img;
-    a.querySelector('img').alt = work.alt;
+  function goToPage(i){
+    currentPage = i;
+    // десктоп — сдвигаем дорожку
+    galleryTrack.style.transform = `translateX(-${i * 100}%)`;
+    // мобильный — показываем только нужную категорию
+    galleryTrack.querySelectorAll('.gallery-page').forEach(p=>{
+      p.classList.toggle('active-page', +p.dataset.page === i);
+    });
+    carouselNav.querySelectorAll('.carousel-item').forEach(b=>{
+      b.classList.toggle('active', +b.dataset.page === i);
+      b.querySelector('.carousel-dot').classList.toggle('active', +b.dataset.page === i);
+    });
   }
 
-  function initGallery(){
-    if(window.innerWidth <= 900){
-      document.querySelectorAll('.gallery-page').forEach((p,i)=>{
-        p.style.display = i === 0 ? '' : 'none';
-      });
-      buildMobileGallery();
-    } else {
-      document.querySelectorAll('.gallery-page').forEach(p=>{ p.style.display = ''; });
-    }
+  function relabelNav(){
+    document.querySelectorAll('.carousel-label').forEach(el=>{
+      const t = el.getAttribute('data-' + currentLang);
+      if(t) el.textContent = t;
+    });
   }
 
-  initGallery();
-  window.addEventListener('resize', initGallery);
+  renderGallery();
 </script>
 </body>
 </html>
