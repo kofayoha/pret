@@ -7,12 +7,10 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <!--
-  ЛАТИНИЦА: Averia Serif Libre Italic — как вы просили
-  КИРИЛЛИЦА: аналог той же «тёплой» антиквы с кириллицей.
-  Ближайший аналог Averia Serif Libre по рисунку + поддержке кириллицы:
-  1) PT Serif Caption Italic — мягкая антиква с крупными засечками
-  2) Lora Italic — тёплый контрастный курсив
-  Ставим PT Serif Caption как основной аналог, Lora — как запас.
+  ЛАТИНИЦА ─ Averia Serif Libre Italic (как просили)
+  КИРИЛЛИЦА ─ аналог: PT Serif Caption Italic
+  У Averia Serif Libre нет кириллических глифов, поэтому в стеке
+  вторым идёт PT Serif Caption — та же тёплая антиква с курсивом.
 -->
 <link href="https://fonts.googleapis.com/css2?family=Averia+Serif+Libre:ital,wght@0,400;1,400&family=PT+Serif+Caption:ital@0;1&family=Lora:ital,wght@0,400;0,500;1,400;1,500&family=IBM+Plex+Sans:wght@400;500;600&family=Caveat:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
@@ -21,11 +19,11 @@
     --blue:#4A7BA7;
     --cream:#FFF9F5;
     --ink:#2B1810;
-    --folder-milk:#F2E8D5;
-    --folder-back:#2E0E12;
-    /* латиница — Averia, кириллица — PT Serif Caption (аналог) */
+    --thread:#1B1208;
+    --folder-milk:#F5E9CE;
+    --folder-dot:#14100E;
+    --folder-back:#3A1016;
     --display:'Averia Serif Libre','PT Serif Caption','Lora',Georgia,serif;
-    /* для письма — чистый читаемый шрифт */
     --letter:'PT Serif Caption','Lora',Georgia,serif;
     --hand:'Caveat','Comic Sans MS',cursive;
   }
@@ -73,7 +71,7 @@
     text-align:center;line-height:1;color:var(--cream);
   }
 
-  /* ============ ПУТЬ ============ */
+  /* ═══════════ ПУТЬ ═══════════ */
   .path-section{
     background:var(--cream);
     padding:70px 48px 40px;
@@ -83,8 +81,9 @@
     position:relative;
     max-width:1250px;
     margin:0 auto;
-    height:1460px;
+    height:1680px;
   }
+  /* нить — ПОД текстом */
   .threads{
     position:absolute;inset:0;
     width:100%;height:100%;
@@ -98,6 +97,8 @@
     line-height:1.5;
     color:var(--ink);
     z-index:2;
+    /* кремовая подложка: если нить пройдёт рядом, она уйдёт за текст */
+    background:var(--cream);
   }
   .pb.lead{font-size:18px;line-height:1.45}
   .pb .big{
@@ -109,8 +110,8 @@
   .pb .sm{font-size:.88em;opacity:.7}
 
   .girl{
-    position:absolute;right:4%;bottom:1%;
-    width:clamp(190px,22vw,300px);
+    position:absolute;right:4%;bottom:0;
+    width:clamp(200px,23vw,320px);
     z-index:2;
   }
   .girl img{width:100%;height:auto;display:block}
@@ -120,7 +121,7 @@
     color:var(--navy);text-align:center;margin-top:4px;
   }
 
-  /* ============ НАВЫКИ — УЗКИЕ ПАПКИ ============ */
+  /* ═══════════ НАВЫКИ ═══════════ */
   .skills{background:var(--cream);padding:70px 48px 110px}
   .skills h2{
     font-size:clamp(40px,6vw,72px);
@@ -129,91 +130,99 @@
   }
   .skills-folders{
     display:grid;
-    /* узкая колонка — папки вытянутые и компактные, как на фото */
-    grid-template-columns:repeat(auto-fill, minmax(132px,1fr));
-    gap:64px 34px;
+    /* УЗКАЯ колонка — папки компактные, не разлапистые */
+    grid-template-columns:repeat(auto-fill, minmax(148px,1fr));
+    gap:54px 30px;
     max-width:1100px;margin:0 auto;
   }
   .folder{
     position:relative;
-    aspect-ratio:1/1.15;      /* вытянутая вверх, не квадратная */
+    aspect-ratio:1/0.94;
     cursor:pointer;
   }
-  /* задняя стенка — трапеция со скошенными боками */
+  /* задняя часть — бордовая, с плечом-язычком сверху */
   .folder-back{
-    position:absolute;
-    left:4%;right:1%;
-    top:6%;bottom:0;
+    position:absolute;inset:0;
     background:var(--folder-back);
-    clip-path:polygon(6% 0, 100% 0, 100% 100%, 0 100%);
+    clip-path:polygon(
+      0% 20%, 22% 20%, 30% 7%, 56% 7%, 64% 20%,
+      100% 20%, 100% 100%, 0% 100%
+    );
+    border-radius:16px;
   }
-  /* язычок слева сверху */
-  .folder-back::before{
-    content:'';
-    position:absolute;
-    left:0;top:-15%;
-    width:46%;height:17%;
-    background:var(--folder-back);
-    border-radius:6px 10px 0 0;
-    clip-path:polygon(0 8%, 100% 0, 100% 100%, 0 100%);
-  }
-  /* передняя часть папки — тоже трапеция, цветной градиент */
+  /* передняя часть — молочная в чёрный горошек, скошенная трапеция */
   .folder-front{
     position:absolute;
-    left:2%;right:4%;
-    top:16%;bottom:1%;
-    border-radius:5px;
-    box-shadow:0 8px 18px rgba(43,24,16,.25);
+    left:4%;right:3%;
+    top:26%;bottom:3%;
+    background:var(--folder-milk);
+    background-image:radial-gradient(circle, var(--folder-dot) 5px, transparent 5.1px);
+    background-size:29px 29px;
+    background-position:7px 5px;
+    border-radius:11px;
+    box-shadow:0 10px 22px rgba(43,24,16,.22);
     transition:transform .35s ease;
     z-index:2;
     clip-path:polygon(7% 0, 100% 0, 100% 100%, 0 100%);
   }
-  .folder:hover .folder-front{transform:translateY(-14px) rotate(-1deg)}
-  /* надпись на папке */
+  .folder:hover .folder-front{transform:translateY(-12px) rotate(-1deg)}
   .folder-label{
     position:absolute;
-    left:50%;top:58%;
-    transform:translate(-50%,-50%) rotate(-2deg);
+    left:50%;top:62%;
+    transform:translate(-50%,-50%);
     font-family:var(--hand);
-    font-size:clamp(17px,1.7vw,24px);
+    font-size:clamp(18px,1.8vw,25px);
     font-weight:700;
     color:var(--ink);
     text-align:center;
-    width:74%;
+    width:82%;
     line-height:1.05;
     pointer-events:none;
     z-index:4;
     transition:transform .35s ease;
-    text-shadow:0 0 6px rgba(255,249,245,.9), 0 0 4px rgba(255,249,245,.9);
+    text-shadow:0 0 7px rgba(245,233,206,.95), 0 0 7px rgba(245,233,206,.95);
   }
-  .folder:hover .folder-label{transform:translate(-50%,-50%) translateY(-14px) rotate(-2deg)}
-  /* картинки — вылезают из папки */
+  .folder:hover .folder-label{transform:translate(-50%,-50%) translateY(-12px)}
+  /* картинки — вылезают ИЗ папки */
   .folder-images{
     position:absolute;
-    left:50%;top:16%;
+    left:50%;top:26%;
     transform:translate(-50%,12px);
-    display:flex;gap:5px;
+    display:flex;gap:6px;
     opacity:0;pointer-events:none;
     transition:opacity .3s ease, transform .4s cubic-bezier(.34,1.3,.5,1);
     z-index:1;
   }
-  .folder:hover .folder-images{opacity:1;transform:translate(-50%,-58px)}
+  .folder:hover .folder-images{opacity:1;transform:translate(-50%,-54px)}
   .folder-images span{
-    width:38px;height:38px;border-radius:4px;
-    border:2px solid var(--cream);
+    width:40px;height:40px;border-radius:5px;
+    border:2px solid var(--folder-milk);
     box-shadow:0 4px 10px rgba(43,24,16,.3);
     background:var(--blue);
   }
   .folder-images span:nth-child(2){background:#E8735A}
   .folder-images span:nth-child(3){background:var(--navy)}
 
-  /* ============ ПИСЬМО ============ */
+  /* ═══════════ ПИСЬМО ═══════════ */
   .extras{
     background:var(--navy);
-    padding:340px 48px 150px;
+    padding:380px 48px 150px;
     display:flex;justify-content:center;position:relative;
   }
-  .letter-scene{position:relative;width:min(720px,100%)}
+  .letter-scene{
+    position:relative;width:min(720px,100%);
+    display:flex;flex-direction:column;align-items:center;
+  }
+  /* «в дополнение» — крупный ЗАГОЛОВОК */
+  .letter-title{
+    font-family:var(--display);
+    font-style:italic;
+    font-size:clamp(42px,6.5vw,88px);
+    color:var(--cream);
+    line-height:1;
+    margin-bottom:44px;
+    text-align:center;
+  }
   .envelope-wrap{position:relative;width:100%;cursor:pointer;perspective:1400px}
   .envelope{position:relative;width:100%;aspect-ratio:1.55/1}
   .sheets{
@@ -231,7 +240,7 @@
     pointer-events:none;
   }
   .sheet.active{opacity:1;transform:translateY(34px);pointer-events:auto}
-  /* ШРИФТ ПИСЬМА — рукописный, как настоящее письмо */
+  /* ШРИФТ ПИСЬМА — спокойная читаемая антиква */
   .sheet p{
     font-family:var(--letter);
     font-size:clamp(15px,1.6vw,19px);
@@ -266,21 +275,26 @@
     box-shadow:0 4px 14px rgba(0,0,0,.12);
   }
   .envelope-wrap.open .env-flap{transform:rotateX(180deg);z-index:0}
+  /* на самом конверте — от руки, коротко */
   .env-label{
-    position:absolute;left:50%;top:68%;
+    position:absolute;left:50%;top:72%;
     transform:translate(-50%,-50%) rotate(-3deg);
     font-family:var(--hand);
-    font-size:clamp(34px,4.6vw,66px);
+    font-size:clamp(24px,3.2vw,44px);
     font-weight:700;color:var(--navy);
     z-index:5;transition:opacity .4s ease;
     pointer-events:none;white-space:nowrap;
   }
   .envelope-wrap.open .env-label{opacity:0}
+  /* подсказка — ДРУГИМ шрифтом (IBM Plex Sans, капс, разрядка) */
   .letter-hint{
-    font-family:var(--hand);
-    font-size:clamp(20px,2.2vw,30px);
-    color:var(--cream);opacity:.7;
-    margin-top:46px;text-align:center;
+    font-family:'IBM Plex Sans',sans-serif;
+    font-size:13px;
+    letter-spacing:.2em;
+    text-transform:uppercase;
+    font-weight:500;
+    color:var(--cream);opacity:.55;
+    margin-top:50px;text-align:center;
   }
 
   footer{background:var(--cream);padding:60px 48px 40px;text-align:center}
@@ -289,7 +303,7 @@
     letter-spacing:.08em;text-transform:uppercase;
   }
 
-  /* ===================== MOBILE ===================== */
+  /* ═══════════ МОБИЛЬНАЯ ═══════════ */
   @media(max-width:900px){
     header{padding:14px 20px}
     .logo{font-size:20px}
@@ -305,27 +319,29 @@
     .pb,.pb.lead{
       position:static;width:auto !important;
       margin-bottom:30px;font-size:15px;
+      background:transparent;
     }
     .pb.lead{font-size:17px}
-    .girl{position:static;width:min(54%,230px);margin:20px 0 0 auto}
+    .girl{position:static;width:min(56%,240px);margin:20px 0 0 auto}
 
     .skills{padding:30px 20px 70px}
     .skills h2{margin-bottom:44px}
     .skills-folders{
-      grid-template-columns:repeat(auto-fill,minmax(104px,1fr));
-      gap:44px 18px;
+      grid-template-columns:repeat(auto-fill,minmax(108px,1fr));
+      gap:40px 16px;
     }
-    .folder-label{font-size:clamp(14px,4vw,18px)}
+    .folder-label{font-size:clamp(13px,3.9vw,17px)}
     .folder-images span{width:32px;height:32px}
-    .folder:hover .folder-images{transform:translate(-50%,-48px)}
+    .folder:hover .folder-images{transform:translate(-50%,-44px)}
 
-    .extras{padding:250px 18px 90px}
+    .extras{padding:270px 18px 90px}
+    .letter-title{margin-bottom:26px;font-size:clamp(30px,9vw,46px)}
     .envelope{aspect-ratio:1.32/1}
     .sheets{width:90%}
     .sheet{padding:24px 22px 34px}
     .sheet p{font-size:14px;line-height:1.7}
     .sheet.active{transform:translateY(26px)}
-    .letter-hint{margin-top:34px}
+    .letter-hint{margin-top:34px;font-size:10px}
   }
 </style>
 </head>
@@ -346,67 +362,82 @@
   <h1>Мария Балаян</h1>
 </section>
 
+<!-- ═══════════ ПУТЬ ═══════════ -->
 <section class="path-section">
   <div class="path-canvas" id="pathCanvas">
     <svg class="threads" id="threads" preserveAspectRatio="none"></svg>
 
-    <p class="pb lead" style="--x:1%;--y:2%;--w:23%">
-      Почти всю жизнь — <span class="big">Вальдорфская школа</span>.
-      <span class="sm">Кто знает, тот поймёт.</span>
+    <p class="pb lead" style="--x:1%;--y:1%;--w:24%">
+      Почти всю жизнь я&nbsp;проучилась в&nbsp;<span class="big">Вальдорфской школе</span>.
+      <span class="sm">Для тех, кто знает&nbsp;— это уже много о&nbsp;чём говорит.</span>
     </p>
-    <p class="pb" style="--x:34%;--y:9%;--w:17%">
-      С <span class="big">8 класса</span> — фотография, танцы, дизайн.
+
+    <p class="pb" style="--x:31%;--y:12%;--w:19%">
+      Начиная с&nbsp;<span class="big">8 класса</span> я&nbsp;делала проекты, связанные с&nbsp;фотографией, танцами и&nbsp;дизайном.
     </p>
-    <p class="pb" style="--x:59%;--y:1%;--w:21%">
-      В <span class="big">11 классе</span> — либо философия, либо дизайн.
-      <span class="sm">Выбрала «Коммуникационный дизайн» в ВШЭ и Школе Дизайна.</span>
+
+    <p class="pb" style="--x:60%;--y:2%;--w:22%">
+      Дойдя до&nbsp;<span class="big">11 класса</span>, я&nbsp;чётко решила: либо философия, либо дизайн.
+      <span class="sm">По&nbsp;подсказке учителя всё-таки пошла на&nbsp;«Коммуникационный дизайн» в&nbsp;ВШЭ и&nbsp;Школу Дизайна.</span>
     </p>
-    <p class="pb lead" style="--x:5%;--y:27%;--w:22%">
-      <span class="big">Поступление.</span> Зины руками, Фигма за пару дней.
-      <span class="sm">Ребрендинг «Bereg» — 75 из 100.</span>
+
+    <p class="pb lead" style="--x:2%;--y:26%;--w:24%">
+      <span class="big">Поступление.</span> Для подготовки я&nbsp;делала вручную зины и&nbsp;только перед подачей решила быстро освоить Фигму.
+      <span class="sm">Проектом был ребрендинг платформы «Bereg»&nbsp;— 75&nbsp;баллов из&nbsp;100.</span>
     </p>
-    <p class="pb" style="--x:37%;--y:38%;--w:17%">
-      <span class="big">1 курс</span> — бренд о&nbsp;передаче энергии: «chenergy».
+
+    <p class="pb" style="--x:34%;--y:36%;--w:19%">
+      Первым проектом на&nbsp;<span class="big">1 курсе</span> стала разработка выдуманного бренда, построенного на&nbsp;принципе передачи энергии,&nbsp;— «chenergy».
     </p>
-    <p class="pb lead" style="--x:63%;--y:27%;--w:20%">
-      <span class="big">2 курс</span> — дизайн это всегда дизайн чего-то.
-      <span class="sm">Искусством сам по себе он быть не может.</span>
+
+    <p class="pb lead" style="--x:62%;--y:26%;--w:22%">
+      К&nbsp;концу <span class="big">2 курса</span> я&nbsp;вдруг поняла, что дизайн&nbsp;— это всегда дизайн чего-то.
+      <span class="sm">Дизайн не&nbsp;может быть искусством сам по&nbsp;себе. Я&nbsp;поняла, что хочу создавать это что-то.</span>
     </p>
-    <p class="pb lead" style="--x:0%;--y:50%;--w:24%">
-      <span class="big">Современное искусство.</span>
-      Благодарна за перформанс «Посестрие».
+
+    <p class="pb lead" style="--x:1%;--y:48%;--w:25%">
+      Я&nbsp;перешла на&nbsp;<span class="big">современное искусство</span>.
+      Единственное, чему я&nbsp;благодарна,&nbsp;— это возможность создать перформанс «Посестрие».
     </p>
-    <p class="pb" style="--x:34%;--y:61%;--w:19%">
-      <span class="big">Разворот.</span> Убежала на&nbsp;«Ивент Дизайн. Театр. Перформанс».
+
+    <p class="pb" style="--x:33%;--y:58%;--w:20%">
+      Через полгода я, сверкая пятками, убежала на&nbsp;<span class="big">«Ивент Дизайн. Театр. Перформанс»</span>.
     </p>
-    <p class="pb lead" style="--x:10%;--y:72%;--w:24%">
-      <span class="big">Сейчас</span> аккумулирую ресурс
-      <span class="sm">на народный фестиваль искусств — диплом.</span>
+
+    <p class="pb lead" style="--x:9%;--y:70%;--w:24%">
+      Я&nbsp;очень благодарна всем случайностям и&nbsp;людям, которые меня туда привели. Всё-таки я&nbsp;рукотворный человек, можно сказать ремесленник. Мне надо быть в&nbsp;контакте.
+    </p>
+
+    <p class="pb" style="--x:38%;--y:80%;--w:21%">
+      <span class="big">Сейчас</span> я&nbsp;аккумулирую ресурс для создания народного фестиваля искусств в&nbsp;качестве диплома.
     </p>
 
     <div class="girl" id="girl">
-      <img src="img/girl.jpg" alt="Мария" onerror="this.style.display='none'">
+      <img src="img/girl.png" alt="Мария" onerror="this.style.display='none'">
       <div class="cap">и вот — я</div>
     </div>
   </div>
 </section>
 
+<!-- ═══════════ НАВЫКИ ═══════════ -->
 <section class="skills">
   <h2>Навыки</h2>
   <div class="skills-folders" id="skillsFolders"></div>
 </section>
 
+<!-- ═══════════ ПИСЬМО ═══════════ -->
 <section class="extras">
   <div class="letter-scene">
+    <h2 class="letter-title">в дополнение</h2>
     <div class="envelope-wrap" id="envelopeWrap">
       <div class="envelope">
         <div class="sheets" id="sheets"></div>
         <div class="env-body"></div>
         <div class="env-flap"></div>
-        <div class="env-label">в дополнение</div>
+        <div class="env-label">письмо</div>
       </div>
     </div>
-    <div class="letter-hint" id="letterHint">нажмите на конверт</div>
+    <div class="letter-hint" id="letterHint">Нажмите на конверт</div>
   </div>
 </section>
 
@@ -415,6 +446,7 @@
 </footer>
 
 <script>
+  /* ═════════ ЯЗЫК ═════════ */
   let currentLang = 'ru';
   function toggleLanguage(){
     currentLang = currentLang === 'en' ? 'ru' : 'en';
@@ -422,7 +454,13 @@
     document.documentElement.lang = currentLang;
   }
 
-  /* ============ НИТИ: ВИТЬЕВАТЫЕ, НЕ ПЕРЕСЕКАЮТСЯ ============ */
+  /* ═════════ НИТИ ═════════
+     Вокруг головы девочки берутся все углы прямоугольников текста
+     (с отступом PAD), сортируются ПО УГЛУ и соединяются по порядку.
+     Такой многоугольник называется звёздчатым — он ГАРАНТИРОВАННО
+     не имеет самопересечений. Значит, нить нигде не пересечёт себя,
+     какой бы ни была раскладка текста.
+     Неровность даёт лёгкое дрожание каждой вершины (±5 px). */
   const canvas  = document.getElementById('pathCanvas');
   const threads = document.getElementById('threads');
   const girlEl  = document.getElementById('girl');
@@ -442,79 +480,51 @@
 
     const gr = girlEl.getBoundingClientRect();
     const hx = gr.left + gr.width * 0.5 - cr.left;
-    const hy = gr.top + gr.height * 0.10 - cr.top;
+    const hy = gr.top + gr.height * 0.12 - cr.top;
 
-    const starts = [];
-    canvas.querySelectorAll('.pb').forEach((b, i)=>{
-      const r = b.getBoundingClientRect();
-      const cx = r.left + r.width/2 - cr.left;
-      const sx = ((cx < hx) ? r.left + r.width : r.left) - cr.left;
-      const sy = r.top + r.height * 0.42 - cr.top;
-      starts.push({
-        x: sx, y: sy,
-        ang: Math.atan2(sy - hy, sx - hx),
-        dist: Math.hypot(sx - hx, sy - hy),
-        i
+    const PAD = 17;
+    const boxes = [];
+    canvas.querySelectorAll('.pb').forEach(el=>{
+      const r = el.getBoundingClientRect();
+      boxes.push({
+        x:  r.left - cr.left - PAD,
+        y:  r.top  - cr.top  - PAD,
+        w:  r.width  + PAD * 2,
+        h:  r.height + PAD * 2,
+        cx: r.left + r.width / 2 - cr.left,
+        top: r.top - cr.top
       });
     });
 
-    starts.sort((a,b)=>a.ang - b.ang);
-    const n = starts.length;
-
-    const edges = starts.map((s,i)=>{
-      const prev = starts[(i - 1 + n) % n];
-      let a = (prev.ang + s.ang) / 2;
-      if(Math.abs(prev.ang - s.ang) > Math.PI) a += Math.PI;
-      if(a >  Math.PI) a -= 2*Math.PI;
-      if(a < -Math.PI) a += 2*Math.PI;
-      return a;
+    // 4 угла каждого прямоугольника → в плоский список
+    const pts = [];
+    boxes.forEach(b=>{
+      [[b.x, b.y], [b.x + b.w, b.y],
+       [b.x + b.w, b.y + b.h], [b.x, b.y + b.h]].forEach(([x, y])=>{
+        pts.push({ x, y, a: Math.atan2(y - hy, x - hx) });
+      });
     });
 
-    let html = '';
-    starts.forEach((s, k)=>{
-      const half = 0.5 * Math.abs(((edges[(k+1)%n] - edges[k] + 3*Math.PI) % (2*Math.PI)) - Math.PI);
-      const wedge = Math.min(half * 0.75, 0.30);
+    // сортировка по углу вокруг головы → звёздчатый многоугольник
+    pts.sort((p, q)=> p.a - q.a);
 
-      const seed = s.i * 17.3 + 5.1;
-      const jitter = (t, f, ph) => Math.sin(t * Math.PI * f + ph) * (0.5 + 0.5*rnd(seed + f));
+    // лёгкое дрожание — «аккуратно, но неровно»
+    let d = `M ${hx.toFixed(1)} ${hy.toFixed(1)}`;
+    pts.forEach((p, i)=>{
+      const jx = (rnd(i * 3.7 + 1.3) - 0.5) * 10;
+      const jy = (rnd(i * 5.9 + 2.7) - 0.5) * 10;
+      d += ` L ${(p.x + jx).toFixed(1)} ${(p.y + jy).toFixed(1)}`;
+    });
+    d += ' Z';
 
-      const target = s.ang + (edges[k] - s.ang) * 0.15;
+    let html = `<path d="${d}" fill="none" stroke="#1B1208"
+      stroke-width="1.5" stroke-linejoin="miter"
+      stroke-linecap="round" opacity="0.68"/>`;
 
-      const STEPS = 64;
-      const pts = [];
-      for(let j=0;j<=STEPS;j++){
-        const t = j / STEPS;
-        const e = t * t * (3 - 2 * t);
-
-        const sag = Math.sin(t * Math.PI) * s.dist * 0.30;
-        const wav = (jitter(t, 4.3, 1.1) + jitter(t, 7.7, 2.4)) * s.dist * 0.075;
-        let r = s.dist * (1 - e) + sag * (1 - e) + wav * (1 - Math.abs(2*t - 1));
-
-        const wob = (jitter(t, 5.1, 0.7) + jitter(t, 9.3, 3.2)) * wedge * 0.55;
-        let a = s.ang + (target - s.ang) * e + wob * (1 - Math.abs(2*t - 1));
-
-        const lo = Math.min(edges[k], edges[(k+1)%n]) - 0.02;
-        const hi = Math.max(edges[k], edges[(k+1)%n]) + 0.02;
-        if(a < lo) a = lo;
-        if(a > hi) a = hi;
-
-        pts.push([ hx + Math.cos(a) * Math.max(r, 0), hy + Math.sin(a) * Math.max(r, 0) ]);
-      }
-
-      const d = pts.map((p,j)=>{
-        if(j === 0 || j === pts.length-1) return (j? 'L ':'M ') + p[0].toFixed(1) + ' ' + p[1].toFixed(1);
-        const k1 = pts[j-1], k2 = pts[j+1];
-        const nx = -(k2[1]-k1[1]), ny = (k2[0]-k1[0]);
-        const len = Math.hypot(nx,ny) || 1;
-        const amp = (rnd(seed + j*0.37) - 0.5) * 9;
-        return 'L ' + (p[0] + nx/len*amp).toFixed(1) + ' ' + (p[1] + ny/len*amp).toFixed(1);
-      }).join(' ');
-
-      html += `<path d="${d}" fill="none" stroke="#1B1208"
-        stroke-width="1.6" stroke-linejoin="miter"
-        stroke-linecap="round" opacity="0.72"/>`;
-      html += `<circle cx="${s.x.toFixed(1)}" cy="${s.y.toFixed(1)}" r="4.2"
-        fill="#1B1208" opacity="0.8"/>`;
+    // кружок-узелок НАД ЗАГОЛОВКОМ каждого блока
+    boxes.forEach(b=>{
+      html += `<circle cx="${b.cx.toFixed(1)}" cy="${(b.top - PAD + 2).toFixed(1)}"
+        r="4.6" fill="#1B1208" opacity="0.85"/>`;
     });
 
     threads.innerHTML = html;
@@ -522,9 +532,9 @@
 
   window.addEventListener('load', ()=>setTimeout(drawThreads, 200));
   window.addEventListener('resize', ()=>{ clearTimeout(window._t); window._t = setTimeout(drawThreads, 250); });
-  if(document.fonts && document.fonts.ready) document.fonts.ready.then(()=>setTimeout(drawThreads, 100));
+  if(document.fonts && document.fonts.ready) document.fonts.ready.then(()=>setTimeout(drawThreads, 120));
 
-  /* ================= ПАПКИ ================= */
+  /* ═════════ ПАПКИ ═════════ */
   const SKILLS = [
     'Photoshop','Illustrator','Indesign','Figma','Lightroom','Premiere',
     'After Effects','Cinema 4D','Blender','Ableton',
@@ -535,28 +545,15 @@
     'Барабаны','Блок-флейта','Перформанс','Эвритмия'
   ];
 
-  // мягкие градиенты в тёплой палитре, как на фото папки
-  const GRADS = [
-    'linear-gradient(150deg,#F2836B 0%,#F5B08C 55%,#F2E0D0 100%)',
-    'linear-gradient(160deg,#E8735A 0%,#EDA97F 50%,#F6E4D5 100%)',
-    'linear-gradient(140deg,#D96A52 0%,#EE9E7C 60%,#F8E8DC 100%)',
-    'linear-gradient(155deg,#F0956F 0%,#F0C296 55%,#F5EDE0 100%)',
-    'linear-gradient(145deg,#E78060 0%,#F2B98E 58%,#FAF0E4 100%)',
-    'linear-gradient(165deg,#D9755C 0%,#EDA680 52%,#F7E9DC 100%)'
-  ];
-
-  document.getElementById('skillsFolders').innerHTML = SKILLS.map((w,i)=>{
-    const g = GRADS[i % GRADS.length];
-    return `
+  document.getElementById('skillsFolders').innerHTML = SKILLS.map(w=>`
     <div class="folder">
       <div class="folder-back"></div>
       <div class="folder-images"><span></span><span></span><span></span></div>
-      <div class="folder-front" style="background:${g}"></div>
+      <div class="folder-front"></div>
       <div class="folder-label">${w}</div>
-    </div>`;
-  }).join('');
+    </div>`).join('');
 
-  /* ================= ПИСЬМО ================= */
+  /* ═════════ ПИСЬМО ═════════ */
   const PARAS = [
     'В продолжение рассказа хочу поделиться своими другими сферами интересов. Я уже упоминала, что не раз участвовала в фотосессиях и съемках. Однажды даже побывав на роли продюссера съемки.',
     'В вышке я также модульно пробовала каллиграфию, саунд-арт, шитье, создание объектов из пластика, линогравюру, цианотипию, штамповку, керамику, гипс, формовку. Помимо прочего изучала джаз.',
@@ -587,18 +584,18 @@
       wrap.classList.add('open');
       opened = true; idx = 0;
       showSheet(0);
-      hint.textContent = 'нажмите на лист';
+      hint.textContent = 'Нажмите на лист';
       return;
     }
     if(idx < PARAS.length - 1){
       idx++;
       showSheet(idx);
-      hint.textContent = (idx === PARAS.length - 1) ? 'ещё нажатие — закрыть' : 'нажмите на лист';
+      hint.textContent = (idx === PARAS.length - 1) ? 'Ещё нажатие — закрыть' : 'Нажмите на лист';
     } else {
       sheetsBox.querySelectorAll('.sheet').forEach(s=>s.classList.remove('active'));
       wrap.classList.remove('open');
       opened = false; idx = -1;
-      hint.textContent = 'нажмите на конверт';
+      hint.textContent = 'Нажмите на конверт';
     }
   });
 
