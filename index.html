@@ -12,8 +12,8 @@
 <link href="https://fonts.googleapis.com/css2?family=Averia+Serif+Libre:ital,wght@0,400;1,400&family=Lora:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
   :root{
-    --navy:#0B1E3C;      /* титульный слайд + манифест */
-    --red:#D62828;       /* вместо розовых плашек */
+    --navy:#0B1E3C;
+    --blue:#4A7BA7;
     --cream:#FFF9F5;
     --ink:#2B1810;
   }
@@ -38,10 +38,20 @@
   .logo{font-family:'Averia Serif Libre',serif;font-size:32px;font-style:italic;text-decoration:none;color:var(--cream);font-weight:400;transition:color .4s}
   header.scrolled .logo{color:var(--ink)}
   nav{display:flex;gap:36px;align-items:center}
-  nav a{text-decoration:none;color:var(--cream);font-size:13px;letter-spacing:.12em;text-transform:uppercase;font-weight:500;font-family:'IBM Plex Sans',Arial,sans-serif;transition:color .4s}
+  nav a{
+    text-decoration:none;color:var(--cream);font-size:13px;letter-spacing:.12em;
+    text-transform:uppercase;font-weight:500;font-family:'IBM Plex Sans',Arial,sans-serif;
+    transition:color .4s;
+  }
   header.scrolled nav a{color:var(--ink)}
   nav a:hover{opacity:.6}
-  .lang-toggle{cursor:pointer;font-size:14px;padding:6px 12px;border:1px solid var(--cream);color:var(--cream);border-radius:4px;font-family:'IBM Plex Sans',sans-serif;font-weight:500;transition:background .3s,color .3s,border-color .4s}
+
+  .lang-toggle{
+    cursor:pointer;font-size:14px;padding:6px 12px;
+    border:1px solid var(--cream);color:var(--cream);border-radius:4px;
+    font-family:'IBM Plex Sans',sans-serif;font-weight:500;
+    transition:background .3s,color .3s,border-color .4s;
+  }
   header.scrolled .lang-toggle{border-color:var(--ink);color:var(--ink)}
   .lang-toggle:hover{background:var(--ink);color:var(--cream);border-color:var(--ink)}
 
@@ -62,21 +72,6 @@
     font-family:'Averia Serif Libre',serif;
     position:relative;max-width:60%;
   }
-  /* рисунок «М» вместо второго абзаца на титуле */
-  .hero-mark{
-    width:clamp(150px,20vw,280px);
-    height:auto;display:block;
-    margin-top:56px;
-    position:relative;z-index:2;
-    filter:invert(1);
-    mix-blend-mode:screen;
-    animation:markFloat 9s ease-in-out infinite;
-    will-change:transform;
-  }
-  @keyframes markFloat{
-    0%,100%{transform:translateY(0) rotate(-4deg)}
-    50%{transform:translateY(-18px) rotate(4deg)}
-  }
   .ornament{
     position:absolute;
     width:clamp(800px,100vw,1400px);
@@ -91,8 +86,6 @@
   /* MANIFEST */
   .manifest{background:var(--navy);padding:60px 48px 80px;position:relative;overflow:hidden}
   .manifest .inner{max-width:700px;margin:0 auto;display:flex;flex-direction:column;align-items:center;background:var(--navy)}
-  .manifest h2{font-size:clamp(32px,5vw,64px);line-height:1.3;font-weight:400;text-align:center;margin-bottom:48px;color:var(--cream)}
-  /* видео с рукописной анимацией вместо текста манифеста */
   .manifest-video{
     width:100%;max-width:820px;height:auto;display:block;
     margin:0 auto 20px;
@@ -102,25 +95,53 @@
   .btn{padding:14px 40px;background:transparent;border:none;text-decoration:underline;text-underline-offset:6px;color:var(--cream);font-size:16px;letter-spacing:.08em;font-family:'Averia Serif Libre',serif;font-style:italic;cursor:pointer;transition:opacity .3s}
   .btn:hover{opacity:.7}
 
-  /* ARTIST */
-  .artist{background:var(--red);padding:110px 48px;position:relative;overflow:hidden;min-height:60vh;display:flex;align-items:center}
-  .artist .container{max-width:1200px;margin:0 auto;width:100%;display:grid;grid-template-columns:1.1fr 1fr;grid-template-rows:auto auto;gap:40px 80px;align-items:start}
-  /* росчерк вместо «Я — художница» */
-  .artist-mark{
-    grid-column:1;grid-row:1/3;align-self:start;
-    width:100%;height:auto;display:block;
+  /* ARTIST — новая верстка: рисунок на всю плашку, текст ниже */
+  .artist{background:var(--blue);padding:0;position:relative;overflow:hidden}
+  .artist-flourish-wrap{
+    width:100%;
+    background:var(--blue);
+    padding:80px 48px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+  .artist-flourish{
+    width:100%;
+    max-width:1400px;
+    height:auto;
+    display:block;
     filter:invert(1);
     mix-blend-mode:screen;
   }
-  .artist .lead{font-size:clamp(18px,2vw,28px);line-height:1.4;grid-column:2;grid-row:1;align-self:end;text-align:left;color:var(--cream)}
-  .artist .bottom-text{grid-column:2;grid-row:2;align-self:end;text-align:left;margin-top:14px}
-  .artist .bottom-text p{font-size:clamp(15px,1.6vw,20px);font-style:italic;color:var(--cream)}
+  .artist-text{
+    background:var(--blue);
+    padding:0 48px 80px;
+  }
+  .artist-text .container{
+    max-width:1200px;
+    margin:0 auto;
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:40px;
+    align-items:start;
+  }
+  .artist-text .lead{
+    font-size:clamp(18px,2vw,28px);
+    line-height:1.4;
+    color:var(--cream);
+  }
+  .artist-text .bottom{
+    text-align:right;
+    font-size:clamp(15px,1.6vw,20px);
+    font-style:italic;
+    color:var(--cream);
+  }
 
   /* PORTRAIT */
-  .portrait-slide{position:relative;height:110vh;overflow:hidden;background:linear-gradient(to bottom,var(--red) 0%,var(--cream) 100%)}
+  .portrait-slide{position:relative;height:110vh;overflow:hidden;background:linear-gradient(to bottom,var(--blue) 0%,var(--cream) 100%)}
   #portraitCanvas{position:absolute;top:0;left:0;width:100%;height:100%;display:block}
 
-  /* GALLERY — desktop */
+  /* GALLERY — desktop с подписями категорий */
   .journey{background:var(--cream);padding:90px 48px;position:relative}
   .journey .head{display:flex;justify-content:space-between;align-items:center;margin-bottom:50px}
   .journey h2{font-size:clamp(40px,6vw,80px);font-style:italic;font-weight:400;font-family:'Averia Serif Libre',serif}
@@ -134,16 +155,26 @@
   .card:hover{transform:translateY(-8px);box-shadow:0 20px 50px rgba(43,24,16,.15)}
   .card img{width:100%;height:100%;object-fit:cover;display:block}
 
-  /* Кнопки стрелок — скрыты на десктопе */
   .card-nav{display:none}
 
-  .carousel-nav{display:flex;justify-content:center;gap:12px;margin-top:40px}
-  .carousel-dot{width:10px;height:10px;border-radius:50%;background:var(--ink);opacity:.3;cursor:pointer;transition:opacity .3s,transform .3s}
-  .carousel-dot:hover{transform:scale(1.2)}
+  .carousel-nav{display:flex;justify-content:center;gap:30px;margin-top:40px;align-items:center}
+  .carousel-item{display:flex;flex-direction:column;align-items:center;gap:8px;cursor:pointer}
+  .carousel-dot{width:10px;height:10px;border-radius:50%;background:var(--ink);opacity:.3;transition:opacity .3s,transform .3s}
+  .carousel-item:hover .carousel-dot{transform:scale(1.2)}
   .carousel-dot.active{opacity:1}
+  .carousel-label{
+    font-size:13px;
+    font-family:'IBM Plex Sans',sans-serif;
+    text-transform:uppercase;
+    letter-spacing:.08em;
+    opacity:.6;
+    transition:opacity .3s;
+  }
+  .carousel-item:hover .carousel-label,
+  .carousel-item.active .carousel-label{opacity:1}
 
   /* FOOTER */
-  footer{background:var(--red);padding:120px 48px 60px;position:relative}
+  footer{background:var(--blue);padding:120px 48px 60px;position:relative}
   footer .inner{max-width:1300px;margin:0 auto;display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:40px}
   footer .left h2{font-size:clamp(52px,9vw,120px);font-style:italic;margin-bottom:32px;font-weight:400;font-family:'Averia Serif Libre',serif;color:var(--cream)}
   footer .left a,footer .right a{color:var(--cream);text-decoration:none;font-size:clamp(18px,2.2vw,24px);display:block;margin:12px 0}
@@ -158,7 +189,6 @@
     nav a{font-size:8px;letter-spacing:.06em}
     .lang-toggle{font-size:9px;padding:3px 6px}
 
-    /* HERO — заголовок наверх-налево */
     .hero{
       padding:80px 20px 30px;
       min-height:100vh;
@@ -170,14 +200,7 @@
       max-width:85%;
       text-align:left;
       margin-top:28px;
-      position:relative;
-      z-index:2;
     }
-    .hero-mark{
-      width:clamp(90px,30vw,150px);
-      margin-top:26px;
-    }
-    /* Орнамент — 2.5× больше, слева вверху */
     .ornament{
       width:clamp(700px,190vw,1050px);
       top:5%;
@@ -188,42 +211,24 @@
       transform-origin:50% 50%;
     }
 
-    /* MANIFEST */
     .manifest{padding:36px 20px 44px}
-    .manifest h2{font-size:clamp(20px,5.2vw,29px);margin-bottom:24px}
     .manifest-video{max-width:100%;margin-bottom:14px}
     .btn{padding:10px 22px;font-size:13px}
 
-    /* ARTIST — 2×2 квадратная сетка */
-    .artist{padding:48px 20px}
-    .artist .container{
-      grid-template-columns:1fr 1fr;
-      grid-template-rows:auto auto;
-      gap:16px 18px;
-      max-width:100%;
+    .artist-flourish-wrap{padding:48px 20px 32px}
+    .artist-text{padding:0 20px 48px}
+    .artist-text .container{
+      grid-template-columns:1fr;
+      gap:20px;
     }
-    .artist-mark{
-      grid-column:1;grid-row:1;
-      width:100%;
+    .artist-text .lead{font-size:clamp(14px,2.5vw,18px)}
+    .artist-text .bottom{
+      text-align:left;
+      font-size:clamp(13px,2.2vw,16px);
     }
-    .artist .lead{
-      font-size:clamp(10px,2.8vw,12px);
-      grid-column:2;grid-row:1;
-      align-self:start;
-      line-height:1.3;
-    }
-    .artist .bottom-text{
-      grid-column:2;grid-row:2;
-      text-align:right;
-      margin-top:0;
-      align-self:end;
-    }
-    .artist .bottom-text p{font-size:clamp(10px,2.8vw,12px)}
 
-    /* PORTRAIT */
     .portrait-slide{height:72vh}
 
-    /* GALLERY — вертикальный стек + стрелки */
     .journey{padding:48px 20px}
     .journey h2{font-size:clamp(26px,7vw,40px)}
     .journey .head{flex-direction:column;align-items:flex-start;gap:14px;margin-bottom:28px}
@@ -232,7 +237,7 @@
     .gallery-track{
       flex-direction:column;
       gap:16px;
-      transform:none !important; /* отключаем горизонтальный сдвиг */
+      transform:none !important;
     }
     .gallery-page{
       min-width:100%;
@@ -240,22 +245,11 @@
       flex-direction:column;
       gap:16px;
     }
-    /* Скрываем страницы 2 и 3 — показываем через JS */
     .gallery-page:not(.active-page){display:none}
 
-    /* Обёртка карточки */
-    .card-wrapper{
-      position:relative;
-      width:100%;
-    }
-    .card{
-      border-radius:10px;
-      aspect-ratio:4/3;
-      width:100%;
-      display:block;
-    }
+    .card-wrapper{position:relative;width:100%}
+    .card{border-radius:10px;aspect-ratio:4/3;width:100%;display:block}
 
-    /* Стрелки */
     .card-nav{
       display:flex;
       align-items:center;
@@ -275,10 +269,8 @@
     .card-nav.prev{left:10px}
     .card-nav.next{right:10px}
 
-    /* Точки — скрыть на мобиле (не нужны) */
     .carousel-nav{display:none}
 
-    /* FOOTER */
     footer{padding:48px 20px 26px}
     footer .inner{flex-direction:column;gap:20px;max-width:300px;margin:0}
     footer .left h2{font-size:clamp(30px,8vw,52px);margin-bottom:14px}
@@ -306,27 +298,30 @@
 <div class="hero" id="top">
   <img class="ornament" src="img/ornament.jpg" alt="">
   <h1 data-en="The Art of prët" data-ru="Искусство prët">Искусство&nbsp;prët</h1>
-  <img class="hero-mark" src="img/mark-m.jpg" alt="">
 </div>
 
 <section class="manifest" id="manifest">
   <div class="inner reveal" id="manifestInner">
-    <video class="manifest-video" id="manifestVideo" src="img/manifest.mp4"
+    <video class="manifest-video" id="manifestVideo" src="img/manifest.MP4"
            autoplay muted loop playsinline preload="auto"></video>
     <a class="btn" href="#artist" data-en="Explore Now" data-ru="Узнать больше">Узнать больше</a>
   </div>
 </section>
 
 <section class="artist" id="artist" style="scroll-margin-top:80px">
-  <div class="container reveal">
-    <img class="artist-mark" src="img/flourish.jpg" alt="">
-    <div class="lead"
-         data-en="I work with material that is always present: the body, the line, the energy"
-         data-ru="Я работаю с&nbsp;материалом, который есть всегда: с&nbsp;телом, с&nbsp;линией, с&nbsp;энергией">
-      Я&nbsp;работаю с&nbsp;материалом, который есть всегда: с&nbsp;телом, с&nbsp;линией, с&nbsp;энергией
-    </div>
-    <div class="bottom-text">
-      <p data-en="Using body painting" data-ru="Использую телесную живопись">Использую телесную живопись</p>
+  <div class="artist-flourish-wrap">
+    <img class="artist-flourish" src="img/flourish.jpg" alt="">
+  </div>
+  <div class="artist-text reveal">
+    <div class="container">
+      <div class="lead"
+           data-en="I work with material that is always present: the body, the line, the energy"
+           data-ru="Я работаю с&nbsp;материалом, который есть всегда: с&nbsp;телом, с&nbsp;линией, с&nbsp;энергией">
+        Я&nbsp;работаю с&nbsp;материалом, который есть всегда: с&nbsp;телом, с&nbsp;линией, с&nbsp;энергией
+      </div>
+      <div class="bottom">
+        <p data-en="Using body painting" data-ru="Использую телесную живопись">Использую телесную живопись</p>
+      </div>
     </div>
   </div>
 </section>
@@ -344,36 +339,36 @@
   <div class="gallery-container" id="galleryContainer">
     <div class="gallery-track" id="galleryTrack">
 
-      <!-- Страница 1 (десктоп) / мобиле: активная -->
+      <!-- Страница 1: Перформанс -->
       <div class="gallery-page active-page" id="desktopPage0">
         <a class="card reveal" href="https://hsedesign.ru/project/posestrie-fdd4656391a44e98b69133c583dda03f" target="_blank">
           <img src="img/posestrie.jpg" alt="Посестрие">
         </a>
-        <a class="card reveal" href="https://www.behance.net/gallery/242102615/Elian-script" target="_blank">
-          <img src="img/elian.jpg" alt="Элианский шрифт">
+        <a class="card reveal" href="https://hsedesign.ru/project/posestrie-b7607978d5fb46828f213abeb44d5003" target="_blank">
+          <img src="img/posestrie2.jpg" alt="Посестрие 2">
         </a>
-        <a class="card reveal" href="https://www.behance.net/gallery/242108047/dzhazovyj-festival" target="_blank">
-          <img src="img/jazz.jpg" alt="Джазовый фестиваль">
+        <a class="card reveal" href="http://hsedesign.ru/project/1947070780544d21889e203d6e2ff548" target="_blank">
+          <img src="img/shadow.jpg" alt="Тень">
         </a>
       </div>
 
-      <!-- Страница 2 -->
+      <!-- Страница 2: Брендинг -->
       <div class="gallery-page" id="desktopPage1">
         <a class="card reveal" href="https://www.behance.net/gallery/242092697/Chenergy" target="_blank">
           <img src="img/chenergy.jpg" alt="Chenergy">
         </a>
-        <a class="card reveal" href="https://hsedesign.ru/project/posestrie-b7607978d5fb46828f213abeb44d5003" target="_blank">
-          <img src="img/posestrie2.jpg" alt="Посестрие 2">
+        <a class="card reveal" href="https://www.behance.net/gallery/242108047/dzhazovyj-festival" target="_blank">
+          <img src="img/jazz.jpg" alt="Джазовый фестиваль">
         </a>
         <a class="card reveal" href="https://hsedesign.ru/project/20fde7d552894e3ab208171906388f3d" target="_blank">
           <img src="img/city.jpg" alt="Город">
         </a>
       </div>
 
-      <!-- Страница 3 -->
+      <!-- Страница 3: Иллюстрация -->
       <div class="gallery-page" id="desktopPage2">
-        <a class="card reveal" href="http://hsedesign.ru/project/1947070780544d21889e203d6e2ff548" target="_blank">
-          <img src="img/shadow.jpg" alt="Тень">
+        <a class="card reveal" href="https://www.behance.net/gallery/242102615/Elian-script" target="_blank">
+          <img src="img/elian.jpg" alt="Элианский шрифт">
         </a>
         <a class="card reveal" href="https://hsedesign.ru/project/24aa67ae77f24a5d96496677a6ca3dc4" target="_blank">
           <img src="img/lines.jpg" alt="Линии">
@@ -383,13 +378,22 @@
         </a>
       </div>
 
-    </div><!-- /gallery-track -->
-  </div><!-- /gallery-container -->
+    </div>
+  </div>
 
   <div class="carousel-nav">
-    <span class="carousel-dot active" data-page="0"></span>
-    <span class="carousel-dot" data-page="1"></span>
-    <span class="carousel-dot" data-page="2"></span>
+    <div class="carousel-item active" data-page="0">
+      <span class="carousel-dot active"></span>
+      <span class="carousel-label" data-en="Performance" data-ru="Перформанс">Перформанс</span>
+    </div>
+    <div class="carousel-item" data-page="1">
+      <span class="carousel-dot"></span>
+      <span class="carousel-label" data-en="Branding" data-ru="Брендинг">Брендинг</span>
+    </div>
+    <div class="carousel-item" data-page="2">
+      <span class="carousel-dot"></span>
+      <span class="carousel-label" data-en="Illustration" data-ru="Иллюстрация">Иллюстрация</span>
+    </div>
   </div>
 </section>
 
@@ -408,7 +412,6 @@
 </footer>
 
 <script>
-  /* ---- язык ---- */
   let currentLang = 'ru';
   function toggleLanguage(){
     currentLang = currentLang === 'en' ? 'ru' : 'en';
@@ -420,7 +423,6 @@
     document.documentElement.lang = currentLang;
   }
 
-  /* ---- видео манифеста: подстраховка, если файл не загрузился ---- */
   const mv = document.getElementById('manifestVideo');
   if(mv){
     mv.addEventListener('error', ()=>{
@@ -428,12 +430,12 @@
       const h2 = document.createElement('h2');
       h2.setAttribute('data-en','My purpose, my meaning, and the ability to live—creating sparks');
       h2.setAttribute('data-ru','Моя цель, мой смысл и&nbsp;возможность жить — создавать искры');
+      h2.style.cssText = 'font-size:clamp(32px,5vw,64px);line-height:1.3;font-weight:400;text-align:center;margin-bottom:48px;color:var(--cream)';
       h2.innerHTML = h2.getAttribute('data-'+currentLang);
       document.getElementById('manifestInner').prepend(h2);
     });
   }
 
-  /* ---- портрет (canvas) ---- */
   const canvas = document.getElementById('portraitCanvas');
   const ctx = canvas.getContext('2d');
   const portraitSlide = document.querySelector('.portrait-slide');
@@ -472,9 +474,8 @@
     }
   }
 
-  /* ---- скролл (орнамент + портрет) ---- */
-  const header      = document.querySelector('header');
-  const ornament    = document.querySelector('.ornament');
+  const header = document.querySelector('header');
+  const ornament = document.querySelector('.ornament');
   const heroSection = document.querySelector('.hero');
 
   window.addEventListener('scroll',()=>{
@@ -484,8 +485,6 @@
       const rect = heroSection.getBoundingClientRect();
       const isMobile = window.innerWidth <= 900;
       if(isMobile){
-        /* орнамент плавно уходит вправо и поворачивается,
-           кончик (правый край) указывает на текст манифеста */
         const range = rect.height * 1.1;
         const p = Math.max(0, Math.min(1, -rect.top / range));
         ornament.style.transform = `translate(${p*75}%, ${p*35}%) rotate(${p*92}deg)`;
@@ -507,44 +506,43 @@
     }
   });
 
-  /* ---- десктопная карусель (точки) ---- */
   let currentPage = 0;
   const galleryTrack = document.getElementById('galleryTrack');
-  document.querySelectorAll('.carousel-dot').forEach(dot=>{
-    dot.addEventListener('click',()=>{
-      currentPage = parseInt(dot.getAttribute('data-page'));
+  document.querySelectorAll('.carousel-item').forEach(item=>{
+    item.addEventListener('click',()=>{
+      currentPage = parseInt(item.getAttribute('data-page'));
       galleryTrack.style.transform = `translateX(-${currentPage*100}%)`;
+      document.querySelectorAll('.carousel-item').forEach(d=>d.classList.remove('active'));
       document.querySelectorAll('.carousel-dot').forEach(d=>d.classList.remove('active'));
-      dot.classList.add('active');
+      item.classList.add('active');
+      item.querySelector('.carousel-dot').classList.add('active');
     });
   });
 
-  /* ---- мобильная галерея со стрелками ---- */
-  // Все работы: 9 карточек по 3 позиции
   const allWorks = [
     [
       {img:'img/posestrie.jpg', href:'https://hsedesign.ru/project/posestrie-fdd4656391a44e98b69133c583dda03f', alt:'Посестрие'},
       {img:'img/chenergy.jpg',  href:'https://www.behance.net/gallery/242092697/Chenergy',                    alt:'Chenergy'},
-      {img:'img/shadow.jpg',    href:'http://hsedesign.ru/project/1947070780544d21889e203d6e2ff548',           alt:'Тень'}
+      {img:'img/elian.jpg',     href:'https://www.behance.net/gallery/242102615/Elian-script',                alt:'Элианский шрифт'}
     ],
     [
-      {img:'img/elian.jpg',       href:'https://www.behance.net/gallery/242102615/Elian-script',                         alt:'Элианский шрифт'},
       {img:'img/posestrie2.jpg',  href:'https://hsedesign.ru/project/posestrie-b7607978d5fb46828f213abeb44d5003',        alt:'Посестрие 2'},
+      {img:'img/jazz.jpg',        href:'https://www.behance.net/gallery/242108047/dzhazovyj-festival',                    alt:'Джазовый фестиваль'},
       {img:'img/lines.jpg',       href:'https://hsedesign.ru/project/24aa67ae77f24a5d96496677a6ca3dc4',                  alt:'Линии'}
     ],
     [
-      {img:'img/jazz.jpg',       href:'https://www.behance.net/gallery/242108047/dzhazovyj-festival',        alt:'Джазовый фестиваль'},
-      {img:'img/city.jpg',       href:'https://hsedesign.ru/project/20fde7d552894e3ab208171906388f3d',       alt:'Город'},
-      {img:'img/posestrie.jpg',  href:'https://www.behance.net/kofayoha',                                    alt:'Ещё работы'}
+      {img:'img/shadow.jpg',      href:'http://hsedesign.ru/project/1947070780544d21889e203d6e2ff548',           alt:'Тень'},
+      {img:'img/city.jpg',        href:'https://hsedesign.ru/project/20fde7d552894e3ab208171906388f3d',          alt:'Город'},
+      {img:'img/posestrie.jpg',   href:'https://www.behance.net/kofayoha',                                       alt:'Ещё работы'}
     ]
   ];
-  const cardIdx = [0, 0, 0]; // текущий индекс для каждой из 3 позиций
+  const cardIdx = [0, 0, 0];
 
   function buildMobileGallery(){
     if(window.innerWidth > 900) return;
 
     const page = document.querySelector('.gallery-page.active-page');
-    page.innerHTML = ''; // очищаем
+    page.innerHTML = '';
 
     allWorks.forEach((pool, pos)=>{
       const work = pool[cardIdx[pos]];
@@ -581,7 +579,6 @@
   function stepCard(pos, dir){
     const pool = allWorks[pos];
     cardIdx[pos] = (cardIdx[pos] + dir + pool.length) % pool.length;
-    // обновляем только эту карточку
     const wrappers = document.querySelectorAll('.card-wrapper');
     if(!wrappers[pos]) return;
     const work = pool[cardIdx[pos]];
@@ -591,16 +588,13 @@
     a.querySelector('img').alt = work.alt;
   }
 
-  // Инициализация при загрузке и при ресайзе
   function initGallery(){
     if(window.innerWidth <= 900){
-      // убедимся, что страницы 2 и 3 скрыты
       document.querySelectorAll('.gallery-page').forEach((p,i)=>{
         p.style.display = i===0 ? '' : 'none';
       });
       buildMobileGallery();
     } else {
-      // десктоп: вернуть все страницы в flex, убрать inline display
       document.querySelectorAll('.gallery-page').forEach(p=>{ p.style.display=''; });
     }
   }
@@ -608,7 +602,6 @@
   initGallery();
   window.addEventListener('resize', initGallery);
 
-  /* ---- reveal on scroll ---- */
   const io = new IntersectionObserver(e=>{
     e.forEach(el=>{ if(el.isIntersecting) el.target.classList.add('visible'); });
   },{threshold:.15});
