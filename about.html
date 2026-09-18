@@ -14,11 +14,10 @@
     --cream:#FFF9F5;
     --ink:#2B1810;
     --thread:#E8735A;
+    --folder-milk:#F2E8D5;
+    --folder-back:#2E0E12;
     --display:'Playfair Display','Averia Serif Libre',Georgia,serif;
     --hand:'Caveat','Comic Sans MS',cursive;
-    --f1:#F2836B; --f2:#7FA6C9; --f3:#E8C547; --f4:#9BC4A0;
-    --f5:#D9A5B3; --f6:#8B7EC8; --f7:#E89B6C; --f8:#6BA8A0;
-    --f9:#C77B94; --f10:#5D8AA8; --f11:#D4A373; --f12:#A8B8D0;
   }
   *{margin:0;padding:0;box-sizing:border-box}
   html{scroll-behavior:smooth}
@@ -64,7 +63,7 @@
     text-align:center;line-height:1;color:var(--cream);
   }
 
-  /* ============ ПУТЬ — КОМПОЗИЦИЯ С НИТЯМИ ============ */
+  /* ============ ПУТЬ — НИТИ К ТОЧКЕ ПЕРЕСЕЧЕНИЯ ============ */
   .path-section{
     background:var(--cream);
     padding:60px 48px 90px;
@@ -81,10 +80,10 @@
     inset:0;
     width:100%;height:100%;
     pointer-events:none;
-    z-index:1;
+    z-index:3;
     overflow:visible;
   }
-  /* текстовые блоки — без рамок, без фонов, только иерархия */
+  /* текстовые блоки — без рамок, только иерархия */
   .pb{
     position:absolute;
     left:var(--x);
@@ -93,7 +92,6 @@
     font-size:15px;
     line-height:1.5;
     color:var(--ink);
-    margin:0;
     z-index:2;
   }
   .pb.lead{font-size:18px;line-height:1.45}
@@ -105,13 +103,14 @@
     line-height:1;
   }
   .pb .sm{font-size:.88em;opacity:.72}
-  /* девочка — справа */
+
+  /* девочка — ровно в точке пересечения линий */
   .girl{
     position:absolute;
-    right:2%;
-    bottom:0;
-    width:clamp(200px,25vw,340px);
-    z-index:2;
+    right:3%;
+    bottom:2%;
+    width:clamp(190px,23vw,320px);
+    z-index:1;         /* под нитями — нити сходятся в неё */
   }
   .girl img{width:100%;height:auto;display:block}
   .girl .cap{
@@ -119,10 +118,10 @@
     font-size:clamp(20px,2vw,30px);
     color:var(--navy);
     text-align:center;
-    margin-top:6px;
+    margin-top:4px;
   }
 
-  /* ============ НАВЫКИ — ПАПКИ ============ */
+  /* ============ НАВЫКИ — ПАПКИ (молочные с горошком) ============ */
   .skills{background:var(--cream);padding:60px 48px 110px}
   .skills h2{
     font-size:clamp(40px,6vw,72px);
@@ -130,86 +129,91 @@
     margin-bottom:70px;text-align:center;
   }
   .skills-folders{
-    display:grid;grid-template-columns:repeat(auto-fill, minmax(200px,1fr));
-    gap:52px 40px;max-width:1250px;margin:0 auto;
+    display:grid;
+    grid-template-columns:repeat(auto-fill, minmax(190px,1fr));
+    gap:60px 40px;
+    max-width:1250px;margin:0 auto;
   }
   .folder{
     position:relative;
-    aspect-ratio:1.05/1;
+    aspect-ratio:1/1;
     cursor:pointer;
   }
-  /* задняя стенка папки */
+  /* задняя стенка — тёмно-бордовая, с язычком */
   .folder-back{
     position:absolute;
-    left:2%;top:10%;
-    width:96%;height:85%;
-    background:#1B1208;
-    border-radius:8px;
+    inset:0;
+    background:var(--folder-back);
+    border-radius:12px;
   }
-  /* передняя часть папки */
+  .folder-back::before{
+    /* язычок слева сверху */
+    content:'';
+    position:absolute;
+    left:0;top:-14%;
+    width:44%;height:26%;
+    background:var(--folder-back);
+    border-radius:12px 16px 0 0;
+  }
+  /* передняя часть — молочная с чёрным горошком */
   .folder-front{
     position:absolute;
-    left:0;top:20%;
-    width:100%;height:80%;
-    border-radius:8px;
-    box-shadow:0 8px 18px rgba(43,24,16,.20);
+    left:2%;right:2%;
+    top:17%;bottom:2%;
+    background:var(--folder-milk);
+    background-image:radial-gradient(circle, #1B1208 6.5px, transparent 6.6px);
+    background-size:38px 38px;
+    background-position:10px 8px;
+    border-radius:10px;
+    box-shadow:0 8px 18px rgba(43,24,16,.22);
     transition:transform .35s ease;
-    overflow:hidden;
+    z-index:2;
   }
-  /* язычок */
-  .folder-tab{
+  .folder:hover .folder-front{transform:translateY(-14px) rotate(-.6deg)}
+  /* надпись на папке */
+  .folder-label{
     position:absolute;
-    left:0;top:13%;
-    width:46%;height:9%;
-    border-radius:8px 10px 0 0;
-    transition:transform .35s ease;
-  }
-  .folder:hover .folder-front,
-  .folder:hover .folder-tab{transform:translateY(-12px)}
-  /* вырезанное окно — тёмное, как сквозь папку */
-  .folder-cut{
-    position:absolute;
-    left:50%;top:52%;
-    transform:translate(-50%,-50%);
-    width:62%;height:62%;
-  }
-  .folder-cut svg{width:100%;height:100%;display:block}
-  /* слово внутри выреза */
-  .folder-word{
-    position:absolute;
-    left:50%;top:52%;
+    left:50%;top:56%;
     transform:translate(-50%,-50%);
     font-family:var(--hand);
-    font-size:clamp(20px,2.1vw,30px);
+    font-size:clamp(19px,2vw,28px);
     font-weight:700;
-    color:var(--cream);
+    color:var(--ink);
+    background:var(--folder-milk);
+    padding:2px 10px;
+    border-radius:4px;
     text-align:center;
-    width:56%;
-    line-height:1;
+    white-space:nowrap;
     pointer-events:none;
-    z-index:3;
+    z-index:4;
     transition:transform .35s ease;
   }
-  .folder:hover .folder-word{transform:translate(-50%,-50%) translateY(-12px)}
-  /* картинки, вылетающие при наведении */
+  .folder:hover .folder-label{transform:translate(-50%,-50%) translateY(-14px)}
+  /* картинки — вылезают ИЗ папки при наведении */
   .folder-images{
     position:absolute;
-    bottom:100%;left:50%;
-    transform:translateX(-50%) translateY(14px);
-    display:flex;gap:8px;
-    opacity:0;pointer-events:none;
-    transition:opacity .3s ease, transform .35s ease;
-    z-index:4;margin-bottom:8px;
+    left:50%;top:17%;
+    transform:translate(-50%,14px);
+    display:flex;
+    gap:8px;
+    opacity:0;
+    pointer-events:none;
+    transition:opacity .3s ease, transform .4s cubic-bezier(.34,1.3,.5,1);
+    z-index:1;                 /* между задней и передней частью */
   }
-  .folder:hover .folder-images{opacity:1;transform:translateX(-50%) translateY(0)}
+  .folder:hover .folder-images{
+    opacity:1;
+    transform:translate(-50%,-64px);
+  }
   .folder-images span{
-    width:48px;height:48px;border-radius:5px;
-    border:2px solid var(--cream);
-    box-shadow:0 4px 10px rgba(43,24,16,.25);
+    width:52px;height:52px;
+    border-radius:5px;
+    border:2px solid var(--folder-milk);
+    box-shadow:0 4px 10px rgba(43,24,16,.3);
     background:var(--blue);
   }
-  .folder-images span:nth-child(2){background:var(--navy)}
-  .folder-images span:nth-child(3){background:#F2836B}
+  .folder-images span:nth-child(2){background:var(--thread)}
+  .folder-images span:nth-child(3){background:var(--navy)}
 
   /* ============ ПИСЬМО ============ */
   .extras{
@@ -218,36 +222,22 @@
     display:flex;justify-content:center;
     position:relative;
   }
-  .letter-scene{
-    position:relative;
-    width:min(720px,100%);
-  }
+  .letter-scene{position:relative;width:min(720px,100%)}
   .envelope-wrap{
-    position:relative;
-    width:100%;
-    cursor:pointer;
-    perspective:1400px;
+    position:relative;width:100%;
+    cursor:pointer;perspective:1400px;
   }
-  .envelope{
-    position:relative;
-    width:100%;
-    aspect-ratio:1.55/1;
-  }
-  /* листы: выходят из-за верхнего края, снизу спрятаны за конвертом */
+  .envelope{position:relative;width:100%;aspect-ratio:1.55/1}
   .sheets{
     position:absolute;
-    left:50%;
-    bottom:100%;
+    left:50%;bottom:100%;
     transform:translateX(-50%);
-    width:84%;
-    z-index:1;
+    width:84%;z-index:1;
   }
   .sheet{
     position:absolute;
-    bottom:0;left:0;
-    width:100%;
-    background:var(--cream);
-    border-radius:8px;
+    bottom:0;left:0;width:100%;
+    background:var(--cream);border-radius:8px;
     padding:38px 40px 46px;
     box-shadow:0 14px 34px rgba(0,0,0,.35);
     opacity:0;
@@ -255,7 +245,7 @@
     transition:opacity .45s ease, transform .5s cubic-bezier(.34,1.25,.5,1);
     pointer-events:none;
   }
-  /* все листы на одной высоте — меняются на месте */
+  /* все листы на одной высоте — просто меняются */
   .sheet.active{
     opacity:1;
     transform:translateY(34px);
@@ -324,7 +314,6 @@
 
     .about-hero{padding:100px 20px 60px}
 
-    /* путь — обычная колонка, без абсолютного позиционирования */
     .path-section{padding:30px 20px 60px}
     .path-canvas{height:auto}
     .threads{display:none}
@@ -337,14 +326,16 @@
     .pb.lead{font-size:17px}
     .girl{
       position:static;
-      width:min(56%,240px);
+      width:min(54%,230px);
       margin:20px 0 0 auto;
     }
 
     .skills{padding:30px 20px 70px}
     .skills h2{margin-bottom:44px}
-    .skills-folders{grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:34px 20px}
-    .folder-word{font-size:clamp(15px,4.2vw,20px);width:60%}
+    .skills-folders{grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:46px 20px}
+    .folder-label{font-size:clamp(15px,4.2vw,20px);padding:2px 7px}
+    .folder-images span{width:40px;height:40px}
+    .folder:hover .folder-images{transform:translate(-50%,-52px)}
 
     .extras{padding:250px 18px 90px}
     .envelope{aspect-ratio:1.32/1}
@@ -373,7 +364,7 @@
   <h1>Мария Балаян</h1>
 </section>
 
-<!-- ============ ПУТЬ: РАЗБРОСАННЫЙ ТЕКСТ + НИТИ К ФИГУРЕ ============ -->
+<!-- ============ ПУТЬ ============ -->
 <section class="path-section">
   <div class="path-canvas" id="pathCanvas">
     <svg class="threads" id="threads" preserveAspectRatio="none"></svg>
@@ -420,6 +411,7 @@
       <span class="sm">на народный фестиваль искусств — диплом.</span>
     </p>
 
+    <!-- девочка — в точке пересечения нитей -->
     <div class="girl" id="girl">
       <img src="img/girl.png" alt="Мария" onerror="this.style.display='none'">
       <div class="cap">и вот — я</div>
@@ -461,7 +453,7 @@
     document.documentElement.lang = currentLang;
   }
 
-  /* ================= НИТИ К ФИГУРЕ ================= */
+  /* ================= НИТИ К ТОЧКЕ ПЕРЕСЕЧЕНИЯ ================= */
   const canvas  = document.getElementById('pathCanvas');
   const threads = document.getElementById('threads');
   const girlEl  = document.getElementById('girl');
@@ -474,30 +466,29 @@
     const W = cr.width, H = cr.height;
     threads.setAttribute('viewBox', `0 0 ${W} ${H}`);
 
-    // точка схода — голова девочки
+    // ТОЧКА ПЕРЕСЕЧЕНИЯ — голова девочки
     const gr = girlEl.getBoundingClientRect();
     const headX = gr.left + gr.width * 0.5 - cr.left;
-    const headY = gr.top + gr.height * 0.09 - cr.top;
+    const headY = gr.top + gr.height * 0.10 - cr.top;
 
     let html = '';
     canvas.querySelectorAll('.pb').forEach(b=>{
       const r = b.getBoundingClientRect();
-      // если блок правее головы — тянем от левого края, иначе от правого
       const centerX = r.left + r.width/2 - cr.left;
-      const fromRight = centerX < headX;
-      const sx = (fromRight ? r.left + r.width : r.left) - cr.left;
-      const sy = r.top + r.height * 0.35 - cr.top;
+      // нить начинается с ближнего к девочке края блока
+      const sx = ((centerX < headX) ? r.left + r.width : r.left) - cr.left;
+      const sy = r.top + r.height * 0.40 - cr.top;
 
-      // мягкая S-образная дуга, как натянутая нить
-      const mx = sx + (headX - sx) * 0.55;
-      const my = sy + (headY - sy) * 0.35;
-      const c2x = sx + (headX - sx) * 0.85;
-      const c2y = headY - (headY - sy) * 0.25;
+      // мягкая дуга, как натянутая нить
+      const cx1 = sx + (headX - sx) * 0.45;
+      const cy1 = sy + (headY - sy) * 0.10;
+      const cx2 = sx + (headX - sx) * 0.80;
+      const cy2 = headY - (headY - sy) * 0.35;
 
       html += `<path d="M ${sx.toFixed(1)} ${sy.toFixed(1)}
-        C ${mx.toFixed(1)} ${my.toFixed(1)}, ${c2x.toFixed(1)} ${c2y.toFixed(1)}, ${headX.toFixed(1)} ${headY.toFixed(1)}"
+        C ${cx1.toFixed(1)} ${cy1.toFixed(1)}, ${cx2.toFixed(1)} ${cy2.toFixed(1)}, ${headX.toFixed(1)} ${headY.toFixed(1)}"
         fill="none" stroke="#E8735A" stroke-width="1.5"
-        stroke-linecap="round" opacity="0.8"/>`;
+        stroke-linecap="round" opacity="0.85"/>`;
     });
 
     threads.innerHTML = html;
@@ -507,43 +498,22 @@
   window.addEventListener('resize', ()=>{ clearTimeout(window._t); window._t = setTimeout(drawThreads, 200); });
 
   /* ================= ПАПКИ ================= */
-  const CUT = [
-    `<path fill-rule="evenodd" d="M0,0 H120 V120 H0 Z M22,28 h10 a9,9 0 0,1 18,0 h10 a9,9 0 0,1 18,0 h10 v64 H22 Z"/>`,
-    `<path fill-rule="evenodd" d="M0,0 H120 V120 H0 Z M60,22 c15,0 24,11 24,23 c0,10 -6,16 -10,20 a13,13 0 1,1 -28,0 c-4,-4 -10,-10 -10,-20 c0,-12 9,-23 24,-23 Z"/>`,
-    `<path fill-rule="evenodd" d="M0,0 H120 V120 H0 Z M60,20 c19,0 32,13 32,26 H28 c0,-13 13,-26 32,-26 Z M55,51 h10 v36 h-10 Z"/>`,
-    `<path fill-rule="evenodd" d="M0,0 H120 V120 H0 Z M26,38 a15,15 0 1,0 30,0 a15,15 0 1,0 -30,0 Z M64,38 a15,15 0 1,0 30,0 a15,15 0 1,0 -30,0 Z M45,74 a15,15 0 1,0 30,0 a15,15 0 1,0 -30,0 Z"/>`,
-    `<path fill-rule="evenodd" d="M0,0 H120 V120 H0 Z M32,86 c0,-15 11,-24 24,-24 c6,0 10,2 13,5 c4,-11 13,-18 22,-20 c-3,9 -3,17 2,24 c6,2 11,6 11,15 Z"/>`,
-    `<path fill-rule="evenodd" d="M0,0 H120 V120 H0 Z M22,58 c0,-17 17,-31 38,-31 s38,14 38,31 c0,7 -7,11 -12,15 c-4,-9 -11,-13 -15,-7 c-3,5 -5,11 -9,11 s-6,-7 -10,-11 c-4,-6 -11,-4 -14,5 c-2,4 -9,2 -11,-2 c-3,-4 -5,-7 -5,-11 Z"/>`
-  ];
-
   const SKILLS = [
-    {w:'Photoshop',   c:'var(--f1)',  s:0},
-    {w:'Illustrator', c:'var(--f2)',  s:2},
-    {w:'Figma',       c:'var(--f3)',  s:1},
-    {w:'Cinema 4D',   c:'var(--f4)',  s:4},
-    {w:'Брендинг',    c:'var(--f5)',  s:3},
-    {w:'Фотография',  c:'var(--f6)',  s:5},
-    {w:'Керамика',    c:'var(--f7)',  s:1},
-    {w:'Каллиграфия', c:'var(--f8)',  s:0},
-    {w:'Перформанс',  c:'var(--f9)',  s:4},
-    {w:'Барабаны',    c:'var(--f10)', s:2},
-    {w:'Шитье',       c:'var(--f11)', s:3},
-    {w:'Дерево',      c:'var(--f12)', s:5}
+    'Photoshop','Illustrator','Indesign','Figma','Lightroom','Premiere',
+    'After Effects','Cinema 4D','Blender','Ableton',
+    'Брендинг','Айдентика','Логотип','Верстка','Мокапы',
+    'Readymag','Tilda','Код',
+    'Фотография','Каллиграфия','Линогравюра','Керамика',
+    'Шитье','Вязание','Бисер','Дерево',
+    'Барабаны','Блок-флейта','Перформанс','Эвритмия'
   ];
 
-  document.getElementById('skillsFolders').innerHTML = SKILLS.map(k=>`
+  document.getElementById('skillsFolders').innerHTML = SKILLS.map(w=>`
     <div class="folder">
       <div class="folder-back"></div>
-      <div class="folder-tab" style="background:${k.c}"></div>
-      <div class="folder-front" style="background:${k.c}">
-        <div class="folder-cut">
-          <svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
-            <g fill="#1B1208">${CUT[k.s]}</g>
-          </svg>
-        </div>
-      </div>
-      <div class="folder-word">${k.w}</div>
       <div class="folder-images"><span></span><span></span><span></span></div>
+      <div class="folder-front"></div>
+      <div class="folder-label">${w}</div>
     </div>`).join('');
 
   /* ================= ПИСЬМО ================= */
