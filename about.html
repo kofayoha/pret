@@ -3,39 +3,35 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="light only">
+<meta name="theme-color" content="#0B1E3C">
 <title>О себе — prët</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Averia+Serif+Libre:ital,wght@0,400;1,400&family=PT+Serif+Caption:ital@0;1&family=Lora:ital,wght@0,400;0,500;1,400;1,500&family=IBM+Plex+Sans:wght@400;500;600&family=Caveat:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
   :root{
+    color-scheme:light only;
     --navy:#0B1E3C;
     --blue:#4A7BA7;
     --cream:#FFF9F5;
     --ink:#2B1810;
-    --thread:#1B1208;
-
-    /* крафт как на фото папки */
     --kraft:#CE8467;
-    --kraft-dark:#B86F53;
-    --kraft-light:#D9A183;
-
     --display:'Averia Serif Libre','PT Serif Caption','Lora',Georgia,serif;
     --letter:'PT Serif Caption','Lora',Georgia,serif;
-    --hand:'Caveat','Comic Sans MS',cursive;
     --ui:'IBM Plex Sans',Arial,sans-serif;
-
-    /* зерно бумаги — переиспользуется в письме */
+    --hand:'Caveat','Comic Sans MS',cursive;
     --noise:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='140' height='140'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3'/><feColorMatrix type='saturate' values='0'/></filter><rect width='140' height='140' filter='url(%23n)' opacity='0.5'/></svg>");
   }
   *{margin:0;padding:0;box-sizing:border-box}
-  html{scroll-behavior:smooth}
+  html{scroll-behavior:smooth;color-scheme:light only}
   body{
     font-family:'PT Serif Caption','Lora',Georgia,serif;
     color:var(--ink);
     background:var(--cream);
     line-height:1.6;
     overflow-x:hidden;
+    -webkit-text-size-adjust:100%;
   }
 
   header{
@@ -55,7 +51,7 @@
   .lang-toggle{
     cursor:pointer;font-size:14px;padding:6px 12px;
     border:1px solid var(--ink);border-radius:4px;
-    font-family:var(--ui);font-weight:500;
+    font-family:var(--ui);font-weight:500;background:none;color:var(--ink);
     transition:background .3s, color .3s;
   }
   .lang-toggle:hover{background:var(--ink);color:var(--cream)}
@@ -94,10 +90,7 @@
     color:var(--navy);text-align:center;margin-top:4px;
   }
 
-  /* ═══════════ НАВЫКИ ═══════════
-     Полоса, в которой снизу сидит синий блок. Папки стоят
-     ровно на линии стыка: --seam вычисляется скриптом по
-     фактической высоте папки, поэтому стык всегда по центру. */
+  /* ═══════════ НАВЫКИ ═══════════ */
   .skills{background:var(--cream);padding:60px 48px 0}
   .skills h2{
     font-size:clamp(40px,6vw,72px);
@@ -106,7 +99,7 @@
   }
   .skills-band{
     position:relative;
-    padding:270px 0 120px;      /* 270 — запас под вылетающие листы */
+    padding:270px 0 120px;
     background-color:var(--cream);
     background-image:linear-gradient(var(--blue),var(--blue));
     background-size:100% calc(100% - var(--seam,320px));
@@ -114,82 +107,40 @@
     background-repeat:no-repeat;
   }
   .skills-folders{
-    display:grid;
-    grid-template-columns:repeat(4,1fr);
-    gap:0 46px;
-    max-width:1180px;
-    margin:0 auto;
-    position:relative;
-    z-index:2;
+    display:grid;grid-template-columns:repeat(4,1fr);
+    gap:0 46px;max-width:1180px;margin:0 auto;position:relative;z-index:2;
   }
   .skill-group{position:relative}
-
-  /* ── папка ── */
-  .folder{
-    position:relative;
-    aspect-ratio:1.32/1;
-    cursor:pointer;
-  }
+  .folder{position:relative;aspect-ratio:1.32/1;cursor:pointer}
   .folder-shape{
-    position:absolute;inset:0;
-    width:100%;height:100%;display:block;
-    filter:
-      drop-shadow(-7px 5px 0 rgba(58,29,19,.20))
-      drop-shadow(0 16px 26px rgba(58,29,19,.20));
-    transition:transform .4s cubic-bezier(.34,1.1,.5,1);
-    z-index:2;
+    position:absolute;inset:0;width:100%;height:100%;display:block;
+    filter:drop-shadow(-7px 5px 0 rgba(58,29,19,.20)) drop-shadow(0 16px 26px rgba(58,29,19,.20));
+    transition:transform .4s cubic-bezier(.34,1.1,.5,1);z-index:2;
   }
   .folder:hover .folder-shape,
   .folder.open  .folder-shape{transform:translateY(-10px) rotate(-1.2deg)}
-
-  /* надпись на папке — тем же шрифтом, что заголовок */
   .folder-label{
-    position:absolute;
-    left:50%;top:65%;
-    transform:translate(-50%,-50%);
-    font-family:var(--display);
-    font-style:italic;
-    font-size:clamp(22px,2.5vw,34px);
-    color:#3A1D13;
-    text-align:center;
-    width:76%;
-    line-height:1;
-    pointer-events:none;
-    z-index:3;
+    position:absolute;left:50%;top:65%;transform:translate(-50%,-50%);
+    font-family:var(--display);font-style:italic;
+    font-size:clamp(22px,2.5vw,34px);color:#3A1D13;
+    text-align:center;width:76%;line-height:1;pointer-events:none;z-index:3;
     transition:transform .4s cubic-bezier(.34,1.1,.5,1);
   }
   .folder:hover .folder-label,
   .folder.open  .folder-label{transform:translate(-50%,-50%) translateY(-10px) rotate(-1.2deg)}
 
-  /* ── листы с прищепками ──
-     Каскад: каждый следующий лист выше и чуть правее, поэтому
-     даже 6 листов «Дизайна» читаются целиком, не перекрываясь. */
-  .sheets{
-    position:absolute;
-    left:50%;top:0;
-    width:100%;
-    z-index:1;
-    pointer-events:none;
-  }
+  /* листы папки — своё имя, чтобы не конфликтовать с письмом */
+  .folder-sheets{position:absolute;left:50%;top:0;width:100%;z-index:1;pointer-events:none}
   .skill-sheet{
-    position:absolute;
-    left:50%;top:0;
-    width:82%;
+    position:absolute;left:50%;top:0;width:82%;
     display:flex;align-items:center;gap:8px;
     padding:7px 10px 7px 9px;
-    background:#FBF4E6;
-    background-image:var(--noise);
-    background-blend-mode:multiply;
-    background-size:140px 140px;
-    border-radius:3px;
-    font-family:var(--display);
-    font-style:italic;
-    font-size:clamp(12px,1.1vw,15px);
-    color:var(--ink);
-    white-space:nowrap;
+    background:#FBF4E6;background-image:var(--noise);
+    background-blend-mode:multiply;background-size:140px 140px;
+    border-radius:3px;font-family:var(--display);font-style:italic;
+    font-size:clamp(12px,1.1vw,15px);color:var(--ink);white-space:nowrap;
     box-shadow:0 3px 9px rgba(58,29,19,.20);
-    opacity:0;
-    transform:translate(-50%, 14px) rotate(0deg);
+    opacity:0;transform:translate(-50%, 14px) rotate(0deg);
     transition:opacity .26s ease, transform .52s cubic-bezier(.34,1.28,.5,1);
     transition-delay:calc(var(--i) * 55ms);
   }
@@ -198,16 +149,12 @@
     opacity:1;
     transform:translate(calc(-50% + var(--tx)), var(--ty)) rotate(var(--rot));
   }
-  .clip{
-    width:15px;height:20px;flex:none;display:block;
-  }
-
-  .skill-list{display:none}   /* только для телефона */
+  .clip{width:15px;height:20px;flex:none;display:block}
+  .skill-list{display:none}
 
   /* ═══════════ ПИСЬМО ═══════════ */
   .extras{
-    background:var(--navy);
-    padding:230px 48px 150px;
+    background:var(--navy);padding:230px 48px 150px;
     display:flex;justify-content:center;position:relative;
   }
   .letter-scene{
@@ -215,26 +162,25 @@
     display:flex;flex-direction:column;align-items:center;
   }
   .letter-title{
-    font-family:var(--display);
-    font-style:italic;
-    font-size:clamp(42px,6.5vw,88px);
-    color:var(--cream);
-    line-height:1;
-    margin-bottom:40px;
-    text-align:center;
+    font-family:var(--display);font-style:italic;
+    font-size:clamp(42px,6.5vw,88px);color:var(--cream);
+    line-height:1;margin-bottom:40px;text-align:center;
   }
   .envelope-wrap{position:relative;width:100%;cursor:pointer;perspective:1400px}
   .envelope{position:relative;width:100%;aspect-ratio:1.55/1}
-  .sheets{}
 
+  /* ЛИСТЫ ПИСЬМА — центрированы, без сдвига вправо */
+  .letter-sheets{
+    position:absolute;
+    left:50%;bottom:100%;
+    transform:translateX(-50%);
+    width:84%;z-index:1;
+  }
   .sheet{
     position:absolute;bottom:0;left:0;width:100%;
-    background:#F6EBD8;
-    background-image:var(--noise);
-    background-blend-mode:multiply;
-    background-size:140px 140px;
-    border-radius:4px;
-    padding:38px 40px 46px;
+    background:#F6EBD8;background-image:var(--noise);
+    background-blend-mode:multiply;background-size:140px 140px;
+    border-radius:4px;padding:38px 40px 46px;
     box-shadow:0 14px 34px rgba(0,0,0,.38);
     opacity:0;transform:translateY(70px);
     transition:opacity .45s ease, transform .5s cubic-bezier(.34,1.25,.5,1);
@@ -244,19 +190,14 @@
   .sheet p{font-family:var(--letter);font-size:clamp(15px,1.6vw,19px);line-height:1.75;color:var(--ink)}
   .sheet-num{
     position:absolute;right:26px;bottom:14px;
-    font-family:var(--ui);font-size:11px;
-    letter-spacing:.12em;color:var(--ink);opacity:.35;
+    font-family:var(--ui);font-size:11px;letter-spacing:.12em;
+    color:var(--ink);opacity:.35;
   }
-
-  /* конверт — тот же крафт, что папка */
   .env-body{
     position:absolute;inset:0;
-    background:#D9A183;
-    background-image:var(--noise);
-    background-blend-mode:multiply;
-    background-size:140px 140px;
-    border-radius:6px;
-    box-shadow:0 22px 54px rgba(0,0,0,.45);
+    background:#D9A183;background-image:var(--noise);
+    background-blend-mode:multiply;background-size:140px 140px;
+    border-radius:6px;box-shadow:0 22px 54px rgba(0,0,0,.45);
     overflow:hidden;z-index:3;
   }
   .env-body::before{
@@ -267,23 +208,18 @@
   }
   .env-flap{
     position:absolute;top:0;left:0;width:100%;height:58%;
-    background:#C88F6F;
-    background-image:var(--noise);
-    background-blend-mode:multiply;
-    background-size:140px 140px;
+    background:#C88F6F;background-image:var(--noise);
+    background-blend-mode:multiply;background-size:140px 140px;
     clip-path:polygon(0 0, 50% 100%, 100% 0);
     transform-origin:top center;
     transition:transform .7s cubic-bezier(.4,0,.2,1);
-    z-index:4;
-    box-shadow:0 4px 14px rgba(0,0,0,.14);
+    z-index:4;box-shadow:0 4px 14px rgba(0,0,0,.14);
   }
   .envelope-wrap.open .env-flap{transform:rotateX(180deg);z-index:0}
-
   .letter-hint{
-    font-family:var(--ui);
-    font-size:13px;letter-spacing:.2em;text-transform:uppercase;font-weight:500;
-    color:var(--cream);opacity:.55;
-    margin-top:50px;text-align:center;
+    font-family:var(--ui);font-size:13px;letter-spacing:.2em;
+    text-transform:uppercase;font-weight:500;
+    color:var(--cream);opacity:.55;margin-top:50px;text-align:center;
   }
 
   footer{background:var(--cream);padding:60px 48px 40px;text-align:center}
@@ -293,30 +229,39 @@
   @media(max-width:900px){
     header{padding:14px 20px}
     .logo{font-size:20px}
-    nav{gap:8px}
-    nav a{font-size:8px}
-    .lang-toggle{font-size:9px;padding:3px 6px}
+    nav{gap:10px}
+    nav a{font-size:9px}
+    .lang-toggle{font-size:9px;padding:3px 7px}
 
     .about-hero{padding:100px 20px 60px}
 
-    .path-section{padding:30px 20px 60px}
-    .path-canvas{height:auto}
-    .threads{display:none}
-    .pb,.pb.lead{
-      position:static;width:auto !important;
-      margin-bottom:30px;font-size:15px;background:transparent;
+    /* путь: блоки в потоке зигзагом, нити рисуются по факту */
+    .path-section{padding:40px 20px 50px}
+    .path-canvas{height:auto;padding-bottom:20px}
+    .pb{
+      position:relative !important;
+      left:auto !important;top:auto !important;
+      width:auto !important;
+      max-width:84%;
+      margin-bottom:38px;
+      font-size:15px;
+      background:transparent;
     }
     .pb.lead{font-size:17px}
-    .girl{position:static;width:min(56%,240px);margin:20px 0 0 auto}
+    /* зигзаг: чётные влево, нечётные вправо */
+    .pb:nth-of-type(odd){margin-left:0;margin-right:auto}
+    .pb:nth-of-type(even){margin-left:auto;margin-right:0;text-align:right}
+    .girl{
+      position:relative !important;
+      right:auto;bottom:auto;
+      width:min(58%,250px);
+      margin:34px 0 0 auto;
+    }
 
     .skills{padding:30px 20px 0}
     .skills h2{margin-bottom:16px}
-    .skills-band{padding:60px 0 70px}
-    .skills-folders{
-      grid-template-columns:repeat(2,1fr);
-      gap:40px 20px;
-    }
-    /* листы на телефоне заменяются списком под папкой */
+    .skills-band{padding:70px 0 70px}
+    .skills-folders{grid-template-columns:repeat(2,1fr);gap:44px 20px}
     .skill-sheet{display:none}
     .folder-label{font-size:clamp(18px,4.8vw,24px)}
     .skill-list{
@@ -328,6 +273,7 @@
     .extras{padding:150px 18px 90px}
     .letter-title{margin-bottom:26px;font-size:clamp(30px,9vw,46px)}
     .envelope{aspect-ratio:1.32/1}
+    .letter-sheets{width:90%}
     .sheet{padding:24px 22px 34px}
     .sheet p{font-size:14px;line-height:1.7}
     .sheet.active{transform:translateY(26px)}
@@ -340,11 +286,11 @@
 <header>
   <a class="logo" href="./index.html">prët</a>
   <nav>
-    <a href="./index.html#journey">Галерея</a>
-    <a href="./shop.html">Магазин</a>
-    <a href="./about.html">О&nbsp;себе</a>
-    <a href="./index.html#contact">Контакты</a>
-    <span class="lang-toggle" onclick="toggleLanguage()">EN</span>
+    <a href="./index.html#journey" data-ru="Галерея" data-en="Gallery">Галерея</a>
+    <a href="./shop.html" data-ru="Магазин" data-en="Shop">Магазин</a>
+    <a href="./about.html" data-ru="О&nbsp;себе" data-en="About">О&nbsp;себе</a>
+    <a href="./index.html#contact" data-ru="Контакты" data-en="Contact">Контакты</a>
+    <button class="lang-toggle" id="langBtn" type="button">EN</button>
   </nav>
 </header>
 
@@ -357,52 +303,91 @@
   <div class="path-canvas" id="pathCanvas">
     <svg class="threads" id="threads" preserveAspectRatio="none"></svg>
 
-    <p class="pb lead" style="--x:1%;--y:1%;--w:24%">
+    <p class="pb lead"
+       data-ru="Почти всю жизнь я&nbsp;проучилась в&nbsp;<span class='big'>Вальдорфской школе</span>. <span class='sm'>Для тех, кто знает&nbsp;— это уже много о&nbsp;чём говорит.</span>"
+       data-en="I spent almost my whole school life at a&nbsp;<span class='big'>Waldorf school</span>. <span class='sm'>For those who know&nbsp;— that already says a&nbsp;lot.</span>"
+       style="--x:1%;--y:1%;--w:24%">
       Почти всю жизнь я&nbsp;проучилась в&nbsp;<span class="big">Вальдорфской школе</span>.
       <span class="sm">Для тех, кто знает&nbsp;— это уже много о&nbsp;чём говорит.</span>
     </p>
-    <p class="pb" style="--x:31%;--y:12%;--w:19%">
+
+    <p class="pb"
+       data-ru="Начиная с&nbsp;<span class='big'>8 класса</span> я&nbsp;делала проекты, связанные с&nbsp;фотографией, танцами и&nbsp;дизайном."
+       data-en="From <span class='big'>8th grade</span> onward I&nbsp;worked on projects around photography, dance and design."
+       style="--x:31%;--y:12%;--w:19%">
       Начиная с&nbsp;<span class="big">8 класса</span> я&nbsp;делала проекты, связанные с&nbsp;фотографией, танцами и&nbsp;дизайном.
     </p>
-    <p class="pb" style="--x:60%;--y:2%;--w:22%">
+
+    <p class="pb"
+       data-ru="Дойдя до&nbsp;<span class='big'>11 класса</span>, я&nbsp;чётко решила: либо философия, либо дизайн. <span class='sm'>По&nbsp;подсказке учителя всё-таки пошла на&nbsp;«Коммуникационный дизайн» в&nbsp;ВШЭ и&nbsp;Школу Дизайна.</span>"
+       data-en="By <span class='big'>11th grade</span> I&nbsp;had decided: philosophy or design. <span class='sm'>On a&nbsp;teacher's advice I&nbsp;went into Communication Design at HSE and the School of Design.</span>"
+       style="--x:60%;--y:2%;--w:22%">
       Дойдя до&nbsp;<span class="big">11 класса</span>, я&nbsp;чётко решила: либо философия, либо дизайн.
       <span class="sm">По&nbsp;подсказке учителя всё-таки пошла на&nbsp;«Коммуникационный дизайн» в&nbsp;ВШЭ и&nbsp;Школу Дизайна.</span>
     </p>
-    <p class="pb lead" style="--x:2%;--y:26%;--w:24%">
+
+    <p class="pb lead"
+       data-ru="<span class='big'>Поступление.</span> Для подготовки я&nbsp;делала вручную зины и&nbsp;только перед подачей решила быстро освоить Фигму. <span class='sm'>Проектом был ребрендинг платформы «Bereg»&nbsp;— 75&nbsp;баллов из&nbsp;100.</span>"
+       data-en="<span class='big'>Applying.</span> I&nbsp;made zines by hand, and only before submitting did I&nbsp;rush to learn Figma. <span class='sm'>The project was a&nbsp;rebrand of the platform Bereg&nbsp;— 75 out of 100.</span>"
+       style="--x:2%;--y:26%;--w:24%">
       <span class="big">Поступление.</span> Для подготовки я&nbsp;делала вручную зины и&nbsp;только перед подачей решила быстро освоить Фигму.
       <span class="sm">Проектом был ребрендинг платформы «Bereg»&nbsp;— 75&nbsp;баллов из&nbsp;100.</span>
     </p>
-    <p class="pb" style="--x:34%;--y:36%;--w:19%">
+
+    <p class="pb"
+       data-ru="Первым проектом на&nbsp;<span class='big'>1 курсе</span> стала разработка выдуманного бренда, построенного на&nbsp;принципе передачи энергии,&nbsp;— «chenergy»."
+       data-en="My first project in <span class='big'>year one</span> was an invented brand built on the principle of transmitting energy&nbsp;— chenergy."
+       style="--x:34%;--y:36%;--w:19%">
       Первым проектом на&nbsp;<span class="big">1 курсе</span> стала разработка выдуманного бренда, построенного на&nbsp;принципе передачи энергии,&nbsp;— «chenergy».
     </p>
-    <p class="pb lead" style="--x:62%;--y:26%;--w:22%">
+
+    <p class="pb lead"
+       data-ru="К&nbsp;концу <span class='big'>2 курса</span> я&nbsp;вдруг поняла, что дизайн&nbsp;— это всегда дизайн чего-то. <span class='sm'>Дизайн не&nbsp;может быть искусством сам по&nbsp;себе. Я&nbsp;поняла, что хочу создавать это что-то.</span>"
+       data-en="By the end of <span class='big'>year two</span> I&nbsp;realised design is always a&nbsp;design of something. <span class='sm'>Design cannot be art in itself. I&nbsp;understood I&nbsp;wanted to make that something.</span>"
+       style="--x:62%;--y:26%;--w:22%">
       К&nbsp;концу <span class="big">2 курса</span> я&nbsp;вдруг поняла, что дизайн&nbsp;— это всегда дизайн чего-то.
       <span class="sm">Дизайн не&nbsp;может быть искусством сам по&nbsp;себе. Я&nbsp;поняла, что хочу создавать это что-то.</span>
     </p>
-    <p class="pb lead" style="--x:1%;--y:48%;--w:25%">
+
+    <p class="pb lead"
+       data-ru="Я&nbsp;перешла на&nbsp;<span class='big'>современное искусство</span>. Единственное, чему я&nbsp;благодарна,&nbsp;— это возможность создать перформанс «Посестрие»."
+       data-en="I switched to <span class='big'>contemporary art</span>. The one thing I'm grateful for is the chance to create the performance “Posestrie”."
+       style="--x:1%;--y:48%;--w:25%">
       Я&nbsp;перешла на&nbsp;<span class="big">современное искусство</span>.
       Единственное, чему я&nbsp;благодарна,&nbsp;— это возможность создать перформанс «Посестрие».
     </p>
-    <p class="pb" style="--x:33%;--y:58%;--w:20%">
+
+    <p class="pb"
+       data-ru="Через полгода я, сверкая пятками, убежала на&nbsp;<span class='big'>«Ивент Дизайн. Театр. Перформанс»</span>."
+       data-en="Six months later I&nbsp;ran off, heels flashing, to <span class='big'>“Event Design. Theatre. Performance”</span>."
+       style="--x:33%;--y:58%;--w:20%">
       Через полгода я, сверкая пятками, убежала на&nbsp;<span class="big">«Ивент Дизайн. Театр. Перформанс»</span>.
     </p>
-    <p class="pb lead" style="--x:9%;--y:70%;--w:24%">
+
+    <p class="pb lead"
+       data-ru="Я&nbsp;очень благодарна всем случайностям и&nbsp;людям, которые меня туда привели. Всё-таки я&nbsp;рукотворный человек, можно сказать ремесленник. Мне надо быть в&nbsp;контакте."
+       data-en="I'm very grateful to all the chance and the people who led me there. I'm a handmade sort of person, a&nbsp;craftsman really. I need to be in contact."
+       style="--x:9%;--y:70%;--w:24%">
       Я&nbsp;очень благодарна всем случайностям и&nbsp;людям, которые меня туда привели. Всё-таки я&nbsp;рукотворный человек, можно сказать ремесленник. Мне надо быть в&nbsp;контакте.
     </p>
-    <p class="pb" style="--x:38%;--y:80%;--w:21%">
+
+    <p class="pb"
+       data-ru="<span class='big'>Сейчас</span> я&nbsp;аккумулирую ресурс для создания народного фестиваля искусств в&nbsp;качестве диплома."
+       data-en="<span class='big'>Right now</span> I'm gathering resources to create a&nbsp;folk arts festival as my diploma."
+       style="--x:38%;--y:80%;--w:21%">
       <span class="big">Сейчас</span> я&nbsp;аккумулирую ресурс для создания народного фестиваля искусств в&nbsp;качестве диплома.
     </p>
 
     <div class="girl" id="girl">
       <img src="img/girl.png" alt="Мария" onerror="this.style.display='none'">
-      <div class="cap">и вот — я</div>
+      <div class="cap" data-ru="и вот — я" data-en="and here — I am">и вот — я</div>
     </div>
   </div>
 </section>
 
 <!-- ═══════════ НАВЫКИ ═══════════ -->
 <section class="skills">
-  <h2>Навыки</h2>
+  <h2 data-ru="Навыки" data-en="Skills">Навыки</h2>
   <div class="skills-band" id="skillsBand">
     <div class="skills-folders" id="skillsFolders"></div>
   </div>
@@ -411,35 +396,84 @@
 <!-- ═══════════ ПИСЬМО ═══════════ -->
 <section class="extras">
   <div class="letter-scene">
-    <h2 class="letter-title">в дополнение</h2>
+    <h2 class="letter-title" data-ru="в дополнение" data-en="in addition">в дополнение</h2>
     <div class="envelope-wrap" id="envelopeWrap">
       <div class="envelope">
-        <div class="sheets" id="sheets"></div>
+        <div class="letter-sheets" id="letterSheets"></div>
         <div class="env-body"></div>
         <div class="env-flap"></div>
       </div>
     </div>
-    <div class="letter-hint" id="letterHint">Нажмите на конверт</div>
+    <div class="letter-hint" id="letterHint" data-ru="Нажмите на конверт" data-en="Click the envelope">Нажмите на конверт</div>
   </div>
 </section>
 
 <footer>
-  <p>© 2026 prët — maria balayan</p>
+  <p data-ru="© 2026 prët — maria balayan" data-en="© 2026 prët — maria balayan">© 2026 prët — maria balayan</p>
 </footer>
 
 <script>
-  /* ═════════ ЯЗЫК ═════════ */
+  /* ═════════ ПЕРЕВОД ═════════ */
   let currentLang = 'ru';
-  function toggleLanguage(){
-    currentLang = currentLang === 'en' ? 'ru' : 'en';
-    document.querySelector('.lang-toggle').textContent = currentLang === 'en' ? 'RU' : 'EN';
+
+  const PARAS = {
+    ru:[
+      'В продолжение рассказа хочу поделиться своими другими сферами интересов. Я уже упоминала, что не раз участвовала в фотосессиях и съемках. Однажды даже побывав на роли продюссера съемки.',
+      'В вышке я также модульно пробовала каллиграфию, саунд-арт, шитье, создание объектов из пластика, линогравюру, цианотипию, штамповку, керамику, гипс, формовку. Помимо прочего изучала джаз.',
+      'Из того, что я осваивала дома — бижутерия, бисер, различны украшения из проволоки, вышивка бисером, вязание, плетение фенечек (в школе делали ковры кстати и помимо всего прочего вязали себе жилетки, шапки, пеналы и даже шили одежду).',
+      'Забыла сказать — умею работать с деревом, у нас был труд в школе. Вырезала кучу посуды маме из дерева, почти сделала навесную полку. С инструментами обращаться умею.',
+      'Ковала меч.',
+      'Умею играть на барабанной установке вполне сносно. Играла в школе в рок группе.',
+      'На протяжении всей школы я играла в эвритмических спектаклях (на первых ролях).',
+      'Неоднократно бывала в деревне, при запросе могу подоить корову.',
+      'Играю на блок флейте!! Могу импровизировать)',
+      'А вообще я художник, у меня с трёх лет в руках кисть.',
+      'Если осталось ещё что-то, что я не охватила в своих навыках — дайте 2 дня. Будет.'
+    ],
+    en:[
+      'To continue the story, I want to share my other fields of interest. I already mentioned that I took part in photoshoots and filming more than once. Once I even acted as a producer of a shoot.',
+      'At university I also tried calligraphy, sound art, sewing, making objects from plastic, linocut, cyanotype, stamping, ceramics, plaster and moulding as modules. Among other things I studied jazz.',
+      'Of what I taught myself at home — costume jewellery, beadwork, various wire ornaments, bead embroidery, knitting, weaving friendship bracelets (at school we made carpets, by the way, and besides everything else knitted ourselves vests, hats, pencil cases and even sewed clothes).',
+      'I forgot to mention — I can work with wood, we had craft classes at school. I carved a lot of tableware for my mum out of wood and nearly finished a wall shelf. I know how to handle tools.',
+      'I forged a sword.',
+      'I can play the drum kit quite decently. I played in a rock band at school.',
+      'Throughout my school years I acted in eurythmy plays (in the leading roles).',
+      'I have been to the countryside many times; on request I can milk a cow.',
+      'I play the recorder!! I can improvise)',
+      'And in general I am an artist — I have had a brush in my hand since I was three.',
+      'If there is anything else I have not covered among my skills — give me 2 days. It will be there.'
+    ]
+  };
+
+  const hintText = {
+    ru:{ start:'Нажмите на конверт', sheet:'Нажмите на лист', last:'Ещё нажатие — закрыть' },
+    en:{ start:'Click the envelope', sheet:'Click the sheet', last:'One more tap — close' }
+  };
+
+  function applyLang(){
+    document.querySelectorAll('[data-ru]').forEach(el=>{
+      const t = el.getAttribute('data-' + currentLang);
+      if(t !== null) el.innerHTML = t;
+    });
+    document.getElementById('langBtn').textContent = currentLang === 'en' ? 'RU' : 'EN';
     document.documentElement.lang = currentLang;
+    renderSkills();
+    renderLetter();
+    hint.textContent = hintText[currentLang][opened ? 'sheet' : 'start'];
+    // после смены языка пересчитываем нити и стык
+    setTimeout(()=>{ drawThreads(); placeSeam(); }, 60);
   }
 
+  document.getElementById('langBtn').addEventListener('click', ()=>{
+    currentLang = currentLang === 'ru' ? 'en' : 'ru';
+    applyLang();
+  });
+
   /* ═════════ НИТИ ═════════
-     Углы прямоугольников текста сортируются по углу вокруг головы
-     девочки — получается звёздчатый многоугольник, который не может
-     пересечь себя. Значит, нить нигде не самопересекается. */
+     Считаются по фактическому положению блоков — работает и на
+     телефоне. Углы текстовых прямоугольников сортируются по углу
+     вокруг головы фигуры: звёздчатый многоугольник не может
+     пересечь себя, поэтому нить нигде не самопересекается. */
   const canvas  = document.getElementById('pathCanvas');
   const threads = document.getElementById('threads');
   const girlEl  = document.getElementById('girl');
@@ -450,9 +484,8 @@
   }
 
   function drawThreads(){
-    if(window.innerWidth <= 900){ threads.innerHTML = ''; return; }
     const cr = canvas.getBoundingClientRect();
-    if(!cr.width || !cr.height) return;
+    if(!cr.width || !cr.height){ threads.innerHTML=''; return; }
 
     const W = cr.width, H = cr.height;
     threads.setAttribute('viewBox', `0 0 ${W} ${H}`);
@@ -461,7 +494,9 @@
     const hx = gr.left + gr.width * 0.5 - cr.left;
     const hy = gr.top + gr.height * 0.12 - cr.top;
 
-    const PAD = 17;
+    const isMobile = window.innerWidth <= 900;
+    const PAD = isMobile ? 12 : 17;
+
     const boxes = [];
     canvas.querySelectorAll('.pb').forEach(el=>{
       const r = el.getBoundingClientRect();
@@ -481,41 +516,37 @@
     });
     pts.sort((p,q)=> p.a - q.a);
 
+    const jitter = isMobile ? 7 : 10;
     let d = `M ${hx.toFixed(1)} ${hy.toFixed(1)}`;
     pts.forEach((p,i)=>{
-      d += ` L ${(p.x + (rnd(i*3.7+1.3)-0.5)*10).toFixed(1)} ${(p.y + (rnd(i*5.9+2.7)-0.5)*10).toFixed(1)}`;
+      d += ` L ${(p.x + (rnd(i*3.7+1.3)-0.5)*jitter).toFixed(1)} ${(p.y + (rnd(i*5.9+2.7)-0.5)*jitter).toFixed(1)}`;
     });
     d += ' Z';
 
     let html = `<path d="${d}" fill="none" stroke="#1B1208"
-      stroke-width="1.5" stroke-linejoin="miter"
+      stroke-width="${isMobile ? 1.3 : 1.5}" stroke-linejoin="miter"
       stroke-linecap="round" opacity="0.68"/>`;
 
     boxes.forEach(b=>{
-      html += `<circle cx="${b.cx.toFixed(1)}" cy="${(b.top - PAD + 2).toFixed(1)}" r="4.6" fill="#1B1208" opacity="0.85"/>`;
+      html += `<circle cx="${b.cx.toFixed(1)}" cy="${(b.top - PAD + 2).toFixed(1)}"
+        r="${isMobile ? 4 : 4.6}" fill="#1B1208" opacity="0.85"/>`;
     });
 
     threads.innerHTML = html;
   }
 
-  window.addEventListener('load', ()=>setTimeout(drawThreads, 200));
-  window.addEventListener('resize', ()=>{ clearTimeout(window._t); window._t = setTimeout(drawThreads, 250); });
-  if(document.fonts && document.fonts.ready) document.fonts.ready.then(()=>setTimeout(drawThreads, 120));
-
   /* ═════════ ПАПКИ ═════════ */
   const GROUPS = [
-    { label:'Дизайн',  items:['Photoshop','Illustrator','Indesign','Figma','Tilda','Readymag'] },
-    { label:'Съемки',  items:['Lightroom','Premiere','After Effects'] },
-    { label:'3-д',     items:['Blender','Cinema 4D'] },
-    { label:'Саунд',   items:['Ableton'] }
+    { ru:'Дизайн', en:'Design', items:['Photoshop','Illustrator','Indesign','Figma','Tilda','Readymag'] },
+    { ru:'Съемки', en:'Shooting', items:['Lightroom','Premiere','After Effects'] },
+    { ru:'3-д',    en:'3D',      items:['Blender','Cinema 4D'] },
+    { ru:'Саунд',  en:'Sound',   items:['Ableton'] }
   ];
 
-  /* силуэт папки: язычок слева, скруглённые углы, фаска слева */
   const FOLDER_PATH = "M14 190 V76 Q14 66 24 66 L44 48 V26 Q44 14 56 14 " +
                       "H158 Q170 14 170 26 V52 L178 62 H296 Q306 62 306 72 " +
                       "V180 Q306 190 296 190 Z";
 
-  /* цвета прищепок — как на фото с канцелярией */
   const CLIP_COLORS = ['#8FCB86','#C9CCD0','#2B2B2B','#E5C063','#F0B9CE',
                        '#A8D8DE','#D9433E','#6E4B2A','#E8DCC0','#7EA8D8'];
 
@@ -545,40 +576,39 @@
     </svg>`;
   }
 
-  document.getElementById('skillsFolders').innerHTML = GROUPS.map((g, gi)=>{
-    const n = g.items.length;
+  function renderSkills(){
+    document.getElementById('skillsFolders').innerHTML = GROUPS.map((g, gi)=>{
+      const n = g.items.length;
+      const sheets = g.items.map((name, i)=>{
+        const tx  = -((n-1) * 7) / 2 + i * 7;
+        const ty  = -58 - i * 28;
+        const rot = -4 + i * 2.2;
+        const col = CLIP_COLORS[(gi * 2 + i) % CLIP_COLORS.length];
+        return `<span class="skill-sheet"
+                   style="--i:${i};--tx:${tx.toFixed(1)}px;--ty:${ty.toFixed(1)}px;--rot:${rot.toFixed(1)}deg">
+                   ${clipSVG(col)}${name}
+                 </span>`;
+      }).join('');
 
-    /* каскад: листы уходят вверх лесенкой, поэтому читаются все */
-    const sheets = g.items.map((name, i)=>{
-      const tx  = -((n-1) * 7) / 2 + i * 7;
-      const ty  = -58 - i * 28;
-      const rot = -4 + i * 2.2;
-      const col = CLIP_COLORS[(gi * 2 + i) % CLIP_COLORS.length];
-      return `<span class="skill-sheet"
-                 style="--i:${i};--tx:${tx.toFixed(1)}px;--ty:${ty.toFixed(1)}px;--rot:${rot.toFixed(1)}deg">
-                 ${clipSVG(col)}${name}
-               </span>`;
+      const label = currentLang === 'en' ? g.en : g.ru;
+
+      return `
+        <div class="skill-group">
+          <div class="folder">
+            <div class="folder-sheets">${sheets}</div>
+            ${folderSVG(gi)}
+            <div class="folder-label">${label}</div>
+          </div>
+          <div class="skill-list">${g.items.join(' · ')}</div>
+        </div>`;
     }).join('');
 
-    return `
-      <div class="skill-group">
-        <div class="folder">
-          <div class="sheets">${sheets}</div>
-          ${folderSVG(gi)}
-          <div class="folder-label">${g.label}</div>
-        </div>
-        <div class="skill-list">${g.items.join(' · ')}</div>
-      </div>`;
-  }).join('');
+    document.querySelectorAll('.folder').forEach(f=>{
+      f.addEventListener('click', ()=> f.classList.toggle('open'));
+    });
+  }
 
-  /* на тач-устройствах наведения нет — открываем по тапу */
-  document.querySelectorAll('.folder').forEach(f=>{
-    f.addEventListener('click', ()=> f.classList.toggle('open'));
-  });
-
-  /* ═════════ СТЫК ПОЛОС ═════════
-     Ставим папки ровно на границу белого и синего: измеряем
-     реальный центр папки и туда подставляем --seam. */
+  /* ═════════ СТЫК ПОЛОС ═════════ */
   function placeSeam(){
     const band = document.getElementById('skillsBand');
     const fol  = document.querySelector('#skillsFolders .folder');
@@ -589,53 +619,46 @@
     band.style.setProperty('--seam', seam.toFixed(1) + 'px');
   }
 
-  window.addEventListener('load', ()=>setTimeout(placeSeam, 120));
-  window.addEventListener('resize', ()=>{ clearTimeout(window._s); window._s = setTimeout(placeSeam, 180); });
-  if(document.fonts && document.fonts.ready) document.fonts.ready.then(()=>setTimeout(placeSeam, 60));
-
   /* ═════════ ПИСЬМО ═════════ */
-  const PARAS = [
-    'В продолжение рассказа хочу поделиться своими другими сферами интересов. Я уже упоминала, что не раз участвовала в фотосессиях и съемках. Однажды даже побывав на роли продюссера съемки.',
-    'В вышке я также модульно пробовала каллиграфию, саунд-арт, шитье, создание объектов из пластика, линогравюру, цианотипию, штамповку, керамику, гипс, формовку. Помимо прочего изучала джаз.',
-    'Из того, что я осваивала дома — бижутерия, бисер, различны украшения из проволоки, вышивка бисером, вязание, плетение фенечек (в школе делали ковры кстати и помимо всего прочего вязали себе жилетки, шапки, пеналы и даже шили одежду).',
-    'Забыла сказать — умею работать с деревом, у нас был труд в школе. Вырезала кучу посуды маме из дерева, почти сделала навесную полку. С инструментами обращаться умею.',
-    'Ковала меч.',
-    'Умею играть на барабанной установке вполне сносно. Играла в школе в рок группе.',
-    'На протяжении всей школы я играла в эвритмических спектаклях (на первых ролях).',
-    'Неоднократно бывала в деревне, при запросе могу подоить корову.',
-    'Играю на блок флейте!! Могу импровизировать)',
-    'А вообще я художник, у меня с трёх лет в руках кисть.',
-    'Если осталось ещё что-то, что я не охватила в своих навыках — дайте 2 дня. Будет.'
-  ];
+  const sheetsBox = document.getElementById('letterSheets');
+  let opened = false, idx = -1;
 
-  const sheetsBox = document.getElementById('sheets');
-  sheetsBox.innerHTML = PARAS.map((t,i)=>`
-    <div class="sheet" data-i="${i}">
-      <p>${t}</p>
-      <span class="sheet-num">${i+1} / ${PARAS.length}</span>
-    </div>`).join('');
+  function renderLetter(){
+    sheetsBox.innerHTML = PARAS[currentLang].map((t,i)=>`
+      <div class="sheet" data-i="${i}">
+        <p>${t}</p>
+        <span class="sheet-num">${i+1} / ${PARAS[currentLang].length}</span>
+      </div>`).join('');
+    // если письмо уже открыто — оставляем тот же лист
+    if(opened && idx >= 0){
+      sheetsBox.querySelectorAll('.sheet').forEach(s=>{
+        s.classList.toggle('active', +s.dataset.i === idx);
+      });
+    }
+  }
 
   const wrap = document.getElementById('envelopeWrap');
   const hint = document.getElementById('letterHint');
-  let opened = false, idx = -1;
 
   wrap.addEventListener('click', ()=>{
+    const L = hintText[currentLang];
+    const total = PARAS[currentLang].length;
     if(!opened){
       wrap.classList.add('open');
       opened = true; idx = 0;
       showSheet(0);
-      hint.textContent = 'Нажмите на лист';
+      hint.textContent = L.sheet;
       return;
     }
-    if(idx < PARAS.length - 1){
+    if(idx < total - 1){
       idx++;
       showSheet(idx);
-      hint.textContent = (idx === PARAS.length - 1) ? 'Ещё нажатие — закрыть' : 'Нажмите на лист';
+      hint.textContent = (idx === total - 1) ? L.last : L.sheet;
     } else {
       sheetsBox.querySelectorAll('.sheet').forEach(s=>s.classList.remove('active'));
       wrap.classList.remove('open');
       opened = false; idx = -1;
-      hint.textContent = 'Нажмите на конверт';
+      hint.textContent = L.start;
     }
   });
 
@@ -644,6 +667,17 @@
       s.classList.toggle('active', +s.dataset.i === i);
     });
   }
+
+  /* ═════════ СТАРТ ═════════ */
+  function refreshAll(){ drawThreads(); placeSeam(); }
+
+  renderSkills();
+  renderLetter();
+
+  window.addEventListener('load', ()=>setTimeout(refreshAll, 180));
+  window.addEventListener('resize', ()=>{ clearTimeout(window._r); window._r = setTimeout(refreshAll, 200); });
+  window.addEventListener('orientationchange', ()=>setTimeout(refreshAll, 300));
+  if(document.fonts && document.fonts.ready) document.fonts.ready.then(()=>setTimeout(refreshAll, 120));
 </script>
 </body>
 </html>
