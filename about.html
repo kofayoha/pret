@@ -6,12 +6,6 @@
 <title>О себе — prët</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<!--
-  ЛАТИНИЦА ─ Averia Serif Libre Italic (как просили)
-  КИРИЛЛИЦА ─ аналог: PT Serif Caption Italic
-  У Averia Serif Libre нет кириллических глифов, поэтому в стеке
-  вторым идёт PT Serif Caption — та же тёплая антиква с курсивом.
--->
 <link href="https://fonts.googleapis.com/css2?family=Averia+Serif+Libre:ital,wght@0,400;1,400&family=PT+Serif+Caption:ital@0;1&family=Lora:ital,wght@0,400;0,500;1,400;1,500&family=IBM+Plex+Sans:wght@400;500;600&family=Caveat:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
   :root{
@@ -20,12 +14,19 @@
     --cream:#FFF9F5;
     --ink:#2B1810;
     --thread:#1B1208;
-    --folder-milk:#F5E9CE;
-    --folder-dot:#14100E;
-    --folder-back:#3A1016;
+
+    /* крафт как на фото папки */
+    --kraft:#CE8467;
+    --kraft-dark:#B86F53;
+    --kraft-light:#D9A183;
+
     --display:'Averia Serif Libre','PT Serif Caption','Lora',Georgia,serif;
     --letter:'PT Serif Caption','Lora',Georgia,serif;
     --hand:'Caveat','Comic Sans MS',cursive;
+    --ui:'IBM Plex Sans',Arial,sans-serif;
+
+    /* зерно бумаги — переиспользуется в письме */
+    --noise:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='140' height='140'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3'/><feColorMatrix type='saturate' values='0'/></filter><rect width='140' height='140' filter='url(%23n)' opacity='0.5'/></svg>");
   }
   *{margin:0;padding:0;box-sizing:border-box}
   html{scroll-behavior:smooth}
@@ -48,20 +49,19 @@
   nav{display:flex;gap:36px;align-items:center}
   nav a{
     text-decoration:none;color:var(--ink);font-size:13px;letter-spacing:.12em;
-    text-transform:uppercase;font-weight:500;font-family:'IBM Plex Sans',Arial,sans-serif;
+    text-transform:uppercase;font-weight:500;font-family:var(--ui);
   }
   nav a:hover{opacity:.6}
   .lang-toggle{
     cursor:pointer;font-size:14px;padding:6px 12px;
     border:1px solid var(--ink);border-radius:4px;
-    font-family:'IBM Plex Sans',sans-serif;font-weight:500;
+    font-family:var(--ui);font-weight:500;
     transition:background .3s, color .3s;
   }
   .lang-toggle:hover{background:var(--ink);color:var(--cream)}
 
   .about-hero{
-    min-height:60vh;
-    background:var(--navy);
+    min-height:60vh;background:var(--navy);
     display:flex;align-items:center;justify-content:center;
     padding:120px 48px 80px;
   }
@@ -72,268 +72,224 @@
   }
 
   /* ═══════════ ПУТЬ ═══════════ */
-  .path-section{
-    background:var(--cream);
-    padding:70px 48px 40px;
-    position:relative;
-  }
-  .path-canvas{
-    position:relative;
-    max-width:1250px;
-    margin:0 auto;
-    height:1680px;
-  }
-  /* нить — ПОД текстом */
+  .path-section{background:var(--cream);padding:70px 48px 40px;position:relative}
+  .path-canvas{position:relative;max-width:1250px;margin:0 auto;height:1680px}
   .threads{
-    position:absolute;inset:0;
-    width:100%;height:100%;
+    position:absolute;inset:0;width:100%;height:100%;
     pointer-events:none;z-index:1;overflow:visible;
   }
   .pb{
-    position:absolute;
-    left:var(--x);top:var(--y);width:var(--w);
-    font-family:var(--display);
-    font-size:15px;
-    line-height:1.5;
-    color:var(--ink);
-    z-index:2;
-    /* кремовая подложка: если нить пройдёт рядом, она уйдёт за текст */
-    background:var(--cream);
+    position:absolute;left:var(--x);top:var(--y);width:var(--w);
+    font-family:var(--display);font-size:15px;line-height:1.5;
+    color:var(--ink);z-index:2;background:var(--cream);
   }
   .pb.lead{font-size:18px;line-height:1.45}
-  .pb .big{
-    font-style:italic;
-    font-size:1.4em;
-    color:var(--navy);
-    line-height:1;
-  }
+  .pb .big{font-style:italic;font-size:1.4em;color:var(--navy);line-height:1}
   .pb .sm{font-size:.88em;opacity:.7}
 
-  .girl{
-    position:absolute;right:4%;bottom:0;
-    width:clamp(200px,23vw,320px);
-    z-index:2;
-  }
+  .girl{position:absolute;right:4%;bottom:0;width:clamp(200px,23vw,320px);z-index:2}
   .girl img{width:100%;height:auto;display:block}
   .girl .cap{
-    font-family:var(--hand);
-    font-size:clamp(20px,2vw,30px);
+    font-family:var(--hand);font-size:clamp(20px,2vw,30px);
     color:var(--navy);text-align:center;margin-top:4px;
   }
 
-  /* ═══════════ НАВЫКИ ═══════════ */
-  .skills{background:var(--cream);padding:70px 48px 110px}
+  /* ═══════════ НАВЫКИ ═══════════
+     Полоса, в которой снизу сидит синий блок. Папки стоят
+     ровно на линии стыка: --seam вычисляется скриптом по
+     фактической высоте папки, поэтому стык всегда по центру. */
+  .skills{background:var(--cream);padding:60px 48px 0}
   .skills h2{
     font-size:clamp(40px,6vw,72px);
     font-style:italic;font-weight:400;font-family:var(--display);
-    margin-bottom:70px;text-align:center;
+    margin-bottom:20px;text-align:center;
   }
-  /* сетка групп: 4 папки в ряд, сверху запас под вылетающие листы */
+  .skills-band{
+    position:relative;
+    padding:270px 0 120px;      /* 270 — запас под вылетающие листы */
+    background-color:var(--cream);
+    background-image:linear-gradient(var(--blue),var(--blue));
+    background-size:100% calc(100% - var(--seam,320px));
+    background-position:0 var(--seam,320px);
+    background-repeat:no-repeat;
+  }
   .skills-folders{
     display:grid;
-    grid-template-columns:repeat(4, 1fr);
-    gap:70px 44px;
+    grid-template-columns:repeat(4,1fr);
+    gap:0 46px;
     max-width:1180px;
-    margin:200px auto 0;
+    margin:0 auto;
+    position:relative;
+    z-index:2;
   }
   .skill-group{position:relative}
+
+  /* ── папка ── */
   .folder{
     position:relative;
-    aspect-ratio:1/0.94;
+    aspect-ratio:1.32/1;
     cursor:pointer;
   }
-  /* веер листов: между задней и передней частью папки */
+  .folder-shape{
+    position:absolute;inset:0;
+    width:100%;height:100%;display:block;
+    filter:
+      drop-shadow(-7px 5px 0 rgba(58,29,19,.20))
+      drop-shadow(0 16px 26px rgba(58,29,19,.20));
+    transition:transform .4s cubic-bezier(.34,1.1,.5,1);
+    z-index:2;
+  }
+  .folder:hover .folder-shape,
+  .folder.open  .folder-shape{transform:translateY(-10px) rotate(-1.2deg)}
+
+  /* надпись на папке — тем же шрифтом, что заголовок */
+  .folder-label{
+    position:absolute;
+    left:50%;top:65%;
+    transform:translate(-50%,-50%);
+    font-family:var(--display);
+    font-style:italic;
+    font-size:clamp(22px,2.5vw,34px);
+    color:#3A1D13;
+    text-align:center;
+    width:76%;
+    line-height:1;
+    pointer-events:none;
+    z-index:3;
+    transition:transform .4s cubic-bezier(.34,1.1,.5,1);
+  }
+  .folder:hover .folder-label,
+  .folder.open  .folder-label{transform:translate(-50%,-50%) translateY(-10px) rotate(-1.2deg)}
+
+  /* ── листы с прищепками ──
+     Каскад: каждый следующий лист выше и чуть правее, поэтому
+     даже 6 листов «Дизайна» читаются целиком, не перекрываясь. */
   .sheets{
     position:absolute;
-    left:50%;top:26%;
+    left:50%;top:0;
     width:100%;
-    transform:translateX(-50%);
     z-index:1;
     pointer-events:none;
   }
   .skill-sheet{
     position:absolute;
-    left:50%;bottom:0;
-    width:70%;
-    display:flex;align-items:center;
-    padding:9px 10px 9px 25px;
-    background:#FBEFD6;
+    left:50%;top:0;
+    width:82%;
+    display:flex;align-items:center;gap:8px;
+    padding:7px 10px 7px 9px;
+    background:#FBF4E6;
+    background-image:var(--noise);
+    background-blend-mode:multiply;
+    background-size:140px 140px;
     border-radius:3px;
-    font-family:var(--ui);
-    font-size:11.5px;
-    letter-spacing:.01em;
+    font-family:var(--display);
+    font-style:italic;
+    font-size:clamp(12px,1.1vw,15px);
     color:var(--ink);
-    white-space:nowrap;overflow:hidden;
-    box-shadow:0 3px 9px rgba(43,24,16,.20);
-    transform:translate(-50%, 4px) rotate(0deg);
+    white-space:nowrap;
+    box-shadow:0 3px 9px rgba(58,29,19,.20);
     opacity:0;
-    transition:opacity .28s ease, transform .5s cubic-bezier(.34,1.3,.5,1);
-    transition-delay:calc(var(--i) * 45ms);
+    transform:translate(-50%, 14px) rotate(0deg);
+    transition:opacity .26s ease, transform .52s cubic-bezier(.34,1.28,.5,1);
+    transition-delay:calc(var(--i) * 55ms);
   }
   .folder:hover .skill-sheet,
   .folder.open  .skill-sheet{
     opacity:1;
     transform:translate(calc(-50% + var(--tx)), var(--ty)) rotate(var(--rot));
   }
-  /* прищепка слева на листе */
   .clip{
-    position:absolute;
-    left:7px;top:50%;
-    width:13px;height:13px;
-    transform:translateY(-50%) rotate(-14deg);
-    color:#8A7A66;
-    flex:none;
+    width:15px;height:20px;flex:none;display:block;
   }
-  /* список — только для телефона */
-  .skill-list{display:none}
-  /* задняя часть — бордовая, с плечом-язычком сверху */
-  .folder-back{
-    position:absolute;inset:0;
-    background:var(--folder-back);
-    clip-path:polygon(
-      0% 20%, 22% 20%, 30% 7%, 56% 7%, 64% 20%,
-      100% 20%, 100% 100%, 0% 100%
-    );
-    border-radius:16px;
-  }
-  /* передняя часть — молочная в чёрный горошек, скошенная трапеция */
-  .folder-front{
-    position:absolute;
-    left:4%;right:3%;
-    top:26%;bottom:3%;
-    background:var(--folder-milk);
-    background-image:radial-gradient(circle, var(--folder-dot) 5px, transparent 5.1px);
-    background-size:29px 29px;
-    background-position:7px 5px;
-    border-radius:11px;
-    box-shadow:0 10px 22px rgba(43,24,16,.22);
-    transition:transform .35s ease;
-    z-index:2;
-    clip-path:polygon(7% 0, 100% 0, 100% 100%, 0 100%);
-  }
-  .folder:hover .folder-front,
-  .folder.open  .folder-front{transform:translateY(-12px) rotate(-1deg)}
-  .folder-label{
-    position:absolute;
-    left:50%;top:62%;
-    transform:translate(-50%,-50%);
-    font-family:var(--hand);
-    font-size:clamp(18px,1.8vw,25px);
-    font-weight:700;
-    color:var(--ink);
-    text-align:center;
-    width:82%;
-    line-height:1.05;
-    pointer-events:none;
-    z-index:4;
-    transition:transform .35s ease;
-    text-shadow:0 0 7px rgba(245,233,206,.95), 0 0 7px rgba(245,233,206,.95);
-  }
-  .folder:hover .folder-label,
-  .folder.open  .folder-label{transform:translate(-50%,-50%) translateY(-12px)}
-  /* ── вторая группа эффектов заменена: листы с прищепками ── */
+
+  .skill-list{display:none}   /* только для телефона */
 
   /* ═══════════ ПИСЬМО ═══════════ */
   .extras{
     background:var(--navy);
-    padding:380px 48px 150px;
+    padding:230px 48px 150px;
     display:flex;justify-content:center;position:relative;
   }
   .letter-scene{
     position:relative;width:min(720px,100%);
     display:flex;flex-direction:column;align-items:center;
   }
-  /* «в дополнение» — крупный ЗАГОЛОВОК */
   .letter-title{
     font-family:var(--display);
     font-style:italic;
     font-size:clamp(42px,6.5vw,88px);
     color:var(--cream);
     line-height:1;
-    margin-bottom:44px;
+    margin-bottom:40px;
     text-align:center;
   }
   .envelope-wrap{position:relative;width:100%;cursor:pointer;perspective:1400px}
   .envelope{position:relative;width:100%;aspect-ratio:1.55/1}
-  .sheets{
-    position:absolute;left:50%;bottom:100%;
-    transform:translateX(-50%);
-    width:84%;z-index:1;
-  }
+  .sheets{}
+
   .sheet{
     position:absolute;bottom:0;left:0;width:100%;
-    background:var(--cream);border-radius:8px;
+    background:#F6EBD8;
+    background-image:var(--noise);
+    background-blend-mode:multiply;
+    background-size:140px 140px;
+    border-radius:4px;
     padding:38px 40px 46px;
-    box-shadow:0 14px 34px rgba(0,0,0,.35);
+    box-shadow:0 14px 34px rgba(0,0,0,.38);
     opacity:0;transform:translateY(70px);
     transition:opacity .45s ease, transform .5s cubic-bezier(.34,1.25,.5,1);
     pointer-events:none;
   }
   .sheet.active{opacity:1;transform:translateY(34px);pointer-events:auto}
-  /* ШРИФТ ПИСЬМА — спокойная читаемая антиква */
-  .sheet p{
-    font-family:var(--letter);
-    font-size:clamp(15px,1.6vw,19px);
-    line-height:1.75;
-    color:var(--ink);
-  }
+  .sheet p{font-family:var(--letter);font-size:clamp(15px,1.6vw,19px);line-height:1.75;color:var(--ink)}
   .sheet-num{
     position:absolute;right:26px;bottom:14px;
-    font-family:'IBM Plex Sans',sans-serif;font-size:11px;
+    font-family:var(--ui);font-size:11px;
     letter-spacing:.12em;color:var(--ink);opacity:.35;
   }
+
+  /* конверт — тот же крафт, что папка */
   .env-body{
     position:absolute;inset:0;
-    background:#EFE4D2;border-radius:10px;
-    box-shadow:0 24px 60px rgba(0,0,0,.45);
+    background:#D9A183;
+    background-image:var(--noise);
+    background-blend-mode:multiply;
+    background-size:140px 140px;
+    border-radius:6px;
+    box-shadow:0 22px 54px rgba(0,0,0,.45);
     overflow:hidden;z-index:3;
   }
   .env-body::before{
     content:'';position:absolute;inset:0;
     background:
-      linear-gradient(to bottom right, transparent 49.5%, #DCCBB2 49.9%, #DCCBB2 50.2%, transparent 50.6%),
-      linear-gradient(to bottom left,  transparent 49.5%, #DCCBB2 49.9%, #DCCBB2 50.2%, transparent 50.6%);
-    opacity:.9;
+      linear-gradient(to bottom right, transparent 49.5%, rgba(120,72,48,.30) 49.9%, rgba(120,72,48,.30) 50.2%, transparent 50.6%),
+      linear-gradient(to bottom left,  transparent 49.5%, rgba(120,72,48,.30) 49.9%, rgba(120,72,48,.30) 50.2%, transparent 50.6%);
   }
   .env-flap{
     position:absolute;top:0;left:0;width:100%;height:58%;
-    background:#E2D3BA;
+    background:#C88F6F;
+    background-image:var(--noise);
+    background-blend-mode:multiply;
+    background-size:140px 140px;
     clip-path:polygon(0 0, 50% 100%, 100% 0);
     transform-origin:top center;
     transition:transform .7s cubic-bezier(.4,0,.2,1);
     z-index:4;
-    box-shadow:0 4px 14px rgba(0,0,0,.12);
+    box-shadow:0 4px 14px rgba(0,0,0,.14);
   }
   .envelope-wrap.open .env-flap{transform:rotateX(180deg);z-index:0}
-  /* на самом конверте — от руки, коротко */
-  .env-label{
-    position:absolute;left:50%;top:72%;
-    transform:translate(-50%,-50%) rotate(-3deg);
-    font-family:var(--hand);
-    font-size:clamp(24px,3.2vw,44px);
-    font-weight:700;color:var(--navy);
-    z-index:5;transition:opacity .4s ease;
-    pointer-events:none;white-space:nowrap;
-  }
-  .envelope-wrap.open .env-label{opacity:0}
-  /* подсказка — ДРУГИМ шрифтом (IBM Plex Sans, капс, разрядка) */
+
   .letter-hint{
-    font-family:'IBM Plex Sans',sans-serif;
-    font-size:13px;
-    letter-spacing:.2em;
-    text-transform:uppercase;
-    font-weight:500;
+    font-family:var(--ui);
+    font-size:13px;letter-spacing:.2em;text-transform:uppercase;font-weight:500;
     color:var(--cream);opacity:.55;
     margin-top:50px;text-align:center;
   }
 
   footer{background:var(--cream);padding:60px 48px 40px;text-align:center}
-  footer p{
-    font-size:14px;opacity:.6;font-family:'IBM Plex Sans',sans-serif;
-    letter-spacing:.08em;text-transform:uppercase;
-  }
+  footer p{font-size:14px;opacity:.6;font-family:var(--ui);letter-spacing:.08em;text-transform:uppercase}
 
-  /* ═══════════ МОБИЛЬНАЯ ═══════════ */
+  /* ══════════════ МОБИЛЬНАЯ ══════════════ */
   @media(max-width:900px){
     header{padding:14px 20px}
     .logo{font-size:20px}
@@ -348,37 +304,30 @@
     .threads{display:none}
     .pb,.pb.lead{
       position:static;width:auto !important;
-      margin-bottom:30px;font-size:15px;
-      background:transparent;
+      margin-bottom:30px;font-size:15px;background:transparent;
     }
     .pb.lead{font-size:17px}
     .girl{position:static;width:min(56%,240px);margin:20px 0 0 auto}
 
-    .skills{padding:30px 20px 70px}
-    .skills h2{margin-bottom:40px}
+    .skills{padding:30px 20px 0}
+    .skills h2{margin-bottom:16px}
+    .skills-band{padding:60px 0 70px}
     .skills-folders{
-      grid-template-columns:repeat(2, 1fr);
-      gap:34px 20px;
-      margin:120px auto 0;
+      grid-template-columns:repeat(2,1fr);
+      gap:40px 20px;
     }
-    .folder-label{font-size:clamp(16px,4.4vw,21px)}
-    /* на телефоне листы заменяются простым списком под папкой */
+    /* листы на телефоне заменяются списком под папкой */
     .skill-sheet{display:none}
+    .folder-label{font-size:clamp(18px,4.8vw,24px)}
     .skill-list{
-      display:block;
-      margin-top:14px;
-      font-family:var(--ui);
-      font-size:12px;
-      line-height:1.75;
-      color:var(--ink);
-      opacity:.75;
-      text-align:center;
+      display:block;margin-top:12px;
+      font-family:var(--ui);font-size:12px;line-height:1.7;
+      color:var(--cream);opacity:.85;text-align:center;
     }
 
-    .extras{padding:270px 18px 90px}
+    .extras{padding:150px 18px 90px}
     .letter-title{margin-bottom:26px;font-size:clamp(30px,9vw,46px)}
     .envelope{aspect-ratio:1.32/1}
-    .sheets{width:90%}
     .sheet{padding:24px 22px 34px}
     .sheet p{font-size:14px;line-height:1.7}
     .sheet.active{transform:translateY(26px)}
@@ -412,43 +361,34 @@
       Почти всю жизнь я&nbsp;проучилась в&nbsp;<span class="big">Вальдорфской школе</span>.
       <span class="sm">Для тех, кто знает&nbsp;— это уже много о&nbsp;чём говорит.</span>
     </p>
-
     <p class="pb" style="--x:31%;--y:12%;--w:19%">
       Начиная с&nbsp;<span class="big">8 класса</span> я&nbsp;делала проекты, связанные с&nbsp;фотографией, танцами и&nbsp;дизайном.
     </p>
-
     <p class="pb" style="--x:60%;--y:2%;--w:22%">
       Дойдя до&nbsp;<span class="big">11 класса</span>, я&nbsp;чётко решила: либо философия, либо дизайн.
       <span class="sm">По&nbsp;подсказке учителя всё-таки пошла на&nbsp;«Коммуникационный дизайн» в&nbsp;ВШЭ и&nbsp;Школу Дизайна.</span>
     </p>
-
     <p class="pb lead" style="--x:2%;--y:26%;--w:24%">
       <span class="big">Поступление.</span> Для подготовки я&nbsp;делала вручную зины и&nbsp;только перед подачей решила быстро освоить Фигму.
       <span class="sm">Проектом был ребрендинг платформы «Bereg»&nbsp;— 75&nbsp;баллов из&nbsp;100.</span>
     </p>
-
     <p class="pb" style="--x:34%;--y:36%;--w:19%">
       Первым проектом на&nbsp;<span class="big">1 курсе</span> стала разработка выдуманного бренда, построенного на&nbsp;принципе передачи энергии,&nbsp;— «chenergy».
     </p>
-
     <p class="pb lead" style="--x:62%;--y:26%;--w:22%">
       К&nbsp;концу <span class="big">2 курса</span> я&nbsp;вдруг поняла, что дизайн&nbsp;— это всегда дизайн чего-то.
       <span class="sm">Дизайн не&nbsp;может быть искусством сам по&nbsp;себе. Я&nbsp;поняла, что хочу создавать это что-то.</span>
     </p>
-
     <p class="pb lead" style="--x:1%;--y:48%;--w:25%">
       Я&nbsp;перешла на&nbsp;<span class="big">современное искусство</span>.
       Единственное, чему я&nbsp;благодарна,&nbsp;— это возможность создать перформанс «Посестрие».
     </p>
-
     <p class="pb" style="--x:33%;--y:58%;--w:20%">
       Через полгода я, сверкая пятками, убежала на&nbsp;<span class="big">«Ивент Дизайн. Театр. Перформанс»</span>.
     </p>
-
     <p class="pb lead" style="--x:9%;--y:70%;--w:24%">
       Я&nbsp;очень благодарна всем случайностям и&nbsp;людям, которые меня туда привели. Всё-таки я&nbsp;рукотворный человек, можно сказать ремесленник. Мне надо быть в&nbsp;контакте.
     </p>
-
     <p class="pb" style="--x:38%;--y:80%;--w:21%">
       <span class="big">Сейчас</span> я&nbsp;аккумулирую ресурс для создания народного фестиваля искусств в&nbsp;качестве диплома.
     </p>
@@ -463,8 +403,11 @@
 <!-- ═══════════ НАВЫКИ ═══════════ -->
 <section class="skills">
   <h2>Навыки</h2>
-  <div class="skills-folders" id="skillsFolders"></div>
+  <div class="skills-band" id="skillsBand">
+    <div class="skills-folders" id="skillsFolders"></div>
+  </div>
 </section>
+
 <!-- ═══════════ ПИСЬМО ═══════════ -->
 <section class="extras">
   <div class="letter-scene">
@@ -474,7 +417,6 @@
         <div class="sheets" id="sheets"></div>
         <div class="env-body"></div>
         <div class="env-flap"></div>
-        <div class="env-label">письмо</div>
       </div>
     </div>
     <div class="letter-hint" id="letterHint">Нажмите на конверт</div>
@@ -495,12 +437,9 @@
   }
 
   /* ═════════ НИТИ ═════════
-     Вокруг головы девочки берутся все углы прямоугольников текста
-     (с отступом PAD), сортируются ПО УГЛУ и соединяются по порядку.
-     Такой многоугольник называется звёздчатым — он ГАРАНТИРОВАННО
-     не имеет самопересечений. Значит, нить нигде не пересечёт себя,
-     какой бы ни была раскладка текста.
-     Неровность даёт лёгкое дрожание каждой вершины (±5 px). */
+     Углы прямоугольников текста сортируются по углу вокруг головы
+     девочки — получается звёздчатый многоугольник, который не может
+     пересечь себя. Значит, нить нигде не самопересекается. */
   const canvas  = document.getElementById('pathCanvas');
   const threads = document.getElementById('threads');
   const girlEl  = document.getElementById('girl');
@@ -527,33 +466,24 @@
     canvas.querySelectorAll('.pb').forEach(el=>{
       const r = el.getBoundingClientRect();
       boxes.push({
-        x:  r.left - cr.left - PAD,
-        y:  r.top  - cr.top  - PAD,
-        w:  r.width  + PAD * 2,
-        h:  r.height + PAD * 2,
-        cx: r.left + r.width / 2 - cr.left,
+        x: r.left - cr.left - PAD, y: r.top - cr.top - PAD,
+        w: r.width + PAD*2,        h: r.height + PAD*2,
+        cx: r.left + r.width/2 - cr.left,
         top: r.top - cr.top
       });
     });
 
-    // 4 угла каждого прямоугольника → в плоский список
     const pts = [];
     boxes.forEach(b=>{
-      [[b.x, b.y], [b.x + b.w, b.y],
-       [b.x + b.w, b.y + b.h], [b.x, b.y + b.h]].forEach(([x, y])=>{
-        pts.push({ x, y, a: Math.atan2(y - hy, x - hx) });
+      [[b.x,b.y],[b.x+b.w,b.y],[b.x+b.w,b.y+b.h],[b.x,b.y+b.h]].forEach(([x,y])=>{
+        pts.push({x, y, a: Math.atan2(y - hy, x - hx)});
       });
     });
+    pts.sort((p,q)=> p.a - q.a);
 
-    // сортировка по углу вокруг головы → звёздчатый многоугольник
-    pts.sort((p, q)=> p.a - q.a);
-
-    // лёгкое дрожание — «аккуратно, но неровно»
     let d = `M ${hx.toFixed(1)} ${hy.toFixed(1)}`;
-    pts.forEach((p, i)=>{
-      const jx = (rnd(i * 3.7 + 1.3) - 0.5) * 10;
-      const jy = (rnd(i * 5.9 + 2.7) - 0.5) * 10;
-      d += ` L ${(p.x + jx).toFixed(1)} ${(p.y + jy).toFixed(1)}`;
+    pts.forEach((p,i)=>{
+      d += ` L ${(p.x + (rnd(i*3.7+1.3)-0.5)*10).toFixed(1)} ${(p.y + (rnd(i*5.9+2.7)-0.5)*10).toFixed(1)}`;
     });
     d += ' Z';
 
@@ -561,10 +491,8 @@
       stroke-width="1.5" stroke-linejoin="miter"
       stroke-linecap="round" opacity="0.68"/>`;
 
-    // кружок-узелок НАД ЗАГОЛОВКОМ каждого блока
     boxes.forEach(b=>{
-      html += `<circle cx="${b.cx.toFixed(1)}" cy="${(b.top - PAD + 2).toFixed(1)}"
-        r="4.6" fill="#1B1208" opacity="0.85"/>`;
+      html += `<circle cx="${b.cx.toFixed(1)}" cy="${(b.top - PAD + 2).toFixed(1)}" r="4.6" fill="#1B1208" opacity="0.85"/>`;
     });
 
     threads.innerHTML = html;
@@ -574,46 +502,69 @@
   window.addEventListener('resize', ()=>{ clearTimeout(window._t); window._t = setTimeout(drawThreads, 250); });
   if(document.fonts && document.fonts.ready) document.fonts.ready.then(()=>setTimeout(drawThreads, 120));
 
-  /* ═════════ ПАПКИ-ГРУППЫ С ЛИСТАМИ ═════════
-     Каждая группа — папка. При наведении из неё вылетает веер
-     листов, на каждом листе прищепка и название программы.
-     Позицию листа в веере считаем по индексу: чем больше листов,
-     тем шире разлёт. */
+  /* ═════════ ПАПКИ ═════════ */
   const GROUPS = [
-    { label:'дизайн', items:['Photoshop','Illustrator','Indesign','Figma','Tilda','Readymag'] },
-    { label:'съемки', items:['Lightroom','Premiere','After Effects'] },
-    { label:'3-д',    items:['Blender','Cinema 4D'] },
-    { label:'саунд',  items:['Ableton'] }
+    { label:'Дизайн',  items:['Photoshop','Illustrator','Indesign','Figma','Tilda','Readymag'] },
+    { label:'Съемки',  items:['Lightroom','Premiere','After Effects'] },
+    { label:'3-д',     items:['Blender','Cinema 4D'] },
+    { label:'Саунд',   items:['Ableton'] }
   ];
 
-  // аккуратная прищепка-канцелярка
-  const CLIP = `<svg class="clip" viewBox="0 0 24 24" fill="none"
-      stroke="currentColor" stroke-width="1.9"
-      stroke-linecap="round" stroke-linejoin="round">
-      <path d="M16.5 7.5v8.2a4.5 4.5 0 0 1-9 0V6.6a2.9 2.9 0 0 1 5.8 0v8.9a1.4 1.4 0 0 1-2.8 0V7.4"/>
-    </svg>`;
+  /* силуэт папки: язычок слева, скруглённые углы, фаска слева */
+  const FOLDER_PATH = "M14 190 V76 Q14 66 24 66 L44 48 V26 Q44 14 56 14 " +
+                      "H158 Q170 14 170 26 V52 L178 62 H296 Q306 62 306 72 " +
+                      "V180 Q306 190 296 190 Z";
 
-  document.getElementById('skillsFolders').innerHTML = GROUPS.map(g=>{
+  /* цвета прищепок — как на фото с канцелярией */
+  const CLIP_COLORS = ['#8FCB86','#C9CCD0','#2B2B2B','#E5C063','#F0B9CE',
+                       '#A8D8DE','#D9433E','#6E4B2A','#E8DCC0','#7EA8D8'];
+
+  function clipSVG(color){
+    return `<svg class="clip" viewBox="0 0 20 26" aria-hidden="true">
+      <path d="M6.2 2.6 C6.2 .6 13.8 .6 13.8 2.6 L13.8 9 L6.2 9 Z"
+            fill="none" stroke="#C3C6CA" stroke-width="1.6" stroke-linejoin="round"/>
+      <path d="M3.4 9 h13.2 l-1.6 15 H5 Z" fill="${color}"/>
+      <path d="M3.4 9 h13.2" stroke="rgba(0,0,0,.2)" stroke-width="1"/>
+    </svg>`;
+  }
+
+  function folderSVG(idx){
+    const cid = 'fc' + idx, gid = 'fg' + idx;
+    return `<svg class="folder-shape" viewBox="0 0 320 200" preserveAspectRatio="none">
+      <defs>
+        <clipPath id="${cid}"><path d="${FOLDER_PATH}"/></clipPath>
+        <filter id="${gid}">
+          <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="3" seed="${idx+3}"/>
+          <feColorMatrix type="saturate" values="0"/>
+        </filter>
+      </defs>
+      <path d="${FOLDER_PATH}" fill="#CE8467"/>
+      <rect x="0" y="0" width="320" height="200" filter="url(#${gid})"
+            clip-path="url(#${cid})" opacity="0.28" style="mix-blend-mode:multiply"/>
+      <path d="${FOLDER_PATH}" fill="none" stroke="rgba(58,29,19,.22)" stroke-width="1.2"/>
+    </svg>`;
+  }
+
+  document.getElementById('skillsFolders').innerHTML = GROUPS.map((g, gi)=>{
     const n = g.items.length;
+
+    /* каскад: листы уходят вверх лесенкой, поэтому читаются все */
     const sheets = g.items.map((name, i)=>{
-      // веер: раскладываем листы от -1 до +1 по горизонтали
-      const mid   = (n - 1) / 2;
-      const rel   = n === 1 ? 0 : (i - mid) / mid;          // -1 … +1
-      const tx    = n === 1 ? 0 : (-64 + (128 / (n - 1)) * i);
-      const ty    = -112 - Math.abs(rel) * 20;              // края веера чуть ниже центра
-      const rot   = n === 1 ? -3 : rel * 13;                // наклон в стороны
+      const tx  = -((n-1) * 7) / 2 + i * 7;
+      const ty  = -58 - i * 28;
+      const rot = -4 + i * 2.2;
+      const col = CLIP_COLORS[(gi * 2 + i) % CLIP_COLORS.length];
       return `<span class="skill-sheet"
                  style="--i:${i};--tx:${tx.toFixed(1)}px;--ty:${ty.toFixed(1)}px;--rot:${rot.toFixed(1)}deg">
-                 ${CLIP}${name}
+                 ${clipSVG(col)}${name}
                </span>`;
     }).join('');
 
     return `
       <div class="skill-group">
         <div class="folder">
-          <div class="folder-back"></div>
           <div class="sheets">${sheets}</div>
-          <div class="folder-front"></div>
+          ${folderSVG(gi)}
           <div class="folder-label">${g.label}</div>
         </div>
         <div class="skill-list">${g.items.join(' · ')}</div>
@@ -624,6 +575,23 @@
   document.querySelectorAll('.folder').forEach(f=>{
     f.addEventListener('click', ()=> f.classList.toggle('open'));
   });
+
+  /* ═════════ СТЫК ПОЛОС ═════════
+     Ставим папки ровно на границу белого и синего: измеряем
+     реальный центр папки и туда подставляем --seam. */
+  function placeSeam(){
+    const band = document.getElementById('skillsBand');
+    const fol  = document.querySelector('#skillsFolders .folder');
+    if(!band || !fol) return;
+    const br = band.getBoundingClientRect();
+    const fr = fol.getBoundingClientRect();
+    const seam = (fr.top - br.top) + fr.height / 2;
+    band.style.setProperty('--seam', seam.toFixed(1) + 'px');
+  }
+
+  window.addEventListener('load', ()=>setTimeout(placeSeam, 120));
+  window.addEventListener('resize', ()=>{ clearTimeout(window._s); window._s = setTimeout(placeSeam, 180); });
+  if(document.fonts && document.fonts.ready) document.fonts.ready.then(()=>setTimeout(placeSeam, 60));
 
   /* ═════════ ПИСЬМО ═════════ */
   const PARAS = [
