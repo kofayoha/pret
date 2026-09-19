@@ -1,21 +1,16 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="ru" style="color-scheme:light !important;background:#FFF9F5 !important">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-<meta name="color-scheme" content="light only">
-<meta name="supported-color-schemes" content="light">
-<meta name="theme-color" content="#0B1E3C">
+<meta name="color-scheme" content="light">
 <title>prët — Мария Балаян | искусство prët</title>
-<meta name="description" content="prët — портфолио Марии Балаян. Художница, дизайнер, перформанс.">
-<meta name="keywords" content="prët, pret, prёt, Мария Балаян, Maria Balayan, искусство prët, художница, дизайнер, перформанс">
-<meta name="author" content="Maria Balayan">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Averia+Serif+Libre:ital,wght@0,400;1,400&family=PT+Serif+Caption:ital@0;1&family=Lora:ital,wght@0,400;0,500;1,400;1,500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
   :root{
-    color-scheme:light only;
+    color-scheme:light !important;
     --navy:#0B1E3C;
     --blue:#4A7BA7;
     --cream:#FFF9F5;
@@ -24,68 +19,61 @@
     --ui:'IBM Plex Sans',Arial,sans-serif;
   }
   *{margin:0;padding:0;box-sizing:border-box}
-  html{scroll-behavior:smooth;color-scheme:light only}
+  html{scroll-behavior:smooth;color-scheme:light !important;background:#FFF9F5 !important}
   body{
     font-family:var(--display);
-    color:var(--ink);background:var(--cream);
+    color:#2B1810 !important;background:#FFF9F5 !important;
     line-height:1.6;overflow-x:hidden;
     -webkit-text-size-adjust:100%;
+    forced-color-adjust:none;
   }
 
-  /* ─────── тёмная тема телефона не перекрашивает сайт ───────
-     Явно возвращаем те же цвета: браузеры Android/iOS в dark mode
-     подменяли фон и текст, из-за чего казалось, что открылась
-     старая версия сайта. */
-  @media (prefers-color-scheme: dark){
-    :root{
-      color-scheme:light only;
-      --navy:#0B1E3C;
-      --blue:#4A7BA7;
-      --cream:#FFF9F5;
-      --ink:#2B1810;
-    }
+  @media(prefers-color-scheme:dark){
+    :root{color-scheme:light !important}
     html,body{background:#FFF9F5 !important;color:#2B1810 !important}
-    .hero,.manifest,.collab{background:#0B1E3C !important}
+    .hero,.manifest,.collab{background:#0B1E3C !important;color:#FFF9F5 !important}
+    .liquid-stage{background:#FFF9F5 !important}
     .artist,.artist-flourish-wrap,.artist-text,footer{background:#4A7BA7 !important}
     .journey{background:#FFF9F5 !important}
-    img,video{filter:none}
-    .ornament,.artist-flourish,.manifest-video{filter:invert(1) !important}
+    .ornament,.artist-flourish{filter:invert(1) brightness(0.9) !important}
+    .manifest-video{filter:invert(1) !important}
+    .morph span{color:#FFFFFF !important}
+    .logo,.nav a,.lang-toggle{color:#FFF9F5 !important}
+    header.scrolled .logo,header.scrolled nav a,header.light .logo,header.light nav a{color:#2B1810 !important}
   }
 
-  /* ── HEADER ── */
   header{
     position:fixed;top:0;left:0;right:0;z-index:100;
     display:flex;justify-content:space-between;align-items:center;
-    padding:24px 48px;transition:background .4s;
+    padding:24px 48px;transition:background .4s,color .4s;
   }
-  header.scrolled{background:rgba(255,249,245,.95);backdrop-filter:blur(8px)}
+  header.scrolled,header.light{background:rgba(255,249,245,.96);backdrop-filter:blur(10px)}
   .logo{
     font-family:var(--display);font-size:32px;font-style:italic;
-    text-decoration:none;color:var(--cream);font-weight:400;transition:color .4s;
+    text-decoration:none;color:var(--cream);font-weight:400;
+    transition:color .4s;
   }
-  header.scrolled .logo{color:var(--ink)}
+  header.scrolled .logo,header.light .logo{color:var(--ink)}
   nav{display:flex;gap:36px;align-items:center}
-  /* колонтитулы — как на странице «о себе» */
   nav a{
     text-decoration:none;color:var(--cream);
     font-family:var(--ui);font-size:13px;font-weight:500;
     letter-spacing:.12em;text-transform:uppercase;
     transition:color .4s;
   }
-  header.scrolled nav a{color:var(--ink)}
+  header.scrolled nav a,header.light nav a{color:var(--ink)}
   nav a:hover{opacity:.6}
   .lang-toggle{
     cursor:pointer;font-size:14px;padding:6px 12px;
     border:1px solid var(--cream);color:var(--cream);border-radius:4px;
     font-family:var(--ui);font-weight:500;background:none;
-    transition:background .3s,color .3s,border-color .4s;
+    transition:all .4s;
   }
-  header.scrolled .lang-toggle{border-color:var(--ink);color:var(--ink)}
-  .lang-toggle:hover{background:var(--ink);color:var(--cream);border-color:var(--ink)}
+  header.scrolled .lang-toggle,header.light .lang-toggle{border-color:var(--ink);color:var(--ink)}
+  .lang-toggle:hover{background:var(--ink);color:var(--cream)}
 
-  /* ═══════════ HERO + МОРФ ЗАГОЛОВКА ═══════════ */
   .hero{
-    min-height:145vh;
+    min-height:100vh;
     background:var(--navy);
     display:flex;flex-direction:column;
     justify-content:center;align-items:flex-start;
@@ -96,20 +84,19 @@
     position:absolute;
     width:clamp(800px,100vw,1400px);
     bottom:-10%;right:-15%;
-    opacity:.40;pointer-events:none;
+    opacity:.38;pointer-events:none;
     will-change:transform,opacity;z-index:1;
     transform-origin:center center;
     filter:invert(1);mix-blend-mode:screen;
   }
 
-  /* сцена морфа: два слова лежат друг на друге и перетекают */
   .morph{
     position:relative;z-index:2;
     width:100%;max-width:1150px;
     height:clamp(150px,20vw,260px);
-    /* гелевое слипание: размытие + порог по альфе */
     filter:url(#gooey);
     pointer-events:none;
+    transition:opacity .6s ease;
   }
   .morph span{
     position:absolute;
@@ -120,12 +107,29 @@
     font-size:clamp(64px,12vw,140px);
     line-height:.92;
     letter-spacing:-.02em;
-    color:#FFFFFF;           /* белый, как просили */
+    color:#FFFFFF;
     white-space:nowrap;
     will-change:transform,opacity,filter;
   }
 
-  /* ── МАНИФЕСТ ── */
+  .liquid-stage{
+    position:fixed;top:0;left:0;right:0;
+    height:100vh;z-index:10;
+    background:#FFF9F5;
+    display:flex;align-items:center;justify-content:center;
+    opacity:0;pointer-events:none;
+    transition:opacity .7s ease;
+  }
+  .liquid-stage.active{opacity:1}
+  .liquid-canvas{
+    width:min(92%,1200px);
+    height:min(70vh,600px);
+    position:relative;
+  }
+  .liquid-svg{
+    position:absolute;inset:0;width:100%;height:100%;
+  }
+
   .manifest{background:var(--navy);padding:60px 48px 80px;position:relative;overflow:hidden}
   .manifest .inner{
     max-width:700px;margin:0 auto;
@@ -144,7 +148,6 @@
   }
   .btn:hover{opacity:.7}
 
-  /* ── Я ХУДОЖНИЦА ── */
   .artist{background:var(--blue);position:relative;overflow:hidden}
   .artist-flourish-wrap{
     width:100%;background:var(--blue);padding:80px 48px;
@@ -170,7 +173,6 @@
     font-style:italic;color:var(--cream);margin-top:6px;
   }
 
-  /* ── ГАЛЕРЕЯ ── */
   .journey{background:var(--cream);padding:90px 48px;position:relative}
   .journey .head{
     display:flex;justify-content:space-between;align-items:center;
@@ -210,7 +212,6 @@
   }
   .carousel-item:hover .carousel-dot{transform:scale(1.2)}
   .carousel-dot.active{opacity:1}
-  /* подписи категорий — тем же шрифтом, что колонтитулы «о себе» */
   .carousel-label{
     font-family:var(--ui);font-size:12px;font-weight:500;
     letter-spacing:.12em;text-transform:uppercase;
@@ -219,10 +220,8 @@
   .carousel-item:hover .carousel-label,
   .carousel-item.active .carousel-label{opacity:1}
 
-  /* ── КОЛЛАБОРАЦИИ ── */
   .collab{background:var(--navy);padding:120px 0 130px;position:relative;overflow:hidden}
   .collab .head{padding:0 48px;margin-bottom:70px;display:flex;justify-content:center}
-  /* без анимации — слово стоит на месте */
   .collab-title{
     font-family:var(--display);font-style:italic;
     font-size:clamp(48px,9vw,120px);
@@ -248,7 +247,6 @@
   .collab-card img{width:100%;height:100%;object-fit:cover;display:block}
   .collab-card:hover{transform:scale(1.03);box-shadow:0 20px 50px rgba(0,0,0,.35)}
 
-  /* ── FOOTER ── */
   footer{background:var(--blue);padding:120px 48px 60px;position:relative}
   footer .inner{
     max-width:1300px;margin:0 auto;
@@ -272,14 +270,12 @@
     font-family:var(--ui);font-size:11px;line-height:1.5;
     color:rgba(255,249,245,.55);letter-spacing:.01em;
   }
-  /* колонтитул — как в «о себе» */
   footer .copy{
     margin-top:70px;font-size:14px;letter-spacing:.08em;
     text-transform:uppercase;opacity:.6;text-align:center;
     font-family:var(--ui);color:var(--cream);
   }
 
-  /* ══════════════ МОБИЛЬНАЯ: мельче и вытянутее ══════════════ */
   @media(max-width:900px){
     header{padding:11px 16px}
     .logo{font-size:17px}
@@ -293,19 +289,23 @@
       justify-content:center;
     }
     .morph{
-      height:clamp(96px,30vw,150px);
+      height:clamp(100px,28vw,160px);
       max-width:100%;
     }
     .morph span{
-      font-size:clamp(34px,10.5vw,52px);
-      /* вытянутее: сжимаем по ширине, тянем по высоте */
-      letter-spacing:-.035em;
+      font-size:clamp(36px,11vw,56px);
+      letter-spacing:-.03em;
       line-height:.88;
     }
     .ornament{
-      width:clamp(620px,175vw,940px);
-      top:3%;left:-34%;bottom:auto;right:auto;
-      opacity:.34;
+      width:clamp(640px,180vw,980px);
+      top:4%;left:-36%;bottom:auto;right:auto;
+      opacity:.36;
+    }
+
+    .liquid-canvas{
+      width:94%;
+      height:min(60vh,480px);
     }
 
     .manifest{padding:28px 16px 36px}
@@ -335,7 +335,6 @@
     .gallery-page.active-page{
       display:grid;grid-template-columns:1fr !important;gap:11px;
     }
-    /* вытянутые карточки вместо широких */
     .card{aspect-ratio:3/4;border-radius:8px}
 
     .carousel-nav{display:flex;justify-content:flex-start;gap:6px;margin-top:18px}
@@ -360,7 +359,6 @@
     .collab-track[aria-hidden="true"]{display:none}
     .collab-card[aria-hidden="true"],
     .collab-card[tabindex="-1"]{display:none}
-    /* вытянутые: узкие и высокие */
     .collab-card{width:clamp(190px,58vw,250px);height:clamp(280px,84vw,370px);border-radius:10px}
     .collab-scroll::-webkit-scrollbar{height:4px}
     .collab-scroll::-webkit-scrollbar-thumb{background:rgba(255,249,245,.3);border-radius:3px}
@@ -375,22 +373,18 @@
 
   @media(prefers-reduced-motion:reduce){
     .collab-marquee{animation:none !important}
+    .morph,.liquid-stage{transition:none !important;animation:none !important}
   }
 </style>
 </head>
 <body>
 
-<!-- SVG-фильтр для «гелевого» морфа: размытие + порог по альфе,
-     плюс лёгкое смещение шумом — отсюда неровные живые края -->
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
   <defs>
     <filter id="gooey">
       <feGaussianBlur in="SourceGraphic" stdDeviation="9" result="soft"/>
       <feColorMatrix in="soft" mode="matrix" result="thick"
-        values="1 0 0 0 0
-                0 1 0 0 0
-                0 0 1 0 0
-                0 0 0 22 -9"/>
+        values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 22 -9"/>
       <feTurbulence id="gooNoise" type="fractalNoise" baseFrequency="0.011"
                     numOctaves="2" seed="4" result="noise"/>
       <feDisplacementMap in="thick" in2="noise" scale="13"
@@ -400,7 +394,7 @@
   </defs>
 </svg>
 
-<header>
+<header id="header">
   <a class="logo" href="#top">prët</a>
   <nav>
     <a href="#journey" data-ru="Галерея" data-en="Gallery">Галерея</a>
@@ -416,6 +410,12 @@
   <div class="morph" id="morph" aria-label="Искусство prët">
     <span id="wordA" data-ru="Искусство" data-en="The Art of">Искусство</span>
     <span id="wordB">prët</span>
+  </div>
+</div>
+
+<div class="liquid-stage" id="liquidStage">
+  <div class="liquid-canvas">
+    <svg class="liquid-svg" id="liquidSVG" viewBox="0 0 1200 600" preserveAspectRatio="xMidYMid meet"></svg>
   </div>
 </div>
 
@@ -511,8 +511,12 @@
 </footer>
 
 <script>
-  /* ═════════ ЯЗЫК ═════════ */
   let currentLang = 'ru';
+  const TEXT = {
+    ru:'Моя цель, мой смысл и возможность жить — создавать искры',
+    en:'My purpose, my meaning, and the ability to live — creating sparks'
+  };
+
   function applyLang(){
     document.querySelectorAll('[data-ru]').forEach(el=>{
       const t = el.getAttribute('data-' + currentLang);
@@ -527,40 +531,27 @@
     applyLang();
   });
 
-  /* ═════════ МОРФ «Искусство» ⇄ «prët» ═════════
-     Два слова лежат друг на друге в контейнере с SVG-фильтром
-     gooey (размытие + порог по альфе). Пока одно слово гаснет и
-     размывается, второе проявляется — капли слипаются и
-     перетекают одна в другую.
-
-     Плавность: длинный цикл + сглаживающая функция.
-     Неровность: к прогрессу примешиваются три синусоиды с
-     несоизмеримыми частотами, поэтому переход каждый раз идёт
-     чуть иначе, а feTurbulence живёт своей волной. */
   const morphBox = document.getElementById('morph');
   const wordA = document.getElementById('wordA');
   const wordB = document.getElementById('wordB');
   const gooNoise = document.getElementById('gooNoise');
 
-  const CYCLE = 4200;   // мс на одну сторону
-  const HOLD  = 0.34;   // доля цикла, когда слово просто стоит
+  const CYCLE = 4200, HOLD = 0.34;
+  function smooth(t){ return t*t*t*(t*(t*6 - 15) + 10); }
 
-  function smooth(t){ return t*t*t*(t*(t*6 - 15) + 10); }   // smootherstep
+  let morphRunning = true;
 
   function morphTick(now){
+    if(!morphRunning) return;
     const isMobile = window.innerWidth <= 900;
-
-    // фаза 0..2: 0→1 первое слово, 1→2 второе
     const phase = (now % (CYCLE * 2)) / CYCLE;
     const dir = phase < 1 ? 0 : 1;
     let local = phase % 1;
 
-    // пауза на «держим слово», затем переход
     let p;
     if(local < HOLD) p = 0;
     else p = (local - HOLD) / (1 - HOLD);
 
-    // неровность: подмешиваем биения
     const wob =
       Math.sin(now * 0.0016) * 0.055 +
       Math.sin(now * 0.0031 + 1.7) * 0.035 +
@@ -568,7 +559,6 @@
 
     let e = smooth(Math.max(0, Math.min(1, p + wob * (p > 0 && p < 1 ? 1 : 0))));
 
-    // vis: 1 — слово видно целиком
     const visFrom = 1 - e;
     const visTo   = e;
 
@@ -581,7 +571,6 @@
     apply(from, visFrom, -1, maxBlur, shiftX, now, isMobile);
     apply(to,   visTo,   +1, maxBlur, shiftX, now, isMobile);
 
-    // живой шум на краях
     if(gooNoise){
       const f = 0.009 + (Math.sin(now * 0.0009) * 0.5 + 0.5) * 0.007;
       gooNoise.setAttribute('baseFrequency', f.toFixed(4));
@@ -593,7 +582,6 @@
   function apply(el, vis, side, maxBlur, shiftX, now, isMobile){
     const inv = 1 - vis;
     const blur = (inv * maxBlur).toFixed(2);
-    // капля растекается: по ширине сжимается, по высоте тянется
     const sx = (0.82 + vis * 0.18).toFixed(3);
     const sy = (1.22 - vis * 0.22 + Math.sin(now * 0.0021 + side) * 0.02).toFixed(3);
     const tx = (side * inv * shiftX).toFixed(1);
@@ -605,16 +593,104 @@
       `translate(${tx}px, calc(-50% + ${ty}px)) scale(${sx}, ${sy})`;
   }
 
-  if(window.matchMedia('(prefers-reduced-motion: reduce)').matches){
-    // без движения: показываем оба слова спокойно
-    morphBox.style.filter = 'none';
-    wordA.style.transform = 'translateY(-50%)';
-    wordB.style.opacity = '0';
-  } else {
+  if(!window.matchMedia('(prefers-reduced-motion: reduce)').matches){
     requestAnimationFrame(morphTick);
   }
 
-  /* ═════════ ВИДЕО ═════════ */
+  const liquidStage = document.getElementById('liquidStage');
+  const liquidSVG = document.getElementById('liquidSVG');
+
+  function buildLiquidPath(txt, w, h){
+    const chars = txt.split('');
+    const cw = w / Math.max(chars.length, 8);
+    let path = '';
+
+    chars.forEach((ch, i)=>{
+      const x = cw * i + cw * 0.3;
+      const y = h * 0.5;
+      const ww = cw * 0.7;
+      const hh = h * 0.35;
+
+      const seed = ch.charCodeAt(0) * 3.14;
+      const c1x = x + ww * 0.2 + Math.sin(seed) * ww * 0.1;
+      const c1y = y - hh * 0.6 + Math.cos(seed * 1.3) * hh * 0.1;
+      const c2x = x + ww * 0.8 + Math.sin(seed * 2.1) * ww * 0.1;
+      const c2y = y + hh * 0.6 + Math.cos(seed * 1.7) * hh * 0.1;
+
+      path += `M ${x.toFixed(1)} ${y.toFixed(1)} `;
+      path += `Q ${c1x.toFixed(1)} ${c1y.toFixed(1)}, ${(x + ww * 0.5).toFixed(1)} ${(y - hh * 0.2).toFixed(1)} `;
+      path += `T ${(x + ww).toFixed(1)} ${y.toFixed(1)} `;
+      path += `Q ${c2x.toFixed(1)} ${c2y.toFixed(1)}, ${(x + ww * 0.5).toFixed(1)} ${(y + hh * 0.2).toFixed(1)} `;
+      path += `T ${x.toFixed(1)} ${y.toFixed(1)} `;
+    });
+
+    return path;
+  }
+
+  let liquidPath = buildLiquidPath(TEXT[currentLang], 1200, 600);
+
+  function animateLiquid(now){
+    const t = now * 0.0008;
+    const off = (Math.sin(t) * 0.5 + 0.5) * 300;
+    const width = 2.4 + Math.sin(t * 1.4) * 0.8;
+
+    liquidSVG.innerHTML = `<path d="${liquidPath}" fill="none" stroke="#1a1a1a"
+      stroke-width="${width.toFixed(2)}" stroke-dasharray="${(20 + Math.sin(t * 0.7) * 10).toFixed(1)},${(30 + Math.cos(t * 0.9) * 15).toFixed(1)}"
+      stroke-dashoffset="${off.toFixed(1)}" stroke-linecap="round" stroke-linejoin="round" opacity="0.92"/>`;
+
+    if(liquidStage.classList.contains('active')){
+      requestAnimationFrame(animateLiquid);
+    }
+  }
+
+  const header = document.getElementById('header');
+  const heroSection = document.getElementById('top');
+  const ornament = document.querySelector('.ornament');
+
+  window.addEventListener('scroll', ()=>{
+    const heroRect = heroSection.getBoundingClientRect();
+    const heroBottom = heroRect.bottom;
+
+    if(heroBottom < window.innerHeight * 0.3){
+      morphBox.style.opacity = '0';
+      morphRunning = false;
+
+      if(!liquidStage.classList.contains('active')){
+        liquidStage.classList.add('active');
+        header.classList.add('light');
+        requestAnimationFrame(animateLiquid);
+      }
+    } else {
+      morphBox.style.opacity = '1';
+      if(!morphRunning){
+        morphRunning = true;
+        requestAnimationFrame(morphTick);
+      }
+      liquidStage.classList.remove('active');
+      header.classList.remove('light');
+    }
+
+    const manifestTop = document.getElementById('manifest').getBoundingClientRect().top;
+    if(manifestTop < window.innerHeight * 0.5){
+      liquidStage.classList.remove('active');
+      header.classList.remove('light');
+    }
+
+    header.classList.toggle('scrolled', window.scrollY > 80);
+
+    if(!ornament) return;
+    const rect = heroSection.getBoundingClientRect();
+    if(window.innerWidth <= 900){
+      const p = Math.max(0, Math.min(1, -rect.top / (rect.height * 1.1)));
+      ornament.style.transform = `translate(${p*70}%, ${p*32}%) rotate(${p*88}deg)`;
+      ornament.style.opacity = 0.36 - p*0.24;
+    } else {
+      const p = Math.max(0, Math.min(1, -rect.top / (rect.height * 1.6)));
+      ornament.style.transform = `translateY(-${p*380}px) rotate(${p*50}deg)`;
+      ornament.style.opacity = 0.38 - p*0.26;
+    }
+  });
+
   const mv = document.getElementById('manifestVideo');
 
   function showManifestText(){
@@ -622,7 +698,7 @@
     const h2 = document.createElement('h2');
     h2.id = 'manifestFallback';
     h2.style.cssText = "font-family:var(--display);font-style:italic;font-size:clamp(22px,4.6vw,58px);line-height:1.3;text-align:center;margin-bottom:34px;color:var(--cream)";
-    h2.textContent = 'Моя цель, мой смысл и возможность жить — создавать искры';
+    h2.textContent = TEXT.ru;
     document.getElementById('manifestInner').prepend(h2);
   }
 
@@ -664,27 +740,6 @@
     });
   }
 
-  /* ═════════ СКРОЛЛ ═════════ */
-  const header = document.querySelector('header');
-  const ornament = document.querySelector('.ornament');
-  const heroSection = document.querySelector('.hero');
-
-  window.addEventListener('scroll', ()=>{
-    header.classList.toggle('scrolled', window.scrollY > 80);
-    if(!ornament) return;
-    const rect = heroSection.getBoundingClientRect();
-    if(window.innerWidth <= 900){
-      const p = Math.max(0, Math.min(1, -rect.top / (rect.height * 1.1)));
-      ornament.style.transform = `translate(${p*70}%, ${p*32}%) rotate(${p*88}deg)`;
-      ornament.style.opacity = 0.34 - p*0.22;
-    } else {
-      const p = Math.max(0, Math.min(1, -rect.top / (rect.height * 1.6)));
-      ornament.style.transform = `translateY(-${p*380}px) rotate(${p*50}deg)`;
-      ornament.style.opacity = 0.40 - p*0.26;
-    }
-  });
-
-  /* ═════════ ГАЛЕРЕЯ ═════════ */
   const CATEGORIES = [
     { ru:'Перформанс', en:'Performance', works:[
       {img:'img/posestrie.jpg',  href:'https://hsedesign.ru/project/posestrie-fdd4656391a44e98b69133c583dda03f', alt:'Посестрие'},
