@@ -3,38 +3,43 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="color-scheme" content="light only">
+<meta name="color-scheme" content="light">
+<meta name="supported-color-schemes" content="light only">
 <meta name="theme-color" content="#0B1E3C">
 <title>Магазин — prët</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Averia+Serif+Libre:ital,wght@0,400;1,400&family=PT+Serif+Caption:ital@0;1&family=Lora:ital,wght@0,400;0,500;1,400;1,500&family=IBM+Plex+Sans:wght@400;500;600&family=Caveat:wght@400;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Averia+Serif+Libre:ital,wght@0,400;1,400&family=PT+Serif+Caption:ital@0;1&family=IBM+Plex+Sans:wght@400;500;600&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
 <style>
   :root{
-    color-scheme:light only;
     --navy:#0B1E3C;
-    --blue:#4A7BA7;
     --cream:#FFF9F5;
     --ink:#2B1810;
-    --rose:#F49BC0;
-    --coral:#E8552F;
-    --display:'Averia Serif Libre','PT Serif Caption','Lora',Georgia,serif;
+    --display:'Averia Serif Libre','PT Serif Caption',Georgia,serif;
     --ui:'IBM Plex Sans',Arial,sans-serif;
+    --hand:'Caveat','Comic Sans MS',cursive;
   }
   *{margin:0;padding:0;box-sizing:border-box}
-  html{scroll-behavior:smooth;color-scheme:light only}
+  html{scroll-behavior:smooth}
   body{
-    font-family:'PT Serif Caption','Lora',Georgia,serif;
+    font-family:var(--ui);
     color:var(--ink);background:var(--cream);
     line-height:1.6;overflow-x:hidden;
     -webkit-text-size-adjust:100%;
+  }
+
+  @media(prefers-color-scheme:dark){
+    html{background:#FFF9F5 !important}
+    body{background:#FFF9F5 !important;color:#2B1810 !important}
+    .shop-hero{background:#0B1E3C !important}
+    .shop{background:#FFF9F5 !important}
   }
 
   header{
     position:fixed;top:0;left:0;right:0;z-index:100;
     display:flex;justify-content:space-between;align-items:center;
     padding:24px 48px;
-    background:rgba(255,249,245,.95);backdrop-filter:blur(8px);
+    background:rgba(255,249,245,.96);backdrop-filter:blur(10px);
   }
   .logo{font-family:var(--display);font-size:32px;font-style:italic;text-decoration:none;color:var(--ink);font-weight:400}
   nav{display:flex;gap:36px;align-items:center}
@@ -51,7 +56,6 @@
   }
   .lang-toggle:hover{background:var(--ink);color:var(--cream)}
 
-  /* ── ХИРО: тот же стиль, что «Мария Балаян» в о себе ── */
   .shop-hero{
     min-height:62vh;background:var(--navy);
     display:flex;flex-direction:column;
@@ -70,38 +74,112 @@
     margin-top:26px;max-width:640px;line-height:1.35;
   }
 
-  /* ── ТОВАРЫ ── */
-  .shop{background:var(--cream);padding:90px 48px 110px}
-  .grid{
-    display:grid;
-    grid-template-columns:repeat(auto-fill,minmax(260px,1fr));
-    gap:56px 40px;
-    max-width:1180px;margin:0 auto;
+  /* ══════ БЛОКНОТ (десктоп: горизонтальный, мобильный: вертикальный папка) ══════ */
+  .shop{background:var(--cream);padding:90px 48px 110px;display:flex;justify-content:center}
+  .notebook-wrap{
+    position:relative;max-width:1100px;width:100%;
+    perspective:1800px;
   }
-  .product{cursor:pointer;display:block;text-align:center}
-  .product-img{
-    aspect-ratio:1/1;border-radius:14px;
-    background:#FBF1EE;
+  .notebook{
+    position:relative;width:100%;
+    aspect-ratio:1.6/1;
+    background:#EFEAE3;
+    border-radius:8px;
+    box-shadow:0 16px 48px rgba(43,24,16,.22);
+    display:flex;overflow:hidden;
+  }
+  /* спираль: чёрные кольца слева */
+  .spiral{
+    position:absolute;left:14px;top:50%;
+    transform:translateY(-50%);width:28px;height:92%;
+    display:flex;flex-direction:column;justify-content:space-around;
+    align-items:center;z-index:3;
+  }
+  .ring{
+    width:18px;height:18px;border-radius:50%;
+    background:#1a1a1a;
+    box-shadow:inset 0 2px 4px rgba(255,255,255,.3), 0 2px 6px rgba(0,0,0,.4);
+  }
+  /* левая страница */
+  .page-left{
+    flex:1;background:#F9F6F0;
+    border-right:1px solid rgba(43,24,16,.12);
+    padding:48px 34px 48px 56px;
+    display:flex;flex-direction:column;gap:24px;
+    position:relative;
+  }
+  .page-left::before{
+    content:'';position:absolute;left:52px;top:20px;bottom:20px;
+    width:1px;background:#E8796C;opacity:.45;
+  }
+  /* правая страница */
+  .page-right{
+    flex:1;background:#FBF8F3;
+    padding:48px 34px;
+    display:flex;flex-direction:column;gap:24px;
+    position:relative;
+  }
+  .page-item{
+    display:flex;gap:16px;align-items:flex-start;
+    opacity:0;
+    animation:fadeIn .6s ease forwards;
+  }
+  .page-item:nth-child(1){animation-delay:.1s}
+  .page-item:nth-child(2){animation-delay:.25s}
+  .page-item:nth-child(3){animation-delay:.4s}
+  .page-item:nth-child(4){animation-delay:.55s}
+  @keyframes fadeIn{to{opacity:1}}
+
+  .photo-box{
+    width:clamp(110px,28%,140px);
+    aspect-ratio:1/1;flex-shrink:0;
+    background:#E8E2D8;
+    border-radius:6px;
+    position:relative;
+    box-shadow:0 4px 12px rgba(43,24,16,.18);
+  }
+  /* скотч */
+  .photo-box::before{
+    content:'';position:absolute;top:-8px;left:50%;
+    transform:translateX(-50%) rotate(-1deg);
+    width:54%;height:18px;
+    background:rgba(255,255,255,.68);
+    border:1px solid rgba(0,0,0,.08);
+    box-shadow:0 2px 6px rgba(0,0,0,.12);
+  }
+  .coming-soon{
+    position:absolute;inset:0;
     display:flex;align-items:center;justify-content:center;
-    overflow:hidden;
-    transition:transform .45s cubic-bezier(.34,1.1,.5,1), box-shadow .45s;
-    box-shadow:0 10px 26px rgba(43,24,16,.10);
+    font-family:var(--hand);font-size:clamp(18px,2.2vw,26px);
+    color:var(--ink);opacity:.55;text-align:center;
+    padding:12px;line-height:1.2;
   }
-  .product:hover .product-img{
-    transform:translateY(-10px) rotate(-1deg);
-    box-shadow:0 22px 48px rgba(43,24,16,.18);
+  .item-text{flex:1;display:flex;flex-direction:column;gap:6px}
+  .item-title{
+    font-family:var(--hand);font-size:clamp(20px,2.4vw,28px);
+    color:var(--ink);line-height:1.1;
   }
-  .product-img svg{width:70%;height:70%;display:block}
-  .product-name{
-    font-family:var(--display);font-style:italic;
-    font-size:clamp(20px,2vw,27px);
-    margin-top:22px;color:var(--ink);
+  .item-note{
+    font-family:var(--ui);font-size:clamp(11px,1.2vw,13px);
+    color:var(--ink);opacity:.6;line-height:1.5;
   }
-  .product-price{
-    font-family:var(--ui);font-size:13px;
-    letter-spacing:.1em;color:var(--ink);opacity:.5;
-    margin-top:6px;
+
+  /* кнопки перелистывания */
+  .flip-controls{
+    position:absolute;bottom:24px;right:32px;
+    display:flex;gap:12px;z-index:5;
   }
+  .flip-btn{
+    width:44px;height:44px;border-radius:50%;
+    background:#1a1a1a;color:#FFF9F5;
+    border:none;cursor:pointer;
+    font-size:20px;
+    display:flex;align-items:center;justify-content:center;
+    box-shadow:0 4px 12px rgba(0,0,0,.28);
+    transition:transform .25s ease,box-shadow .25s ease;
+  }
+  .flip-btn:hover{transform:translateY(-2px);box-shadow:0 6px 16px rgba(0,0,0,.36)}
+  .flip-btn:disabled{opacity:.3;cursor:not-allowed}
 
   footer{background:var(--cream);padding:60px 48px 40px;text-align:center}
   footer p{
@@ -109,20 +187,54 @@
     letter-spacing:.08em;text-transform:uppercase;
   }
 
+  /* ══════ МОБИЛЬНАЯ: вертикальная папка с прищепками ══════ */
   @media(max-width:900px){
-    header{padding:14px 20px}
-    .logo{font-size:20px}
-    nav{gap:10px}
-    nav a{font-size:9px}
-    .lang-toggle{font-size:9px;padding:3px 7px}
+    header{padding:11px 16px}
+    .logo{font-size:17px}
+    nav{gap:9px}
+    nav a{font-size:8px;letter-spacing:.07em}
+    .lang-toggle{font-size:8px;padding:2px 5px}
 
-    .shop-hero{padding:104px 20px 52px;min-height:auto}
-    .shop-hero p{margin-top:18px;max-width:100%}
+    .shop-hero{padding:90px 16px 44px;min-height:auto}
+    .shop-hero h1{font-size:clamp(34px,9.5vw,52px)}
+    .shop-hero p{margin-top:18px;max-width:100%;font-size:clamp(15px,4.2vw,20px)}
 
-    .shop{padding:52px 20px 70px}
-    .grid{grid-template-columns:repeat(2,1fr);gap:34px 18px}
-    .product-name{margin-top:14px}
-    .product-price{font-size:11px}
+    .shop{padding:44px 16px 70px}
+    .notebook-wrap{max-width:420px}
+    .notebook{
+      aspect-ratio:0.7/1;
+      flex-direction:column;
+      background:#F6F1EA;
+    }
+    /* спираль вертикальна */
+    .spiral{
+      left:50%;top:14px;
+      transform:translateX(-50%);width:88%;height:28px;
+      flex-direction:row;
+    }
+    .ring{width:16px;height:16px}
+    .page-left{
+      flex:1;border-right:none;border-bottom:1px solid rgba(43,24,16,.12);
+      padding:48px 20px 28px;
+    }
+    .page-left::before{
+      left:20px;right:20px;top:46px;bottom:auto;
+      width:auto;height:1px;
+    }
+    .page-right{
+      flex:1;padding:28px 20px 48px;
+    }
+    .page-item{flex-direction:column;gap:12px}
+    .photo-box{width:100%;aspect-ratio:1.3/1;max-width:260px;margin:0 auto}
+    .item-text{text-align:center}
+    .item-title{font-size:clamp(18px,5vw,24px)}
+    .item-note{font-size:clamp(10px,2.8vw,12px)}
+
+    .flip-controls{bottom:16px;right:16px;gap:8px}
+    .flip-btn{width:38px;height:38px;font-size:18px}
+
+    footer{padding:36px 16px 24px}
+    footer p{font-size:9px}
   }
 </style>
 </head>
@@ -148,7 +260,26 @@
 </section>
 
 <section class="shop">
-  <div class="grid" id="grid"></div>
+  <div class="notebook-wrap">
+    <div class="notebook" id="notebook">
+      <div class="spiral">
+        <div class="ring"></div>
+        <div class="ring"></div>
+        <div class="ring"></div>
+        <div class="ring"></div>
+        <div class="ring"></div>
+        <div class="ring"></div>
+      </div>
+
+      <div class="page-left" id="pageLeft"></div>
+      <div class="page-right" id="pageRight"></div>
+
+      <div class="flip-controls">
+        <button class="flip-btn" id="prevBtn" type="button">‹</button>
+        <button class="flip-btn" id="nextBtn" type="button">›</button>
+      </div>
+    </div>
+  </div>
 </section>
 
 <footer>
@@ -156,74 +287,7 @@
 </footer>
 
 <script>
-  /* ═════════ РАКУШКА ═════════
-     Пока вместо фотографий товаров — нарисованная ракушка
-     в палитре картинки: розовое тело, коралловые шипы,
-     спираль в центре. Одна SVG переиспользуется сеткой. */
-  function shellSVG(id, seed){
-    return `
-    <svg viewBox="0 0 320 320" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-      <defs>
-        <radialGradient id="body${id}" cx="42%" cy="44%" r="72%">
-          <stop offset="0%"  stop-color="#FBD3E4"/>
-          <stop offset="55%" stop-color="#F49BC0"/>
-          <stop offset="100%" stop-color="#EE7FAE"/>
-        </radialGradient>
-        <linearGradient id="spike${id}" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%"  stop-color="#F0452A"/>
-          <stop offset="70%" stop-color="#E8552F"/>
-          <stop offset="100%" stop-color="#D93A2B"/>
-        </linearGradient>
-        <filter id="soft${id}">
-          <feDropShadow dx="0" dy="6" stdDeviation="7" flood-color="#8A3350" flood-opacity="0.22"/>
-        </filter>
-      </defs>
-
-      <g filter="url(#soft${id})">
-        <!-- шипы -->
-        <polygon points="215.4,51.2 225.9,90.2 266.9,97.5 253.2,136.9 295.2,165.7 250.9,190.9 281.0,245.2 219.7,235.2 211.1,285.7 169.6,255.5 137.2,281.8 116.5,245.6 76.2,248.8 77.1,208.4 41.6,189.4 64.1,155.9 44.5,120.7 81.5,104.7 84.1,64.5 123.9,71.1 147.8,38.6 177.7,65.6"
-                 fill="url(#spike${id})"/>
-        <!-- тело -->
-        <circle cx="160" cy="160" r="96" fill="url(#body${id})"/>
-        <!-- внутренние сгустки коралла -->
-        <path d="M160 64 A96 96 0 0 1 253 134" fill="none"
-              stroke="#EE6A38" stroke-width="12" stroke-linecap="round" opacity=".55"/>
-        <path d="M256 178 A96 96 0 0 1 214 246" fill="none"
-              stroke="#EE6A38" stroke-width="12" stroke-linecap="round" opacity=".55"/>
-        <path d="M110 240 A96 96 0 0 1 62 168" fill="none"
-              stroke="#EE6A38" stroke-width="12" stroke-linecap="round" opacity=".55"/>
-        <!-- спираль -->
-        <path d="M166.0 160.0L166.4 161.3L166.6 162.7L166.4 164.2L165.9 165.8L165.0 167.3L163.7 168.6L162.1 169.7L160.3 170.5L158.1 170.9L155.9 170.9L153.6 170.4L151.3 169.4L149.2 167.8L147.4 165.9L146.0 163.5L145.0 160.7L144.6 157.7L144.8 154.6L145.6 151.5L147.1 148.5L149.2 145.8L151.8 143.5L155.0 141.7L158.6 140.5L162.4 140.0L166.4 140.3L170.3 141.4L174.1 143.3L177.4 146.0L180.3 149.3L182.5 153.3L183.9 157.7L184.5 162.4L184.1 167.2L182.8 172.0L180.5 176.5L177.3 180.5L173.3 184.0L168.7 186.6L163.4 188.4L157.9 189.1L152.2 188.6L146.6 187.1L141.3 184.5L136.5 180.8L132.5 176.2L129.3 170.8L127.3 164.8L126.4 158.4L126.8 151.8L128.5 145.3L131.4 139.2L135.6 133.7L140.8 129.0L146.9 125.4L153.7 122.9L160.9 121.9L168.4 122.2L175.7 124.0L182.6 127.2L188.9 131.8L194.3 137.5L198.5 144.3L201.3 151.9L202.7 160.0L202.4 168.3L200.6 176.5L197.1 184.3L192.1 191.4L185.8 197.4L178.4 202.2L170.1 205.5L161.1 207.2L152.0 207.1L142.9 205.2L134.2 201.5L126.3 196.2L119.5 189.4"
-              fill="none" stroke="#F08A3C" stroke-width="9"
-              stroke-linecap="round" stroke-linejoin="round"/>
-        <!-- блик -->
-        <ellipse cx="128" cy="118" rx="26" ry="16" fill="#FFF" opacity=".28"
-                 transform="rotate(-32 128 118)"/>
-      </g>
-    </svg>`;
-  }
-
-  /* Пока все товары — ракушка. Замените name/price,
-     когда появятся работы. */
-  const PRODUCTS = [
-    { ru:'Ракушка I',   en:'Shell I',   price:'скоро' },
-    { ru:'Ракушка II',  en:'Shell II',  price:'скоро' },
-    { ru:'Ракушка III', en:'Shell III', price:'скоро' },
-    { ru:'Ракушка IV',  en:'Shell IV',  price:'скоро' },
-    { ru:'Ракушка V',   en:'Shell V',   price:'скоро' },
-    { ru:'Ракушка VI',  en:'Shell VI',  price:'скоро' }
-  ];
-
   let currentLang = 'ru';
-
-  function render(){
-    document.getElementById('grid').innerHTML = PRODUCTS.map((p,i)=>`
-      <div class="product">
-        <div class="product-img">${shellSVG(i, i)}</div>
-        <div class="product-name">${currentLang === 'en' ? p.en : p.ru}</div>
-        <div class="product-price">${p.price}</div>
-      </div>`).join('');
-  }
 
   function applyLang(){
     document.querySelectorAll('[data-ru]').forEach(el=>{
@@ -232,15 +296,79 @@
     });
     document.getElementById('langBtn').textContent = currentLang === 'en' ? 'RU' : 'EN';
     document.documentElement.lang = currentLang;
-    render();
+    renderPage();
   }
-
   document.getElementById('langBtn').addEventListener('click', ()=>{
     currentLang = currentLang === 'ru' ? 'en' : 'ru';
     applyLang();
   });
 
-  render();
+  /* ═════ ДАННЫЕ: 4 страницы по 4 товара, цветные блоки-плейсхолдеры ═════ */
+  const COLORS = ['#F8C8DC','#D4E4F7','#FFF4C2','#D5EDD8','#FFD4B8','#E8D4F0','#C2E8E4','#FFDCE5'];
+  const PAGES = [
+    [
+      { ru:'Принт 1', en:'Print 1', note:'60×80 см' },
+      { ru:'Принт 2', en:'Print 2', note:'50×70 см' },
+      { ru:'Открытка 1', en:'Postcard 1', note:'10×15 см' },
+      { ru:'Открытка 2', en:'Postcard 2', note:'10×15 см' }
+    ],
+    [
+      { ru:'Плакат 1', en:'Poster 1', note:'40×60 см' },
+      { ru:'Плакат 2', en:'Poster 2', note:'40×60 см' },
+      { ru:'Стикерпак', en:'Sticker pack', note:'12 шт' },
+      { ru:'Зин 1', en:'Zine 1', note:'A5, 24 стр' }
+    ]
+  ];
+
+  let currentPage = 0;
+
+  function renderPage(){
+    const isMobile = window.innerWidth <= 900;
+    const data = PAGES[currentPage];
+
+    const leftHTML = data.slice(0,2).map((item, i)=>{
+      const ci = (currentPage * 4 + i) % COLORS.length;
+      return `<div class="page-item">
+        <div class="photo-box" style="background:${COLORS[ci]}">
+          <div class="photo-box-tape"></div>
+          <div class="coming-soon" data-ru="скоро появится" data-en="coming soon">скоро появится</div>
+        </div>
+        <div class="item-text">
+          <div class="item-title" data-ru="${item.ru}" data-en="${item.en}">${item[currentLang]}</div>
+          <div class="item-note">${item.note}</div>
+        </div>
+      </div>`;
+    }).join('');
+
+    const rightHTML = data.slice(2,4).map((item, i)=>{
+      const ci = (currentPage * 4 + 2 + i) % COLORS.length;
+      return `<div class="page-item">
+        <div class="photo-box" style="background:${COLORS[ci]}">
+          <div class="coming-soon" data-ru="скоро появится" data-en="coming soon">скоро появится</div>
+        </div>
+        <div class="item-text">
+          <div class="item-title" data-ru="${item.ru}" data-en="${item.en}">${item[currentLang]}</div>
+          <div class="item-note">${item.note}</div>
+        </div>
+      </div>`;
+    }).join('');
+
+    document.getElementById('pageLeft').innerHTML = leftHTML;
+    document.getElementById('pageRight').innerHTML = rightHTML;
+
+    document.getElementById('prevBtn').disabled = currentPage === 0;
+    document.getElementById('nextBtn').disabled = currentPage >= PAGES.length - 1;
+  }
+
+  document.getElementById('prevBtn').addEventListener('click', ()=>{
+    if(currentPage > 0){ currentPage--; renderPage(); }
+  });
+
+  document.getElementById('nextBtn').addEventListener('click', ()=>{
+    if(currentPage < PAGES.length - 1){ currentPage++; renderPage(); }
+  });
+
+  renderPage();
 </script>
 </body>
 </html>
