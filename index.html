@@ -3,44 +3,60 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<meta name="color-scheme" content="light only">
+<meta name="supported-color-schemes" content="light">
+<meta name="theme-color" content="#0B1E3C">
 <title>prët — Мария Балаян | искусство prët</title>
 <meta name="description" content="prët — портфолио Марии Балаян. Художница, дизайнер, перформанс.">
 <meta name="keywords" content="prët, pret, prёt, Мария Балаян, Maria Balayan, искусство prët, художница, дизайнер, перформанс">
 <meta name="author" content="Maria Balayan">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<!--
-  ЕДИНЫЙ ШРИФТ САЙТА
-  латиница  → Averia Serif Libre Italic
-  кириллица → PT Serif Caption Italic (аналог, у Averia нет кириллицы)
--->
-<link href="https://fonts.googleapis.com/css2?family=Averia+Serif+Libre:ital,wght@0,400;1,400&family=PT+Serif+Caption:ital@0;1&family=Lora:ital,wght@0,400;0,500;1,400;1,500&family=IBM+Plex+Sans:wght@400;500;600&family=Caveat:wght@400;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Averia+Serif+Libre:ital,wght@0,400;1,400&family=PT+Serif+Caption:ital@0;1&family=Lora:ital,wght@0,400;0,500;1,400;1,500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
   :root{
+    color-scheme:light only;
     --navy:#0B1E3C;
     --blue:#4A7BA7;
     --cream:#FFF9F5;
     --ink:#2B1810;
     --display:'Averia Serif Libre','PT Serif Caption','Lora',Georgia,serif;
     --ui:'IBM Plex Sans',Arial,sans-serif;
-    --hand:'Caveat','Comic Sans MS',cursive;
   }
   *{margin:0;padding:0;box-sizing:border-box}
-  html{scroll-behavior:smooth}
+  html{scroll-behavior:smooth;color-scheme:light only}
   body{
     font-family:var(--display);
-    color:var(--ink);
-    background:var(--cream);
-    line-height:1.6;
-    overflow-x:hidden;
+    color:var(--ink);background:var(--cream);
+    line-height:1.6;overflow-x:hidden;
+    -webkit-text-size-adjust:100%;
+  }
+
+  /* ─────── тёмная тема телефона не перекрашивает сайт ───────
+     Явно возвращаем те же цвета: браузеры Android/iOS в dark mode
+     подменяли фон и текст, из-за чего казалось, что открылась
+     старая версия сайта. */
+  @media (prefers-color-scheme: dark){
+    :root{
+      color-scheme:light only;
+      --navy:#0B1E3C;
+      --blue:#4A7BA7;
+      --cream:#FFF9F5;
+      --ink:#2B1810;
+    }
+    html,body{background:#FFF9F5 !important;color:#2B1810 !important}
+    .hero,.manifest,.collab{background:#0B1E3C !important}
+    .artist,.artist-flourish-wrap,.artist-text,footer{background:#4A7BA7 !important}
+    .journey{background:#FFF9F5 !important}
+    img,video{filter:none}
+    .ornament,.artist-flourish,.manifest-video{filter:invert(1) !important}
   }
 
   /* ── HEADER ── */
   header{
     position:fixed;top:0;left:0;right:0;z-index:100;
     display:flex;justify-content:space-between;align-items:center;
-    padding:24px 48px;
-    transition:background .4s;
+    padding:24px 48px;transition:background .4s;
   }
   header.scrolled{background:rgba(255,249,245,.95);backdrop-filter:blur(8px)}
   .logo{
@@ -49,10 +65,11 @@
   }
   header.scrolled .logo{color:var(--ink)}
   nav{display:flex;gap:36px;align-items:center}
+  /* колонтитулы — как на странице «о себе» */
   nav a{
     text-decoration:none;color:var(--cream);
-    font-size:14px;letter-spacing:.1em;font-style:italic;
-    font-family:var(--display);
+    font-family:var(--ui);font-size:13px;font-weight:500;
+    letter-spacing:.12em;text-transform:uppercase;
     transition:color .4s;
   }
   header.scrolled nav a{color:var(--ink)}
@@ -60,13 +77,13 @@
   .lang-toggle{
     cursor:pointer;font-size:14px;padding:6px 12px;
     border:1px solid var(--cream);color:var(--cream);border-radius:4px;
-    font-family:var(--ui);font-weight:500;
+    font-family:var(--ui);font-weight:500;background:none;
     transition:background .3s,color .3s,border-color .4s;
   }
   header.scrolled .lang-toggle{border-color:var(--ink);color:var(--ink)}
   .lang-toggle:hover{background:var(--ink);color:var(--cream);border-color:var(--ink)}
 
-  /* ── HERO ── */
+  /* ═══════════ HERO + МОРФ ЗАГОЛОВКА ═══════════ */
   .hero{
     min-height:145vh;
     background:var(--navy);
@@ -75,21 +92,37 @@
     position:relative;overflow:hidden;
     padding:0 48px 48px;
   }
-  .hero h1{
-    font-size:clamp(64px,12vw,140px);
-    font-style:italic;color:var(--cream);
-    line-height:.95;z-index:2;font-weight:400;
-    letter-spacing:-.02em;font-family:var(--display);
-    position:relative;max-width:60%;
-  }
   .ornament{
     position:absolute;
     width:clamp(800px,100vw,1400px);
     bottom:-10%;right:-15%;
-    opacity:.45;pointer-events:none;
+    opacity:.40;pointer-events:none;
     will-change:transform,opacity;z-index:1;
     transform-origin:center center;
     filter:invert(1);mix-blend-mode:screen;
+  }
+
+  /* сцена морфа: два слова лежат друг на друге и перетекают */
+  .morph{
+    position:relative;z-index:2;
+    width:100%;max-width:1150px;
+    height:clamp(150px,20vw,260px);
+    /* гелевое слипание: размытие + порог по альфе */
+    filter:url(#gooey);
+    pointer-events:none;
+  }
+  .morph span{
+    position:absolute;
+    left:0;top:50%;
+    transform-origin:0% 50%;
+    font-family:var(--display);
+    font-style:italic;font-weight:400;
+    font-size:clamp(64px,12vw,140px);
+    line-height:.92;
+    letter-spacing:-.02em;
+    color:#FFFFFF;           /* белый, как просили */
+    white-space:nowrap;
+    will-change:transform,opacity,filter;
   }
 
   /* ── МАНИФЕСТ ── */
@@ -111,11 +144,10 @@
   }
   .btn:hover{opacity:.7}
 
-  /* ── Я ХУДОЖНИЦА: зигзаг ── */
-  .artist{background:var(--blue);padding:0;position:relative;overflow:hidden}
+  /* ── Я ХУДОЖНИЦА ── */
+  .artist{background:var(--blue);position:relative;overflow:hidden}
   .artist-flourish-wrap{
-    width:100%;background:var(--blue);
-    padding:80px 48px;
+    width:100%;background:var(--blue);padding:80px 48px;
     display:flex;align-items:center;justify-content:center;
   }
   .artist-flourish{
@@ -152,11 +184,9 @@
     text-decoration:underline;text-underline-offset:6px;
     color:var(--ink);font-size:17px;font-style:italic;
   }
-
   .gallery-container{position:relative;overflow:hidden}
   .gallery-track{display:flex;transition:transform .55s cubic-bezier(.4,0,.2,1)}
   .gallery-page{min-width:100%;display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
-
   .card{
     border-radius:12px;overflow:hidden;position:relative;display:block;
     aspect-ratio:3/4;transition:transform .4s ease,box-shadow .4s ease;
@@ -171,8 +201,7 @@
   }
   .carousel-item{
     display:flex;flex-direction:column;align-items:center;gap:8px;
-    cursor:pointer;background:none;border:none;padding:0;
-    font:inherit;color:inherit;
+    cursor:pointer;background:none;border:none;padding:0;font:inherit;color:inherit;
   }
   .carousel-dot{
     width:10px;height:10px;border-radius:50%;
@@ -181,42 +210,25 @@
   }
   .carousel-item:hover .carousel-dot{transform:scale(1.2)}
   .carousel-dot.active{opacity:1}
+  /* подписи категорий — тем же шрифтом, что колонтитулы «о себе» */
   .carousel-label{
-    font-size:14px;font-style:italic;
-    font-family:var(--display);
-    opacity:.55;transition:opacity .3s;
+    font-family:var(--ui);font-size:12px;font-weight:500;
+    letter-spacing:.12em;text-transform:uppercase;
+    opacity:.5;transition:opacity .3s;
   }
   .carousel-item:hover .carousel-label,
   .carousel-item.active .carousel-label{opacity:1}
 
   /* ── КОЛЛАБОРАЦИИ ── */
-  .collab{
-    background:var(--navy);
-    padding:120px 0 130px;
-    position:relative;overflow:hidden;
-  }
-  .collab .head{
-    padding:0 48px;margin-bottom:70px;
-    display:flex;justify-content:center;
-  }
-  /* Заголовок: каждая буква — отдельный inline-block.
-     Буквы наклоняются влево-вправо как курсив, но само слово
-     стоит по оси ровно — контейнер не поворачивается. */
+  .collab{background:var(--navy);padding:120px 0 130px;position:relative;overflow:hidden}
+  .collab .head{padding:0 48px;margin-bottom:70px;display:flex;justify-content:center}
+  /* без анимации — слово стоит на месте */
   .collab-title{
-    font-family:var(--display);
-    font-style:italic;
+    font-family:var(--display);font-style:italic;
     font-size:clamp(48px,9vw,120px);
-    color:var(--cream);
-    line-height:1.1;
-    text-align:center;
-  }
-  .collab-title .ltr{
-    display:inline-block;
-    will-change:transform;
-    transform-origin:50% 80%;
+    color:var(--cream);line-height:1.1;text-align:center;
   }
 
-  /* карусель */
   .collab-scroll{width:100%;overflow:hidden}
   .collab-marquee{
     display:flex;width:max-content;
@@ -224,10 +236,7 @@
     animation-play-state:paused;
   }
   .collab:hover .collab-marquee{animation-play-state:running}
-  @keyframes marquee{
-    from{transform:translateX(0)}
-    to{transform:translateX(-50%)}
-  }
+  @keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
   .collab-track{display:flex;gap:28px;padding:0 14px}
   .collab-card{
     width:clamp(280px,30vw,420px);
@@ -257,148 +266,167 @@
     font-family:var(--display);
   }
   footer a:hover{opacity:.7}
-  .ast{
-    font-size:.6em;vertical-align:super;
-    opacity:.75;margin-left:2px;
-  }
-  /* Сноска — узкий блок, чуть шире ника @kofayoha */
+  .ast{font-size:.6em;vertical-align:super;opacity:.75;margin-left:2px}
   .disclaimer{
-    max-width:250px;
-    margin-top:14px;
-    font-family:var(--ui);
-    font-size:11px;
-    line-height:1.5;
-    color:rgba(255,249,245,.55);
-    letter-spacing:.01em;
+    max-width:250px;margin-top:14px;
+    font-family:var(--ui);font-size:11px;line-height:1.5;
+    color:rgba(255,249,245,.55);letter-spacing:.01em;
   }
+  /* колонтитул — как в «о себе» */
   footer .copy{
-    margin-top:70px;font-size:12px;letter-spacing:.14em;
+    margin-top:70px;font-size:14px;letter-spacing:.08em;
     text-transform:uppercase;opacity:.6;text-align:center;
     font-family:var(--ui);color:var(--cream);
   }
 
-  /* ══════════════ МОБИЛЬНАЯ ══════════════ */
+  /* ══════════════ МОБИЛЬНАЯ: мельче и вытянутее ══════════════ */
   @media(max-width:900px){
-    header{padding:14px 20px}
-    .logo{font-size:20px}
-    nav{gap:10px}
-    nav a{font-size:10px;letter-spacing:.04em}
-    .lang-toggle{font-size:9px;padding:3px 6px}
+    header{padding:11px 16px}
+    .logo{font-size:17px}
+    nav{gap:9px}
+    nav a{font-size:8px;letter-spacing:.07em}
+    .lang-toggle{font-size:8px;padding:2px 5px}
 
     .hero{
-      padding:80px 20px 30px;
       min-height:100vh;
-      justify-content:flex-start;align-items:flex-start;
+      padding:0 16px 30px;
+      justify-content:center;
     }
-    .hero h1{
-      font-size:clamp(38px,11vw,56px);
-      max-width:85%;text-align:left;margin-top:28px;
+    .morph{
+      height:clamp(96px,30vw,150px);
+      max-width:100%;
+    }
+    .morph span{
+      font-size:clamp(34px,10.5vw,52px);
+      /* вытянутее: сжимаем по ширине, тянем по высоте */
+      letter-spacing:-.035em;
+      line-height:.88;
     }
     .ornament{
-      width:clamp(700px,190vw,1050px);
-      top:5%;left:-30%;bottom:auto;right:auto;
-      opacity:.55;
+      width:clamp(620px,175vw,940px);
+      top:3%;left:-34%;bottom:auto;right:auto;
+      opacity:.34;
     }
 
-    .manifest{padding:36px 20px 44px}
-    .manifest-video{max-width:100%;margin-bottom:14px}
-    .btn{padding:10px 22px;font-size:14px}
+    .manifest{padding:28px 16px 36px}
+    .manifest-video{max-width:100%;margin-bottom:12px}
+    .btn{padding:9px 18px;font-size:12.5px}
 
-    .artist-flourish-wrap{padding:48px 20px 32px}
-    .artist-text{padding:0 20px 52px}
+    .artist-flourish-wrap{padding:38px 16px 24px}
+    .artist-text{padding:0 16px 42px}
+    .artist-text .container{gap:30px}
     .artist-text .lead{
-      align-self:flex-end;max-width:80%;
-      text-align:right;font-size:clamp(17px,4.6vw,24px);
+      align-self:flex-end;max-width:84%;text-align:right;
+      font-size:clamp(15px,4.2vw,20px);line-height:1.2;
     }
     .artist-text .bottom{
-      align-self:flex-start;max-width:75%;
-      text-align:left;font-size:clamp(14px,3.8vw,18px);
-      margin-top:2px;
+      align-self:flex-start;max-width:78%;text-align:left;
+      font-size:clamp(12.5px,3.4vw,16px);margin-top:0;
     }
 
-    /* ── ГАЛЕРЕЯ НА ТЕЛЕФОНЕ: категории-чипсы + вертикальный список ── */
-    .journey{padding:48px 20px}
-    .journey h2{font-size:clamp(26px,7vw,40px)}
-    .journey .head{flex-direction:column;align-items:flex-start;gap:14px;margin-bottom:24px}
+    .journey{padding:40px 16px}
+    .journey h2{font-size:clamp(22px,6.4vw,34px)}
+    .journey .head{flex-direction:column;align-items:flex-start;gap:10px;margin-bottom:18px}
+    .journey .head a{font-size:13px}
 
     .gallery-container{overflow:visible}
     .gallery-track{display:block;transform:none !important}
-    /* показываем только выбранную категорию */
     .gallery-page{display:none}
     .gallery-page.active-page{
-      display:grid;
-      grid-template-columns:1fr !important;
-      gap:14px;
+      display:grid;grid-template-columns:1fr !important;gap:11px;
     }
-    .card{aspect-ratio:4/3;border-radius:10px}
+    /* вытянутые карточки вместо широких */
+    .card{aspect-ratio:3/4;border-radius:8px}
 
-    .carousel-nav{
-      display:flex;justify-content:flex-start;
-      gap:8px;margin-top:22px;
-    }
+    .carousel-nav{display:flex;justify-content:flex-start;gap:6px;margin-top:18px}
     .carousel-item{
       flex-direction:row;
       border:1px solid rgba(43,24,16,.22);
-      padding:7px 14px;border-radius:22px;
+      padding:5px 11px;border-radius:20px;
       transition:background .25s,border-color .25s;
     }
-    .carousel-item.active{
-      background:var(--ink);border-color:var(--ink);
-    }
+    .carousel-item.active{background:var(--ink);border-color:var(--ink)}
     .carousel-dot{display:none}
-    .carousel-label{font-size:12px;opacity:.7}
+    .carousel-label{font-size:9px;letter-spacing:.09em;opacity:.65}
     .carousel-item.active .carousel-label{opacity:1;color:var(--cream)}
 
-    .collab{padding:70px 0 80px}
-    .collab .head{padding:0 20px;margin-bottom:40px}
-    .collab-title{font-size:clamp(34px,11vw,58px)}
+    .collab{padding:52px 0 60px}
+    .collab .head{padding:0 16px;margin-bottom:28px}
+    .collab-title{font-size:clamp(26px,9vw,44px)}
 
     .collab-scroll{overflow-x:auto;overflow-y:hidden;-webkit-overflow-scrolling:touch}
     .collab-marquee{animation:none !important;transform:none !important}
-    .collab-track{padding:0 16px}
+    .collab-track{padding:0 14px;gap:14px}
     .collab-track[aria-hidden="true"]{display:none}
     .collab-card[aria-hidden="true"],
     .collab-card[tabindex="-1"]{display:none}
-    .collab-card{width:clamp(240px,74vw,330px);height:clamp(300px,92vw,412px)}
-    .collab-scroll::-webkit-scrollbar{height:5px}
+    /* вытянутые: узкие и высокие */
+    .collab-card{width:clamp(190px,58vw,250px);height:clamp(280px,84vw,370px);border-radius:10px}
+    .collab-scroll::-webkit-scrollbar{height:4px}
     .collab-scroll::-webkit-scrollbar-thumb{background:rgba(255,249,245,.3);border-radius:3px}
 
-    footer{padding:56px 20px 30px}
-    footer .inner{flex-direction:column;gap:18px;max-width:340px;margin:0}
-    footer .left h2{font-size:clamp(30px,8vw,52px);margin-bottom:14px}
-    footer .left a,footer .right a{font-size:clamp(14px,3.6vw,16px);margin:6px 0}
-    .disclaimer{max-width:230px;font-size:10px;margin-top:10px}
-    footer .copy{margin-top:30px;font-size:9px}
+    footer{padding:44px 16px 24px}
+    footer .inner{flex-direction:column;gap:14px;max-width:300px;margin:0}
+    footer .left h2{font-size:clamp(24px,7vw,40px);margin-bottom:10px}
+    footer .left a,footer .right a{font-size:clamp(12.5px,3.3vw,14px);margin:5px 0}
+    .disclaimer{max-width:210px;font-size:9px;margin-top:9px;line-height:1.45}
+    footer .copy{margin-top:24px;font-size:8px}
+  }
+
+  @media(prefers-reduced-motion:reduce){
+    .collab-marquee{animation:none !important}
   }
 </style>
 </head>
 <body>
 
+<!-- SVG-фильтр для «гелевого» морфа: размытие + порог по альфе,
+     плюс лёгкое смещение шумом — отсюда неровные живые края -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <filter id="gooey">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="9" result="soft"/>
+      <feColorMatrix in="soft" mode="matrix" result="thick"
+        values="1 0 0 0 0
+                0 1 0 0 0
+                0 0 1 0 0
+                0 0 0 22 -9"/>
+      <feTurbulence id="gooNoise" type="fractalNoise" baseFrequency="0.011"
+                    numOctaves="2" seed="4" result="noise"/>
+      <feDisplacementMap in="thick" in2="noise" scale="13"
+                         xChannelSelector="R" yChannelSelector="G" result="wobble"/>
+      <feGaussianBlur in="wobble" stdDeviation="0.6"/>
+    </filter>
+  </defs>
+</svg>
+
 <header>
   <a class="logo" href="#top">prët</a>
   <nav>
-    <a href="#journey" data-en="Gallery" data-ru="Галерея">Галерея</a>
-    <a href="./shop.html" data-en="Shop" data-ru="Магазин">Магазин</a>
-    <a href="./about.html" data-en="About" data-ru="О&nbsp;себе">О&nbsp;себе</a>
-    <a href="#contact" data-en="Contact" data-ru="Контакты">Контакты</a>
-    <span class="lang-toggle" onclick="toggleLanguage()">EN</span>
+    <a href="#journey" data-ru="Галерея" data-en="Gallery">Галерея</a>
+    <a href="./shop.html" data-ru="Магазин" data-en="Shop">Магазин</a>
+    <a href="./about.html" data-ru="О&nbsp;себе" data-en="About">О&nbsp;себе</a>
+    <a href="#contact" data-ru="Контакты" data-en="Contact">Контакты</a>
+    <button class="lang-toggle" id="langBtn" type="button">EN</button>
   </nav>
 </header>
 
 <div class="hero" id="top">
   <img class="ornament" src="img/ornament.jpg" alt="">
-  <h1 data-en="The Art of prët" data-ru="Искусство prët">Искусство&nbsp;prët</h1>
+  <div class="morph" id="morph" aria-label="Искусство prët">
+    <span id="wordA" data-ru="Искусство" data-en="The Art of">Искусство</span>
+    <span id="wordB">prët</span>
+  </div>
 </div>
 
 <section class="manifest" id="manifest">
   <div class="inner" id="manifestInner">
     <video class="manifest-video" id="manifestVideo" src="img/manifest.MP4"
            autoplay muted playsinline preload="auto"></video>
-    <a class="btn" href="./about.html" data-en="Explore Now" data-ru="Узнать больше">Узнать больше</a>
+    <a class="btn" href="./about.html" data-ru="Узнать больше" data-en="Explore Now">Узнать больше</a>
   </div>
 </section>
 
-<!-- ══ Я ХУДОЖНИЦА ══ -->
 <section class="artist" id="artist">
   <div class="artist-flourish-wrap">
     <img class="artist-flourish" src="img/flourish.jpg" alt="">
@@ -406,41 +434,37 @@
   <div class="artist-text">
     <div class="container">
       <div class="lead"
-           data-en="I work with material that is always present: the body, the line, the energy"
-           data-ru="Я работаю с&nbsp;материалом, который есть всегда: с&nbsp;телом, с&nbsp;линией, с&nbsp;энергией">
+           data-ru="Я работаю с&nbsp;материалом, который есть всегда: с&nbsp;телом, с&nbsp;линией, с&nbsp;энергией"
+           data-en="I work with material that is always present: the body, the line, the energy">
         Я&nbsp;работаю с&nbsp;материалом, который есть всегда: с&nbsp;телом, с&nbsp;линией, с&nbsp;энергией
       </div>
       <div class="bottom"
-           data-en="Using body painting"
-           data-ru="Использую телесную живопись">
+           data-ru="Использую телесную живопись"
+           data-en="Using body painting">
         Использую телесную живопись
       </div>
     </div>
   </div>
 </section>
 
-<!-- ══ ГАЛЕРЕЯ ══ -->
 <section class="journey" id="journey">
   <div class="head">
-    <h2 data-en="Follow my Journey" data-ru="Моя галерея">Моя&nbsp;галерея</h2>
+    <h2 data-ru="Моя галерея" data-en="Follow my Journey">Моя&nbsp;галерея</h2>
     <a href="https://www.behance.net/kofayoha" target="_blank" rel="noopener">Behance →</a>
   </div>
-
   <div class="gallery-container">
     <div class="gallery-track" id="galleryTrack"></div>
   </div>
   <div class="carousel-nav" id="carouselNav"></div>
 </section>
 
-<!-- ══ КОЛЛАБОРАЦИИ ══ -->
 <section class="collab" id="collab">
   <div class="head">
-    <h2 class="collab-title" id="collabTitle" data-en="Collaborations" data-ru="Коллаборации">Коллаборации</h2>
+    <h2 class="collab-title" data-ru="Коллаборации" data-en="Collaborations">Коллаборации</h2>
   </div>
 
   <div class="collab-scroll">
-    <div class="collab-marquee" id="collabMarquee">
-      <!-- ваши работы: img/collab-1.png … img/collab-4.png -->
+    <div class="collab-marquee">
       <div class="collab-track">
         <a class="collab-card" href="#"><img src="img/collab-1.png" alt="Кристаллы в руке"></a>
         <a class="collab-card" href="#"><img src="img/collab-2.png" alt="Розовая гора"></a>
@@ -468,67 +492,179 @@
 <footer id="contact">
   <div class="inner">
     <div class="left">
-      <h2 data-en="Get in Touch!" data-ru="Пишите!">Пишите!</h2>
+      <h2 data-ru="Пишите!" data-en="Get in Touch!">Пишите!</h2>
       <a href="https://t.me/kofayoha" target="_blank" rel="noopener">t.me/kofayoha</a>
       <a href="https://instagram.com/kofayoha" target="_blank" rel="noopener">@kofayoha<span class="ast">*</span></a>
-      <p class="disclaimer">
+      <p class="disclaimer"
+         data-ru="* Instagram — продукт компании Meta, признанной экстремистской организацией, её деятельность запрещена на территории Российской Федерации."
+         data-en="* Instagram is a product of Meta, designated an extremist organisation; its activity is banned in the Russian Federation.">
         * Instagram — продукт компании Meta, признанной экстремистской
         организацией, её деятельность запрещена на территории
         Российской Федерации.
       </p>
     </div>
     <div class="right">
-      <a href="/cdn-cgi/l/email-protection#472c2821263e282f2607202a262e2b6924282a"><span class="__cf_email__" data-cfemail="5f3430393e2630373e1f38323e3633713c3032">[email&#160;protected]</span></a>
+      <a href="mailto:kofayoha@gmail.com">kofayoha@gmail.com</a>
     </div>
   </div>
-
   <p class="copy">© 2026 prët — art &amp; energy</p>
 </footer>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
-  /* ═════ ИНТЕРФЕЙС ═════ */
+<script>
+  /* ═════════ ЯЗЫК ═════════ */
   let currentLang = 'ru';
-  function toggleLanguage(){
-    currentLang = currentLang === 'en' ? 'ru' : 'en';
-    document.querySelector('.lang-toggle').textContent = currentLang === 'en' ? 'RU' : 'EN';
-    document.querySelectorAll('[data-en]').forEach(el=>{
-      const t = el.getAttribute('data-'+currentLang);
-      if(t) el.innerHTML = t;
+  function applyLang(){
+    document.querySelectorAll('[data-ru]').forEach(el=>{
+      const t = el.getAttribute('data-' + currentLang);
+      if(t !== null) el.innerHTML = t;
     });
+    document.getElementById('langBtn').textContent = currentLang === 'en' ? 'RU' : 'EN';
     document.documentElement.lang = currentLang;
-    buildLetters();     // пересобираем буквы заголовка после смены языка
-    relabelNav();       // и подписи категорий галереи
+    relabelNav();
+  }
+  document.getElementById('langBtn').addEventListener('click', ()=>{
+    currentLang = currentLang === 'ru' ? 'en' : 'ru';
+    applyLang();
+  });
+
+  /* ═════════ МОРФ «Искусство» ⇄ «prët» ═════════
+     Два слова лежат друг на друге в контейнере с SVG-фильтром
+     gooey (размытие + порог по альфе). Пока одно слово гаснет и
+     размывается, второе проявляется — капли слипаются и
+     перетекают одна в другую.
+
+     Плавность: длинный цикл + сглаживающая функция.
+     Неровность: к прогрессу примешиваются три синусоиды с
+     несоизмеримыми частотами, поэтому переход каждый раз идёт
+     чуть иначе, а feTurbulence живёт своей волной. */
+  const morphBox = document.getElementById('morph');
+  const wordA = document.getElementById('wordA');
+  const wordB = document.getElementById('wordB');
+  const gooNoise = document.getElementById('gooNoise');
+
+  const CYCLE = 4200;   // мс на одну сторону
+  const HOLD  = 0.34;   // доля цикла, когда слово просто стоит
+
+  function smooth(t){ return t*t*t*(t*(t*6 - 15) + 10); }   // smootherstep
+
+  function morphTick(now){
+    const isMobile = window.innerWidth <= 900;
+
+    // фаза 0..2: 0→1 первое слово, 1→2 второе
+    const phase = (now % (CYCLE * 2)) / CYCLE;
+    const dir = phase < 1 ? 0 : 1;
+    let local = phase % 1;
+
+    // пауза на «держим слово», затем переход
+    let p;
+    if(local < HOLD) p = 0;
+    else p = (local - HOLD) / (1 - HOLD);
+
+    // неровность: подмешиваем биения
+    const wob =
+      Math.sin(now * 0.0016) * 0.055 +
+      Math.sin(now * 0.0031 + 1.7) * 0.035 +
+      Math.sin(now * 0.0047 + 0.4) * 0.022;
+
+    let e = smooth(Math.max(0, Math.min(1, p + wob * (p > 0 && p < 1 ? 1 : 0))));
+
+    // vis: 1 — слово видно целиком
+    const visFrom = 1 - e;
+    const visTo   = e;
+
+    const from = dir === 0 ? wordA : wordB;
+    const to   = dir === 0 ? wordB : wordA;
+
+    const maxBlur = isMobile ? 9 : 15;
+    const shiftX  = isMobile ? 26 : 54;
+
+    apply(from, visFrom, -1, maxBlur, shiftX, now, isMobile);
+    apply(to,   visTo,   +1, maxBlur, shiftX, now, isMobile);
+
+    // живой шум на краях
+    if(gooNoise){
+      const f = 0.009 + (Math.sin(now * 0.0009) * 0.5 + 0.5) * 0.007;
+      gooNoise.setAttribute('baseFrequency', f.toFixed(4));
+    }
+
+    requestAnimationFrame(morphTick);
   }
 
-  /* ═════ ВИДЕО ═════ */
+  function apply(el, vis, side, maxBlur, shiftX, now, isMobile){
+    const inv = 1 - vis;
+    const blur = (inv * maxBlur).toFixed(2);
+    // капля растекается: по ширине сжимается, по высоте тянется
+    const sx = (0.82 + vis * 0.18).toFixed(3);
+    const sy = (1.22 - vis * 0.22 + Math.sin(now * 0.0021 + side) * 0.02).toFixed(3);
+    const tx = (side * inv * shiftX).toFixed(1);
+    const ty = (Math.sin(now * 0.0013 + side * 1.3) * (isMobile ? 3 : 6) * inv).toFixed(1);
+
+    el.style.opacity = Math.max(0, Math.min(1, vis * 1.12)).toFixed(3);
+    el.style.filter = `blur(${blur}px)`;
+    el.style.transform =
+      `translate(${tx}px, calc(-50% + ${ty}px)) scale(${sx}, ${sy})`;
+  }
+
+  if(window.matchMedia('(prefers-reduced-motion: reduce)').matches){
+    // без движения: показываем оба слова спокойно
+    morphBox.style.filter = 'none';
+    wordA.style.transform = 'translateY(-50%)';
+    wordB.style.opacity = '0';
+  } else {
+    requestAnimationFrame(morphTick);
+  }
+
+  /* ═════════ ВИДЕО ═════════ */
   const mv = document.getElementById('manifestVideo');
+
+  function showManifestText(){
+    if(document.getElementById('manifestFallback')) return;
+    const h2 = document.createElement('h2');
+    h2.id = 'manifestFallback';
+    h2.style.cssText = "font-family:var(--display);font-style:italic;font-size:clamp(22px,4.6vw,58px);line-height:1.3;text-align:center;margin-bottom:34px;color:var(--cream)";
+    h2.textContent = 'Моя цель, мой смысл и возможность жить — создавать искры';
+    document.getElementById('manifestInner').prepend(h2);
+  }
+
   if(mv){
-    mv.loop = false;
-    mv.pause();
-    let inView = false;
-    const vo = new IntersectionObserver(entries=>{
+    mv.loop = false; mv.muted = true;
+    mv.setAttribute('muted',''); mv.playsInline = true;
+
+    let inView = false, playedOk = false;
+
+    const watchdog = setTimeout(()=>{
+      if(!playedOk && (mv.readyState < 2 || mv.paused)){
+        mv.style.display = 'none';
+        showManifestText();
+      }
+    }, 2200);
+
+    mv.addEventListener('playing', ()=>{
+      playedOk = true; clearTimeout(watchdog);
+      mv.style.display = '';
+      const fb = document.getElementById('manifestFallback');
+      if(fb) fb.remove();
+    });
+
+    new IntersectionObserver(entries=>{
       entries.forEach(e=>{
         if(e.isIntersecting){
-          if(!inView){ mv.currentTime = 0; mv.play().catch(()=>{}); }
+          if(!inView){
+            mv.currentTime = 0;
+            mv.play().catch(()=>{ mv.style.display='none'; showManifestText(); });
+          }
           inView = true;
-        } else { inView = false; }
+        } else inView = false;
       });
-    },{threshold:.4});
-    vo.observe(mv);
+    },{threshold:.4}).observe(mv);
+
     mv.addEventListener('ended', ()=> mv.pause());
     mv.addEventListener('error', ()=>{
-      mv.remove();
-      const h2 = document.createElement('h2');
-      h2.setAttribute('data-en','My purpose, my meaning, and the ability to live—creating sparks');
-      h2.setAttribute('data-ru','Моя цель, мой смысл и&nbsp;возможность жить — создавать искры');
-      h2.style.cssText = "font-family:var(--display);font-style:italic;font-size:clamp(30px,4.6vw,58px);line-height:1.3;text-align:center;margin-bottom:44px;color:var(--cream)";
-      h2.innerHTML = h2.getAttribute('data-'+currentLang);
-      document.getElementById('manifestInner').prepend(h2);
-      buildLetters();
+      clearTimeout(watchdog); mv.remove(); showManifestText();
     });
   }
 
-  /* ═════ СКРОЛЛ: шапка и орнамент ═════ */
+  /* ═════════ СКРОЛЛ ═════════ */
   const header = document.querySelector('header');
   const ornament = document.querySelector('.ornament');
   const heroSection = document.querySelector('.hero');
@@ -539,82 +675,35 @@
     const rect = heroSection.getBoundingClientRect();
     if(window.innerWidth <= 900){
       const p = Math.max(0, Math.min(1, -rect.top / (rect.height * 1.1)));
-      ornament.style.transform = `translate(${p*75}%, ${p*35}%) rotate(${p*92}deg)`;
-      ornament.style.opacity = 0.55 - p*0.3;
+      ornament.style.transform = `translate(${p*70}%, ${p*32}%) rotate(${p*88}deg)`;
+      ornament.style.opacity = 0.34 - p*0.22;
     } else {
       const p = Math.max(0, Math.min(1, -rect.top / (rect.height * 1.6)));
       ornament.style.transform = `translateY(-${p*380}px) rotate(${p*50}deg)`;
-      ornament.style.opacity = 0.45 - p*0.25;
+      ornament.style.opacity = 0.40 - p*0.26;
     }
   });
 
-  /* ═════ ЗАГОЛОВОК «КОЛЛАБОРАЦИИ»: покачивание букв ═════════
-     Каждая буква — отдельный inline-block и вращается вокруг
-     собственной нижней точки. Слово при этом не наклоняется
-     целиком: ось остаётся ровной, а «дышит» только рисунок курсива. */
-  const collabTitle = document.getElementById('collabTitle');
-  let letters = [];
-  let running = false;
-
-  function buildLetters(){
-    if(!collabTitle) return;
-    const txt = collabTitle.textContent.trim();
-    collabTitle.textContent = '';
-    letters = [];
-    [...txt].forEach(ch=>{
-      const s = document.createElement('span');
-      s.className = 'ltr';
-      s.textContent = (ch === ' ') ? '\u00A0' : ch;
-      collabTitle.appendChild(s);
-      letters.push(s);
-    });
-  }
-
-  function tick(now){
-    if(!running) return;
-    const t = now * 0.0011;
-    letters.forEach((el,i)=>{
-      const p = t + i * 0.55;
-      const rot   = Math.sin(p) * 7;      // наклон влево-вправо
-      const skew  = Math.sin(p) * -4;     // лёгкая курсивная скошенность
-      el.style.transform = `rotate(${rot.toFixed(2)}deg) skewX(${skew.toFixed(2)}deg)`;
-    });
-    requestAnimationFrame(tick);
-  }
-
-  buildLetters();
-  if('IntersectionObserver' in window && collabTitle){
-    new IntersectionObserver(entries=>{
-      entries.forEach(e=>{
-        if(e.isIntersecting && !running){ running = true; requestAnimationFrame(tick); }
-        else if(!e.isIntersecting){ running = false; }
-      });
-    },{threshold:.05}).observe(collabTitle);
-  } else {
-    running = true; requestAnimationFrame(tick);
-  }
-
-  /* ═════ ГАЛЕРЕЯ ═════ */
+  /* ═════════ ГАЛЕРЕЯ ═════════ */
   const CATEGORIES = [
-    { en:'Performance', ru:'Перформанс', works:[
+    { ru:'Перформанс', en:'Performance', works:[
       {img:'img/posestrie.jpg',  href:'https://hsedesign.ru/project/posestrie-fdd4656391a44e98b69133c583dda03f', alt:'Посестрие'},
       {img:'img/posestrie2.jpg', href:'https://hsedesign.ru/project/posestrie-b7607978d5fb46828f213abeb44d5003', alt:'Посестрие 2'},
       {img:'img/city.jpg',       href:'https://hsedesign.ru/project/20fde7d552894e3ab208171906388f3d',          alt:'Город'}
     ]},
-    { en:'Branding', ru:'Брендинг', works:[
+    { ru:'Брендинг', en:'Branding', works:[
       {img:'img/chenergy.jpg', href:'https://www.behance.net/gallery/242092697/Chenergy',            alt:'Chenergy'},
       {img:'img/jazz.jpg',     href:'https://www.behance.net/gallery/242108047/dzhazovyj-festival',  alt:'Джазовый фестиваль'},
       {img:'img/lines.jpg',    href:'https://hsedesign.ru/project/24aa67ae77f24a5d96496677a6ca3dc4', alt:'Линии'}
     ]},
-    { en:'Illustration', ru:'Иллюстрация', works:[
-      {img:'img/elian.jpg',  href:'https://www.behance.net/gallery/242102615/Elian-script',           alt:'Элианский шрифт'},
-      {img:'img/shadow.jpg', href:'https://hsedesign.ru/project/1947070780544d21889e203d6e2ff548',    alt:'Тень'}
+    { ru:'Иллюстрация', en:'Illustration', works:[
+      {img:'img/elian.jpg',  href:'https://www.behance.net/gallery/242102615/Elian-script',        alt:'Элианский шрифт'},
+      {img:'img/shadow.jpg', href:'https://hsedesign.ru/project/1947070780544d21889e203d6e2ff548', alt:'Тень'}
     ]}
   ];
 
   const galleryTrack = document.getElementById('galleryTrack');
   const carouselNav  = document.getElementById('carouselNav');
-  let currentPage = 0;
 
   function renderGallery(){
     galleryTrack.innerHTML = CATEGORIES.map((cat, ci)=>{
@@ -631,7 +720,7 @@
     carouselNav.innerHTML = CATEGORIES.map((cat, i)=>`
       <button class="carousel-item${i === 0 ? ' active' : ''}" data-page="${i}" type="button">
         <span class="carousel-dot${i === 0 ? ' active' : ''}"></span>
-        <span class="carousel-label" data-en="${cat.en}" data-ru="${cat.ru}">${cat.ru}</span>
+        <span class="carousel-label" data-ru="${cat.ru}" data-en="${cat.en}">${cat.ru}</span>
       </button>`).join('');
 
     carouselNav.querySelectorAll('.carousel-item').forEach(btn=>{
@@ -640,16 +729,14 @@
   }
 
   function goToPage(i){
-    currentPage = i;
-    // десктоп — сдвигаем дорожку
     galleryTrack.style.transform = `translateX(-${i * 100}%)`;
-    // мобильный — показываем только нужную категорию
     galleryTrack.querySelectorAll('.gallery-page').forEach(p=>{
       p.classList.toggle('active-page', +p.dataset.page === i);
     });
     carouselNav.querySelectorAll('.carousel-item').forEach(b=>{
-      b.classList.toggle('active', +b.dataset.page === i);
-      b.querySelector('.carousel-dot').classList.toggle('active', +b.dataset.page === i);
+      const on = +b.dataset.page === i;
+      b.classList.toggle('active', on);
+      b.querySelector('.carousel-dot').classList.toggle('active', on);
     });
   }
 
