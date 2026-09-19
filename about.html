@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="color-scheme" content="light only">
+<meta name="supported-color-schemes" content="light">
 <meta name="theme-color" content="#0B1E3C">
 <title>О себе — prët</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -16,7 +17,6 @@
     --blue:#4A7BA7;
     --cream:#FFF9F5;
     --ink:#2B1810;
-    --kraft:#CE8467;
     --display:'Averia Serif Libre','PT Serif Caption','Lora',Georgia,serif;
     --letter:'PT Serif Caption','Lora',Georgia,serif;
     --ui:'IBM Plex Sans',Arial,sans-serif;
@@ -27,19 +27,26 @@
   html{scroll-behavior:smooth;color-scheme:light only}
   body{
     font-family:'PT Serif Caption','Lora',Georgia,serif;
-    color:var(--ink);
-    background:var(--cream);
-    line-height:1.6;
-    overflow-x:hidden;
+    color:var(--ink);background:var(--cream);
+    line-height:1.6;overflow-x:hidden;
     -webkit-text-size-adjust:100%;
+  }
+
+  /* тёмная тема телефона не перекрашивает сайт */
+  @media (prefers-color-scheme: dark){
+    :root{color-scheme:light only}
+    html,body{background:#FFF9F5 !important;color:#2B1810 !important}
+    .about-hero,.extras{background:#0B1E3C !important}
+    .path-section,.skills,footer{background:#FFF9F5 !important}
+    .pb{background:#FFF9F5 !important;color:#2B1810 !important}
+    .girl img{filter:none}
   }
 
   header{
     position:fixed;top:0;left:0;right:0;z-index:100;
     display:flex;justify-content:space-between;align-items:center;
     padding:24px 48px;
-    background:rgba(255,249,245,.95);
-    backdrop-filter:blur(8px);
+    background:rgba(255,249,245,.95);backdrop-filter:blur(8px);
   }
   .logo{font-family:var(--display);font-size:32px;font-style:italic;text-decoration:none;color:var(--ink);font-weight:400}
   nav{display:flex;gap:36px;align-items:center}
@@ -50,9 +57,9 @@
   nav a:hover{opacity:.6}
   .lang-toggle{
     cursor:pointer;font-size:14px;padding:6px 12px;
-    border:1px solid var(--ink);border-radius:4px;
-    font-family:var(--ui);font-weight:500;background:none;color:var(--ink);
-    transition:background .3s, color .3s;
+    border:1px solid var(--ink);border-radius:4px;background:none;color:var(--ink);
+    font-family:var(--ui);font-weight:500;
+    transition:background .3s,color .3s;
   }
   .lang-toggle:hover{background:var(--ink);color:var(--cream)}
 
@@ -70,10 +77,7 @@
   /* ═══════════ ПУТЬ ═══════════ */
   .path-section{background:var(--cream);padding:70px 48px 40px;position:relative}
   .path-canvas{position:relative;max-width:1250px;margin:0 auto;height:1680px}
-  .threads{
-    position:absolute;inset:0;width:100%;height:100%;
-    pointer-events:none;z-index:1;overflow:visible;
-  }
+  .threads{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:1;overflow:visible}
   .pb{
     position:absolute;left:var(--x);top:var(--y);width:var(--w);
     font-family:var(--display);font-size:15px;line-height:1.5;
@@ -98,12 +102,11 @@
     margin-bottom:20px;text-align:center;
   }
   .skills-band{
-    position:relative;
-    padding:270px 0 120px;
+    position:relative;padding:290px 0 120px;
     background-color:var(--cream);
     background-image:linear-gradient(var(--blue),var(--blue));
-    background-size:100% calc(100% - var(--seam,320px));
-    background-position:0 var(--seam,320px);
+    background-size:100% calc(100% - var(--seam,340px));
+    background-position:0 var(--seam,340px);
     background-repeat:no-repeat;
   }
   .skills-folders{
@@ -129,17 +132,17 @@
   .folder:hover .folder-label,
   .folder.open  .folder-label{transform:translate(-50%,-50%) translateY(-10px) rotate(-1.2deg)}
 
-  /* листы папки — своё имя, чтобы не конфликтовать с письмом */
+  /* листы с прищепками */
   .folder-sheets{position:absolute;left:50%;top:0;width:100%;z-index:1;pointer-events:none}
   .skill-sheet{
-    position:absolute;left:50%;top:0;width:82%;
-    display:flex;align-items:center;gap:8px;
-    padding:7px 10px 7px 9px;
+    position:absolute;left:50%;top:0;width:86%;
+    display:flex;align-items:center;gap:9px;
+    padding:9px 11px 9px 7px;
     background:#FBF4E6;background-image:var(--noise);
     background-blend-mode:multiply;background-size:140px 140px;
     border-radius:3px;font-family:var(--display);font-style:italic;
     font-size:clamp(12px,1.1vw,15px);color:var(--ink);white-space:nowrap;
-    box-shadow:0 3px 9px rgba(58,29,19,.20);
+    box-shadow:0 3px 9px rgba(58,29,19,.22);
     opacity:0;transform:translate(-50%, 14px) rotate(0deg);
     transition:opacity .26s ease, transform .52s cubic-bezier(.34,1.28,.5,1);
     transition-delay:calc(var(--i) * 55ms);
@@ -149,7 +152,7 @@
     opacity:1;
     transform:translate(calc(-50% + var(--tx)), var(--ty)) rotate(var(--rot));
   }
-  .clip{width:15px;height:20px;flex:none;display:block}
+  .clip{width:26px;height:24px;flex:none;display:block;margin-top:-13px}
   .skill-list{display:none}
 
   /* ═══════════ ПИСЬМО ═══════════ */
@@ -168,13 +171,9 @@
   }
   .envelope-wrap{position:relative;width:100%;cursor:pointer;perspective:1400px}
   .envelope{position:relative;width:100%;aspect-ratio:1.55/1}
-
-  /* ЛИСТЫ ПИСЬМА — центрированы, без сдвига вправо */
   .letter-sheets{
-    position:absolute;
-    left:50%;bottom:100%;
-    transform:translateX(-50%);
-    width:84%;z-index:1;
+    position:absolute;left:50%;bottom:100%;
+    transform:translateX(-50%);width:84%;z-index:1;
   }
   .sheet{
     position:absolute;bottom:0;left:0;width:100%;
@@ -225,59 +224,63 @@
   footer{background:var(--cream);padding:60px 48px 40px;text-align:center}
   footer p{font-size:14px;opacity:.6;font-family:var(--ui);letter-spacing:.08em;text-transform:uppercase}
 
-  /* ══════════════ МОБИЛЬНАЯ ══════════════ */
+  /* ══════════ МОБИЛЬНАЯ: мельче и вытянутее ══════════ */
   @media(max-width:900px){
-    header{padding:14px 20px}
-    .logo{font-size:20px}
-    nav{gap:10px}
-    nav a{font-size:9px}
-    .lang-toggle{font-size:9px;padding:3px 7px}
+    header{padding:11px 16px}
+    .logo{font-size:17px}
+    nav{gap:9px}
+    nav a{font-size:8px;letter-spacing:.07em}
+    .lang-toggle{font-size:8px;padding:2px 5px}
 
-    .about-hero{padding:100px 20px 60px}
+    .about-hero{padding:86px 16px 46px;min-height:44vh}
+    .about-hero h1{font-size:clamp(32px,9.5vw,50px)}
 
-    /* путь: блоки в потоке зигзагом, нити рисуются по факту */
-    .path-section{padding:40px 20px 50px}
-    .path-canvas{height:auto;padding-bottom:20px}
+    .path-section{padding:32px 16px 40px}
+    .path-canvas{height:auto;padding-bottom:16px}
     .pb{
       position:relative !important;
       left:auto !important;top:auto !important;
-      width:auto !important;
-      max-width:84%;
-      margin-bottom:38px;
-      font-size:15px;
+      width:auto !important;max-width:86%;
+      margin-bottom:30px;font-size:12.5px;line-height:1.45;
       background:transparent;
     }
-    .pb.lead{font-size:17px}
-    /* зигзаг: чётные влево, нечётные вправо */
+    .pb.lead{font-size:14px}
+    .pb .big{font-size:1.3em}
     .pb:nth-of-type(odd){margin-left:0;margin-right:auto}
     .pb:nth-of-type(even){margin-left:auto;margin-right:0;text-align:right}
     .girl{
-      position:relative !important;
-      right:auto;bottom:auto;
-      width:min(58%,250px);
-      margin:34px 0 0 auto;
+      position:relative !important;right:auto;bottom:auto;
+      width:min(48%,190px);margin:26px 0 0 auto;
     }
+    .girl .cap{font-size:clamp(15px,4.4vw,20px)}
 
-    .skills{padding:30px 20px 0}
-    .skills h2{margin-bottom:16px}
-    .skills-band{padding:70px 0 70px}
-    .skills-folders{grid-template-columns:repeat(2,1fr);gap:44px 20px}
+    .skills{padding:24px 16px 0}
+    .skills h2{font-size:clamp(24px,6.6vw,36px);margin-bottom:12px}
+    .skills-band{padding:60px 0 56px}
+    .skills-folders{grid-template-columns:repeat(2,1fr);gap:34px 14px}
+    /* вытянутые папки */
+    .folder{aspect-ratio:1.12/1}
     .skill-sheet{display:none}
-    .folder-label{font-size:clamp(18px,4.8vw,24px)}
+    .folder-label{font-size:clamp(14px,4.2vw,19px)}
     .skill-list{
-      display:block;margin-top:12px;
-      font-family:var(--ui);font-size:12px;line-height:1.7;
+      display:block;margin-top:9px;
+      font-family:var(--ui);font-size:9.5px;line-height:1.65;
       color:var(--cream);opacity:.85;text-align:center;
     }
 
-    .extras{padding:150px 18px 90px}
-    .letter-title{margin-bottom:26px;font-size:clamp(30px,9vw,46px)}
-    .envelope{aspect-ratio:1.32/1}
-    .letter-sheets{width:90%}
-    .sheet{padding:24px 22px 34px}
-    .sheet p{font-size:14px;line-height:1.7}
-    .sheet.active{transform:translateY(26px)}
-    .letter-hint{margin-top:34px;font-size:10px}
+    .extras{padding:110px 14px 64px}
+    .letter-title{margin-bottom:20px;font-size:clamp(24px,8.4vw,38px)}
+    /* вытянутый конверт */
+    .envelope{aspect-ratio:1.18/1}
+    .letter-sheets{width:92%}
+    .sheet{padding:18px 16px 26px;border-radius:3px}
+    .sheet p{font-size:12px;line-height:1.62}
+    .sheet.active{transform:translateY(20px)}
+    .sheet-num{right:14px;bottom:9px;font-size:9px}
+    .letter-hint{margin-top:24px;font-size:9px;letter-spacing:.16em}
+
+    footer{padding:36px 16px 24px}
+    footer p{font-size:9px}
   }
 </style>
 </head>
@@ -295,7 +298,7 @@
 </header>
 
 <section class="about-hero">
-  <h1>Мария Балаян</h1>
+  <h1 data-ru="Мария Балаян" data-en="Maria Balayan">Мария Балаян</h1>
 </section>
 
 <!-- ═══════════ ПУТЬ ═══════════ -->
@@ -409,7 +412,7 @@
 </section>
 
 <footer>
-  <p data-ru="© 2026 prët — maria balayan" data-en="© 2026 prët — maria balayan">© 2026 prët — maria balayan</p>
+  <p>© 2026 prët — maria balayan</p>
 </footer>
 
 <script>
@@ -460,7 +463,6 @@
     renderSkills();
     renderLetter();
     hint.textContent = hintText[currentLang][opened ? 'sheet' : 'start'];
-    // после смены языка пересчитываем нити и стык
     setTimeout(()=>{ drawThreads(); placeSeam(); }, 60);
   }
 
@@ -469,11 +471,7 @@
     applyLang();
   });
 
-  /* ═════════ НИТИ ═════════
-     Считаются по фактическому положению блоков — работает и на
-     телефоне. Углы текстовых прямоугольников сортируются по углу
-     вокруг головы фигуры: звёздчатый многоугольник не может
-     пересечь себя, поэтому нить нигде не самопересекается. */
+  /* ═════════ НИТИ ═════════ */
   const canvas  = document.getElementById('pathCanvas');
   const threads = document.getElementById('threads');
   const girlEl  = document.getElementById('girl');
@@ -495,7 +493,7 @@
     const hy = gr.top + gr.height * 0.12 - cr.top;
 
     const isMobile = window.innerWidth <= 900;
-    const PAD = isMobile ? 12 : 17;
+    const PAD = isMobile ? 10 : 17;
 
     const boxes = [];
     canvas.querySelectorAll('.pb').forEach(el=>{
@@ -516,20 +514,20 @@
     });
     pts.sort((p,q)=> p.a - q.a);
 
-    const jitter = isMobile ? 7 : 10;
+    const jit = isMobile ? 6 : 10;
     let d = `M ${hx.toFixed(1)} ${hy.toFixed(1)}`;
     pts.forEach((p,i)=>{
-      d += ` L ${(p.x + (rnd(i*3.7+1.3)-0.5)*jitter).toFixed(1)} ${(p.y + (rnd(i*5.9+2.7)-0.5)*jitter).toFixed(1)}`;
+      d += ` L ${(p.x + (rnd(i*3.7+1.3)-0.5)*jit).toFixed(1)} ${(p.y + (rnd(i*5.9+2.7)-0.5)*jit).toFixed(1)}`;
     });
     d += ' Z';
 
     let html = `<path d="${d}" fill="none" stroke="#1B1208"
-      stroke-width="${isMobile ? 1.3 : 1.5}" stroke-linejoin="miter"
+      stroke-width="${isMobile ? 1.1 : 1.5}" stroke-linejoin="miter"
       stroke-linecap="round" opacity="0.68"/>`;
 
     boxes.forEach(b=>{
       html += `<circle cx="${b.cx.toFixed(1)}" cy="${(b.top - PAD + 2).toFixed(1)}"
-        r="${isMobile ? 4 : 4.6}" fill="#1B1208" opacity="0.85"/>`;
+        r="${isMobile ? 3.4 : 4.6}" fill="#1B1208" opacity="0.85"/>`;
     });
 
     threads.innerHTML = html;
@@ -547,15 +545,73 @@
                       "H158 Q170 14 170 26 V52 L178 62 H296 Q306 62 306 72 " +
                       "V180 Q306 190 296 190 Z";
 
-  const CLIP_COLORS = ['#8FCB86','#C9CCD0','#2B2B2B','#E5C063','#F0B9CE',
-                       '#A8D8DE','#D9433E','#6E4B2A','#E8DCC0','#7EA8D8'];
+  /* ── ПРИЩЕПКИ: разные типы, как на фото Penco ──
+     0 bulldog  — круглый шарнир сверху, широкое основание
+     1 clamp    — плоский верх с ушком и «рёбрами»
+     2 wire     — проволочный биндер с петлёй
+     3 dotted   — bulldog в горошек
+     Цвета из фото: мята, хром, чёрный, золото, розовый,
+     голубой, красный, коричневый, синий, зелёный. */
+  const CLIPS = [
+    { type:0, body:'#8FCB86', metal:'#7FB877' },   // мятный bulldog
+    { type:1, body:'#C9CCD0', metal:'#A9AEB4' },   // хром clamp
+    { type:2, body:'#2B2B2B', metal:'#BFC3C7' },   // чёрный wire
+    { type:1, body:'#D9B45C', metal:'#BE9840' },   // золото clamp
+    { type:0, body:'#F0B9CE', metal:'#DFA2BA' },   // розовый bulldog
+    { type:0, body:'#A8D8DE', metal:'#8FC4CB' },   // голубой bulldog
+    { type:2, body:'#D9433E', metal:'#BFC3C7' },   // красный wire
+    { type:3, body:'#D9B45C', metal:'#BE9840' },   // золото в горошек
+    { type:1, body:'#3A5C92', metal:'#2C4875' },   // синий clamp
+    { type:0, body:'#77BE6E', metal:'#63A85B' },   // зелёный bulldog
+    { type:1, body:'#6E4B2A', metal:'#5A3D22' },   // коричневый clamp
+    { type:3, body:'#8FCB86', metal:'#7FB877' }    // мята в горошек
+  ];
 
-  function clipSVG(color){
-    return `<svg class="clip" viewBox="0 0 20 26" aria-hidden="true">
-      <path d="M6.2 2.6 C6.2 .6 13.8 .6 13.8 2.6 L13.8 9 L6.2 9 Z"
-            fill="none" stroke="#C3C6CA" stroke-width="1.6" stroke-linejoin="round"/>
-      <path d="M3.4 9 h13.2 l-1.6 15 H5 Z" fill="${color}"/>
-      <path d="M3.4 9 h13.2" stroke="rgba(0,0,0,.2)" stroke-width="1"/>
+  function clipSVG(c, uid){
+    const { type, body, metal } = c;
+
+    if(type === 2){
+      // проволочный биндер: петля из проволоки + корпус
+      return `<svg class="clip" viewBox="0 0 34 30" aria-hidden="true">
+        <path d="M11 13 C9 7 13 3 17 3 C21 3 25 7 23 13"
+              fill="none" stroke="${metal}" stroke-width="1.7" stroke-linecap="round"/>
+        <path d="M5 13 h24 a2 2 0 0 1 2 2 v9 a2 2 0 0 1 -2 2 H5 a2 2 0 0 1 -2 -2 v-9 a2 2 0 0 1 2 -2 Z"
+              fill="${body}"/>
+        <path d="M8 13 v16 M26 13 v16" stroke="${metal}" stroke-width="1.5" stroke-linecap="round"/>
+        <path d="M5 16 h24" stroke="rgba(0,0,0,.18)" stroke-width=".9"/>
+      </svg>`;
+    }
+
+    if(type === 1){
+      // плоский clamp: трапеция с ушком, рёбра внизу
+      return `<svg class="clip" viewBox="0 0 34 30" aria-hidden="true">
+        <path d="M12 4 h10 a2 2 0 0 1 2 2 v6 h5 a3 3 0 0 1 3 3 v8
+                 a2 2 0 0 1 -2 2 H4 a2 2 0 0 1 -2 -2 v-8 a3 3 0 0 1 3 -3 h5 V6
+                 a2 2 0 0 1 2 -2 Z"
+              fill="${body}"/>
+        <circle cx="17" cy="8" r="1.5" fill="${metal}"/>
+        <path d="M2 21 h30 M2 23.6 h30" stroke="rgba(0,0,0,.16)" stroke-width=".8"/>
+        <path d="M11 12 h12" stroke="${metal}" stroke-width=".9" opacity=".7"/>
+      </svg>`;
+    }
+
+    // type 0 / 3 — bulldog с круглым шарниром
+    const dots = (type === 3)
+      ? `<g fill="#FFFFFF" opacity=".85">
+           <circle cx="12" cy="20" r="1.3"/><circle cx="19" cy="18.4" r="1.3"/>
+           <circle cx="26" cy="20" r="1.3"/><circle cx="15.5" cy="24" r="1.3"/>
+           <circle cx="22.5" cy="24" r="1.3"/><circle cx="17" cy="9.4" r="1.2"/>
+         </g>`
+      : '';
+
+    return `<svg class="clip" viewBox="0 0 34 30" aria-hidden="true">
+      <circle cx="17" cy="9" r="6.4" fill="${body}"/>
+      <circle cx="17" cy="9" r="2.9" fill="#FFF9F5"/>
+      <path d="M7 15 h20 a3 3 0 0 1 3 3 v7 a2 2 0 0 1 -2 2 H6 a2 2 0 0 1 -2 -2 v-7 a3 3 0 0 1 3 -3 Z"
+            fill="${body}"/>
+      <path d="M27.4 16.4 l3.4 -1.4 v3.2 Z" fill="${metal}"/>
+      <path d="M4 22.6 h26" stroke="rgba(0,0,0,.16)" stroke-width=".9"/>
+      ${dots}
     </svg>`;
   }
 
@@ -576,17 +632,22 @@
     </svg>`;
   }
 
+  /* сдвиг набора прищепок — меняется при нажатии на папку */
+  const clipOffset = GROUPS.map(()=> 0);
+
   function renderSkills(){
     document.getElementById('skillsFolders').innerHTML = GROUPS.map((g, gi)=>{
       const n = g.items.length;
+      const off = clipOffset[gi];
+
       const sheets = g.items.map((name, i)=>{
         const tx  = -((n-1) * 7) / 2 + i * 7;
-        const ty  = -58 - i * 28;
+        const ty  = -64 - i * 30;
         const rot = -4 + i * 2.2;
-        const col = CLIP_COLORS[(gi * 2 + i) % CLIP_COLORS.length];
+        const clip = CLIPS[(gi * 3 + i + off) % CLIPS.length];
         return `<span class="skill-sheet"
                    style="--i:${i};--tx:${tx.toFixed(1)}px;--ty:${ty.toFixed(1)}px;--rot:${rot.toFixed(1)}deg">
-                   ${clipSVG(col)}${name}
+                   ${clipSVG(clip, gi + '_' + i)}${name}
                  </span>`;
       }).join('');
 
@@ -594,7 +655,7 @@
 
       return `
         <div class="skill-group">
-          <div class="folder">
+          <div class="folder" data-g="${gi}">
             <div class="folder-sheets">${sheets}</div>
             ${folderSVG(gi)}
             <div class="folder-label">${label}</div>
@@ -603,8 +664,16 @@
         </div>`;
     }).join('');
 
+    /* нажатие: меняем прищепки и держим папку открытой */
     document.querySelectorAll('.folder').forEach(f=>{
-      f.addEventListener('click', ()=> f.classList.toggle('open'));
+      f.addEventListener('click', ()=>{
+        const gi = +f.dataset.g;
+        clipOffset[gi] = (clipOffset[gi] + 1) % CLIPS.length;
+        const wasOpen = f.classList.contains('open');
+        renderSkills();
+        const again = document.querySelector(`.folder[data-g="${gi}"]`);
+        if(again && !wasOpen) again.classList.add('open');
+      });
     });
   }
 
@@ -629,7 +698,6 @@
         <p>${t}</p>
         <span class="sheet-num">${i+1} / ${PARAS[currentLang].length}</span>
       </div>`).join('');
-    // если письмо уже открыто — оставляем тот же лист
     if(opened && idx >= 0){
       sheetsBox.querySelectorAll('.sheet').forEach(s=>{
         s.classList.toggle('active', +s.dataset.i === idx);
