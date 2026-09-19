@@ -1,17 +1,16 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="ru" style="color-scheme:light !important;background:#FFF9F5 !important">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="color-scheme" content="light">
-<meta name="supported-color-schemes" content="light only">
-<meta name="theme-color" content="#0B1E3C">
 <title>Магазин — prët</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Averia+Serif+Libre:ital,wght@0,400;1,400&family=PT+Serif+Caption:ital@0;1&family=IBM+Plex+Sans:wght@400;500;600&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
 <style>
   :root{
+    color-scheme:light !important;
     --navy:#0B1E3C;
     --cream:#FFF9F5;
     --ink:#2B1810;
@@ -20,18 +19,19 @@
     --hand:'Caveat','Comic Sans MS',cursive;
   }
   *{margin:0;padding:0;box-sizing:border-box}
-  html{scroll-behavior:smooth}
+  html{scroll-behavior:smooth;color-scheme:light !important;background:#FFF9F5 !important}
   body{
-    font-family:var(--ui);
-    color:var(--ink);background:var(--cream);
+    font-family:var(--display);
+    color:#2B1810 !important;background:#FFF9F5 !important;
     line-height:1.6;overflow-x:hidden;
     -webkit-text-size-adjust:100%;
+    forced-color-adjust:none;
   }
 
   @media(prefers-color-scheme:dark){
-    html{background:#FFF9F5 !important}
-    body{background:#FFF9F5 !important;color:#2B1810 !important}
-    .shop-hero{background:#0B1E3C !important}
+    :root{color-scheme:light !important}
+    html,body{background:#FFF9F5 !important;color:#2B1810 !important}
+    .shop-hero{background:#0B1E3C !important;color:#FFF9F5 !important}
     .shop{background:#FFF9F5 !important}
   }
 
@@ -74,7 +74,6 @@
     margin-top:26px;max-width:640px;line-height:1.35;
   }
 
-  /* ══════ БЛОКНОТ (десктоп: горизонтальный, мобильный: вертикальный папка) ══════ */
   .shop{background:var(--cream);padding:90px 48px 110px;display:flex;justify-content:center}
   .notebook-wrap{
     position:relative;max-width:1100px;width:100%;
@@ -88,7 +87,6 @@
     box-shadow:0 16px 48px rgba(43,24,16,.22);
     display:flex;overflow:hidden;
   }
-  /* спираль: чёрные кольца слева */
   .spiral{
     position:absolute;left:14px;top:50%;
     transform:translateY(-50%);width:28px;height:92%;
@@ -100,7 +98,6 @@
     background:#1a1a1a;
     box-shadow:inset 0 2px 4px rgba(255,255,255,.3), 0 2px 6px rgba(0,0,0,.4);
   }
-  /* левая страница */
   .page-left{
     flex:1;background:#F9F6F0;
     border-right:1px solid rgba(43,24,16,.12);
@@ -112,7 +109,6 @@
     content:'';position:absolute;left:52px;top:20px;bottom:20px;
     width:1px;background:#E8796C;opacity:.45;
   }
-  /* правая страница */
   .page-right{
     flex:1;background:#FBF8F3;
     padding:48px 34px;
@@ -138,7 +134,6 @@
     position:relative;
     box-shadow:0 4px 12px rgba(43,24,16,.18);
   }
-  /* скотч */
   .photo-box::before{
     content:'';position:absolute;top:-8px;left:50%;
     transform:translateX(-50%) rotate(-1deg);
@@ -150,13 +145,13 @@
   .coming-soon{
     position:absolute;inset:0;
     display:flex;align-items:center;justify-content:center;
-    font-family:var(--hand);font-size:clamp(18px,2.2vw,26px);
+    font-family:var(--display);font-style:italic;font-size:clamp(15px,1.8vw,22px);
     color:var(--ink);opacity:.55;text-align:center;
     padding:12px;line-height:1.2;
   }
   .item-text{flex:1;display:flex;flex-direction:column;gap:6px}
   .item-title{
-    font-family:var(--hand);font-size:clamp(20px,2.4vw,28px);
+    font-family:var(--display);font-style:italic;font-size:clamp(20px,2.4vw,28px);
     color:var(--ink);line-height:1.1;
   }
   .item-note{
@@ -164,7 +159,6 @@
     color:var(--ink);opacity:.6;line-height:1.5;
   }
 
-  /* кнопки перелистывания */
   .flip-controls{
     position:absolute;bottom:24px;right:32px;
     display:flex;gap:12px;z-index:5;
@@ -187,7 +181,6 @@
     letter-spacing:.08em;text-transform:uppercase;
   }
 
-  /* ══════ МОБИЛЬНАЯ: вертикальная папка с прищепками ══════ */
   @media(max-width:900px){
     header{padding:11px 16px}
     .logo{font-size:17px}
@@ -206,7 +199,6 @@
       flex-direction:column;
       background:#F6F1EA;
     }
-    /* спираль вертикальна */
     .spiral{
       left:50%;top:14px;
       transform:translateX(-50%);width:88%;height:28px;
@@ -229,6 +221,7 @@
     .item-text{text-align:center}
     .item-title{font-size:clamp(18px,5vw,24px)}
     .item-note{font-size:clamp(10px,2.8vw,12px)}
+    .coming-soon{font-size:clamp(13px,3.6vw,17px)}
 
     .flip-controls{bottom:16px;right:16px;gap:8px}
     .flip-btn{width:38px;height:38px;font-size:18px}
@@ -303,7 +296,6 @@
     applyLang();
   });
 
-  /* ═════ ДАННЫЕ: 4 страницы по 4 товара, цветные блоки-плейсхолдеры ═════ */
   const COLORS = ['#F8C8DC','#D4E4F7','#FFF4C2','#D5EDD8','#FFD4B8','#E8D4F0','#C2E8E4','#FFDCE5'];
   const PAGES = [
     [
@@ -323,14 +315,12 @@
   let currentPage = 0;
 
   function renderPage(){
-    const isMobile = window.innerWidth <= 900;
     const data = PAGES[currentPage];
 
     const leftHTML = data.slice(0,2).map((item, i)=>{
       const ci = (currentPage * 4 + i) % COLORS.length;
       return `<div class="page-item">
         <div class="photo-box" style="background:${COLORS[ci]}">
-          <div class="photo-box-tape"></div>
           <div class="coming-soon" data-ru="скоро появится" data-en="coming soon">скоро появится</div>
         </div>
         <div class="item-text">
