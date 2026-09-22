@@ -32,14 +32,15 @@
     :root{color-scheme:light !important}
     html,body{background:#FFF9F5 !important;color:#2B1810 !important}
     .hero,.manifest,.collab{background:#0B1E3C !important;color:#FFF9F5 !important}
-    .liquid-stage{background:#FFF9F5 !important}
     .artist,.artist-flourish-wrap,.artist-text,footer{background:#4A7BA7 !important}
     .journey{background:#FFF9F5 !important}
-    .ornament,.artist-flourish{filter:invert(1) brightness(0.9) !important}
-    .manifest-video{filter:invert(1) !important}
+    .ornament,.artist-flourish{filter:invert(1) brightness(.9) !important}
+    /* видео манифеста: инверсия обязательна, иначе виден белый квадрат */
+    .manifest-video{filter:invert(1) !important;mix-blend-mode:screen !important}
+    .sketch-video{filter:invert(1) blur(1.4px) !important;mix-blend-mode:screen !important}
     .morph span{color:#FFFFFF !important;-webkit-text-fill-color:#FFFFFF !important}
     .logo,nav a,.lang-toggle{color:#FFF9F5 !important}
-    header.scrolled .logo,header.scrolled nav a,header.light .logo,header.light nav a{color:#2B1810 !important}
+    header.scrolled .logo,header.scrolled nav a{color:#2B1810 !important}
   }
 
   header{
@@ -47,13 +48,13 @@
     display:flex;justify-content:space-between;align-items:center;
     padding:24px 48px;transition:background .4s,color .4s;
   }
-  header.scrolled,header.light{background:rgba(255,249,245,.96);backdrop-filter:blur(10px)}
+  header.scrolled{background:rgba(255,249,245,.96);backdrop-filter:blur(10px)}
   .logo{
     font-family:var(--display);font-size:32px;font-style:italic;
     text-decoration:none;color:var(--cream);font-weight:400;
     transition:color .4s;
   }
-  header.scrolled .logo,header.light .logo{color:var(--ink)}
+  header.scrolled .logo{color:var(--ink)}
   nav{display:flex;gap:36px;align-items:center}
   nav a{
     text-decoration:none;color:var(--cream);
@@ -61,7 +62,7 @@
     letter-spacing:.12em;text-transform:uppercase;
     transition:color .4s;
   }
-  header.scrolled nav a,header.light nav a{color:var(--ink)}
+  header.scrolled nav a{color:var(--ink)}
   nav a:hover{opacity:.6}
   .lang-toggle{
     cursor:pointer;font-size:14px;padding:6px 12px;
@@ -69,37 +70,29 @@
     font-family:var(--ui);font-weight:500;background:none;
     transition:all .4s;
   }
-  header.scrolled .lang-toggle,header.light .lang-toggle{border-color:var(--ink);color:var(--ink)}
+  header.scrolled .lang-toggle{border-color:var(--ink);color:var(--ink)}
   .lang-toggle:hover{background:var(--ink);color:var(--cream)}
 
   /* ═══════════ ГЕРОЙ ═══════════
-     Экран удлинён: видео успевает проиграться больше.
-     Морф держится по центру через sticky, поэтому пока
-     листаем герой — синий фон непрерывный, стыка нет. */
+     Один непрерывный синий блок. Заголовок держится по центру
+     через sticky, поэтому стыка между анимациями не видно. */
   .hero{
     min-height:175vh;
     background:#0B1E3C;
-    position:relative;
-    overflow:hidden;
-    padding:0;
+    position:relative;overflow:hidden;padding:0;
   }
-
-  /* скетч-видео на всю высоту героя, снизу растворяется */
   .sketch-layer{
     position:absolute;inset:0;
     z-index:0;overflow:hidden;pointer-events:none;
-    /* мягкий уход в синий у нижней кромки — без резкой границы */
+    display:flex;align-items:center;justify-content:center;
+    /* к низу растворяется в синий, без резкой кромки */
     -webkit-mask-image:linear-gradient(to bottom,
       #000 0%, #000 62%, rgba(0,0,0,.55) 82%, transparent 100%);
             mask-image:linear-gradient(to bottom,
       #000 0%, #000 62%, rgba(0,0,0,.55) 82%, transparent 100%);
   }
   .sketch-video{
-    position:absolute;
-    top:50%;left:50%;
-    transform:translate(-50%,-50%);
-    min-width:100%;min-height:100%;
-    width:auto;height:auto;
+    width:100%;height:100%;
     object-fit:cover;display:block;
     opacity:.16;
     filter:invert(1) blur(1.4px);
@@ -116,13 +109,11 @@
     filter:invert(1);mix-blend-mode:screen;
   }
 
-  /* липкая сцена: заголовок стоит по центру, пока идёт герой */
   .hero-stage{
     position:sticky;top:0;
     height:100vh;
     display:flex;align-items:center;
-    padding:0 48px;
-    z-index:2;
+    padding:0 48px;z-index:2;
   }
   .morph{
     position:relative;
@@ -130,11 +121,10 @@
     height:clamp(150px,20vw,260px);
     filter:url(#gooey);
     pointer-events:none;
-    transition:opacity .6s ease;
+    transition:opacity .5s ease;
   }
   .morph span{
-    position:absolute;
-    left:0;top:50%;
+    position:absolute;left:0;top:50%;
     transform-origin:0% 50%;
     font-family:var(--display);
     font-style:italic;font-weight:400;
@@ -145,31 +135,31 @@
     will-change:transform,opacity,filter;
   }
 
-  /* ═══ БЕЛАЯ СЦЕНА С РУКОПИСНОЙ ФРАЗОЙ ═══ */
-  .liquid-stage{
-    position:fixed;top:0;left:0;right:0;
-    height:100vh;z-index:10;
-    background:#FFF9F5;
-    display:flex;align-items:center;justify-content:center;
-    opacity:0;pointer-events:none;
-    transition:opacity .7s ease;
+  /* ═══════════ МАНИФЕСТ ═══════════
+     Вторая анимация — ваше видео. Лежит на том же синем,
+     инвертировано и смешано screen, поэтому тёмные слова
+     читаются светлыми штрихами, а белый фон выбивается. */
+  .manifest{
+    background:#0B1E3C;
+    padding:40px 48px 90px;
+    position:relative;overflow:hidden;
   }
-  .liquid-stage.active{opacity:1}
-  .liquid-canvas{
-    width:min(92%,1200px);
-    height:min(70vh,600px);
-    position:relative;
-  }
-  .liquid-svg{position:absolute;inset:0;width:100%;height:100%}
-
-  .manifest{background:#0B1E3C;padding:60px 48px 80px;position:relative;overflow:hidden}
   .manifest .inner{
-    max-width:700px;margin:0 auto;
+    max-width:900px;margin:0 auto;
     display:flex;flex-direction:column;align-items:center;
   }
   .manifest-video{
-    width:100%;max-width:820px;height:auto;display:block;
-    margin:0 auto 20px;filter:invert(1);mix-blend-mode:screen;
+    width:100%;max-width:860px;height:auto;display:block;
+    margin:0 auto 26px;
+    filter:invert(1);
+    mix-blend-mode:screen;
+    background:transparent;
+  }
+  .manifest-fallback{
+    font-family:var(--display);font-style:italic;
+    font-size:clamp(22px,4.4vw,56px);
+    line-height:1.3;text-align:center;margin-bottom:30px;
+    color:#FFF9F5;-webkit-text-fill-color:#FFF9F5;
   }
   .btn{
     padding:14px 40px;background:transparent;border:none;
@@ -259,7 +249,6 @@
     font-size:clamp(48px,9vw,120px);
     color:var(--cream);line-height:1.1;text-align:center;
   }
-
   .collab-scroll{width:100%;overflow:hidden}
   .collab-marquee{
     display:flex;width:max-content;
@@ -316,13 +305,26 @@
     nav a{font-size:8px;letter-spacing:.07em}
     .lang-toggle{font-size:8px;padding:2px 5px}
 
-    /* экран длиннее — видео успевает показать больше */
     .hero{min-height:165vh}
     .hero-stage{padding:0 16px}
 
-    /* SVG-фильтр на мобильных браузерах ломает отрисовку
-       текста — надпись пропадала. Здесь его выключаем,
-       перетекание остаётся за счёт blur + opacity из JS. */
+    /* фоновый рисунок мельче: не заполняет кадр целиком,
+       а вписывается в 74% ширины по центру */
+    .sketch-layer{
+      -webkit-mask-image:linear-gradient(to bottom,
+        #000 0%, #000 58%, rgba(0,0,0,.5) 80%, transparent 100%);
+              mask-image:linear-gradient(to bottom,
+        #000 0%, #000 58%, rgba(0,0,0,.5) 80%, transparent 100%);
+    }
+    .sketch-video{
+      width:74%;height:auto;max-height:62%;
+      object-fit:contain;
+      opacity:.13;
+      filter:invert(1) blur(.9px);
+    }
+
+    /* SVG-фильтр на мобильных рвёт отрисовку текста — выключаем,
+       перетекание держится на blur + opacity из JS */
     .morph{
       filter:none;
       height:clamp(96px,26vw,150px);
@@ -330,27 +332,18 @@
     }
     .morph span{
       font-size:clamp(30px,9.2vw,48px);
-      letter-spacing:-.025em;
-      line-height:.9;
+      letter-spacing:-.025em;line-height:.9;
     }
 
-    .sketch-video{opacity:.12;filter:invert(1) blur(1px)}
-    .sketch-layer{
-      -webkit-mask-image:linear-gradient(to bottom,
-        #000 0%, #000 58%, rgba(0,0,0,.5) 80%, transparent 100%);
-              mask-image:linear-gradient(to bottom,
-        #000 0%, #000 58%, rgba(0,0,0,.5) 80%, transparent 100%);
-    }
     .ornament{
       width:clamp(640px,180vw,980px);
       top:4%;left:-36%;bottom:auto;right:auto;
       opacity:.36;
     }
 
-    .liquid-canvas{width:94%;height:min(60vh,480px)}
-
-    .manifest{padding:28px 16px 36px}
-    .manifest-video{max-width:100%;margin-bottom:12px}
+    .manifest{padding:18px 16px 40px}
+    .manifest-video{max-width:100%;margin-bottom:16px}
+    .manifest-fallback{font-size:clamp(17px,5vw,26px);margin-bottom:20px}
     .btn{padding:9px 18px;font-size:12.5px}
 
     .artist-flourish-wrap{padding:38px 16px 24px}
@@ -393,7 +386,6 @@
     .collab{padding:52px 0 60px}
     .collab .head{padding:0 16px;margin-bottom:28px}
     .collab-title{font-size:clamp(26px,9vw,44px)}
-
     .collab-scroll{overflow-x:auto;overflow-y:hidden;-webkit-overflow-scrolling:touch}
     .collab-marquee{animation:none !important;transform:none !important}
     .collab-track{padding:0 14px;gap:14px}
@@ -414,7 +406,7 @@
 
   @media(prefers-reduced-motion:reduce){
     .collab-marquee{animation:none !important}
-    .morph,.liquid-stage{transition:none !important;animation:none !important}
+    .morph{transition:none !important}
     .sketch-layer{display:none}
   }
 </style>
@@ -447,8 +439,8 @@
   </nav>
 </header>
 
+<!-- ПЕРВАЯ АНИМАЦИЯ: скетч фоном + морф заголовка -->
 <div class="hero" id="top">
-  <!-- ваша скетч-анимация: файл img/sketch.mp4 -->
   <div class="sketch-layer">
     <video class="sketch-video" id="sketchVideo"
            src="img/sketch.mp4"
@@ -466,16 +458,13 @@
   </div>
 </div>
 
-<div class="liquid-stage" id="liquidStage">
-  <div class="liquid-canvas">
-    <svg class="liquid-svg" id="liquidSVG" viewBox="0 0 1200 600" preserveAspectRatio="xMidYMid meet"></svg>
-  </div>
-</div>
-
+<!-- ВТОРАЯ АНИМАЦИЯ: ваше видео с фразой, на том же синем -->
 <section class="manifest" id="manifest">
   <div class="inner" id="manifestInner">
-    <video class="manifest-video" id="manifestVideo" src="img/manifest.MP4"
-           autoplay muted playsinline preload="auto"></video>
+    <video class="manifest-video" id="manifestVideo"
+           src="img/manifest.MP4"
+           autoplay loop muted playsinline preload="auto"
+           webkit-playsinline disablepictureinpicture></video>
     <a class="btn" href="./about.html" data-ru="Узнать больше" data-en="Explore Now">Узнать больше</a>
   </div>
 </section>
@@ -515,7 +504,6 @@
   <div class="head">
     <h2 class="collab-title" data-ru="Коллаборации" data-en="Collaborations">Коллаборации</h2>
   </div>
-
   <div class="collab-scroll">
     <div class="collab-marquee">
       <div class="collab-track">
@@ -564,6 +552,7 @@
 </footer>
 
 <script>
+  /* ═══ ЯЗЫК ═══ */
   let currentLang = 'ru';
   const TEXT = {
     ru:'Моя цель, мой смысл и возможность жить — создавать искры',
@@ -578,50 +567,105 @@
     document.getElementById('langBtn').textContent = currentLang === 'en' ? 'RU' : 'EN';
     document.documentElement.lang = currentLang;
     relabelNav();
-    liquidPath = buildLiquidPath(TEXT[currentLang], 1200, 600);
+    const fb = document.getElementById('manifestFallback');
+    if(fb) fb.textContent = TEXT[currentLang];
   }
   document.getElementById('langBtn').addEventListener('click', ()=>{
     currentLang = currentLang === 'ru' ? 'en' : 'ru';
     applyLang();
   });
 
-  /* ═══ СКЕТЧ-ВИДЕО ФОНОМ ═══ */
-  const sk = document.getElementById('sketchVideo');
-  if(sk){
-    sk.muted = true;
-    sk.defaultMuted = true;
-    sk.setAttribute('muted','');
-    sk.playsInline = true;
-    sk.loop = true;
+  /* ═══ ОБЩИЙ ЗАПУСК ВИДЕО ═══
+     Оба видео ведут себя одинаково: грузим принудительно,
+     пробуем играть на canplay и при появлении в кадре,
+     добиваем после первого касания. Никаких подменных
+     сцен — если видео не пошло, показываем текст. */
+  function setupVideo(el, opts){
+    if(!el) return;
+    const { loop = true, onFail = null, onOk = null } = opts || {};
 
-    const hideSketch = ()=>{
-      const layer = sk.closest('.sketch-layer');
-      if(layer) layer.style.display = 'none';
+    el.muted = true;
+    el.defaultMuted = true;
+    el.setAttribute('muted','');
+    el.playsInline = true;
+    el.loop = loop;
+
+    let ok = false, tries = 0;
+
+    const tryPlay = ()=>{
+      if(ok && !el.paused) return;
+      tries++;
+      const pr = el.play();
+      if(pr && pr.catch){
+        pr.catch(()=>{
+          if(tries >= 4 && !ok && onFail) onFail();
+        });
+      }
     };
-    const trySketch = ()=>{
-      const pr = sk.play();
-      if(pr && pr.catch) pr.catch(()=>{});
-    };
 
-    sk.addEventListener('loadeddata', trySketch);
-    sk.addEventListener('canplay', trySketch);
-    sk.addEventListener('error', hideSketch);
-    sk.load();
+    el.addEventListener('loadeddata', tryPlay);
+    el.addEventListener('canplay', tryPlay);
+    el.addEventListener('playing', ()=>{
+      ok = true;
+      el.style.display = '';
+      if(onOk) onOk();
+    });
+    el.addEventListener('error', ()=>{ if(onFail) onFail(); });
 
-    window.addEventListener('touchstart', trySketch, {passive:true});
-    window.addEventListener('click', trySketch);
+    el.load();
 
+    // держим в кадре — играет, ушло — пауза
     new IntersectionObserver(entries=>{
       entries.forEach(e=>{
-        if(e.isIntersecting) trySketch();
-        else if(!sk.paused) sk.pause();
+        if(e.isIntersecting) tryPlay();
+        else if(!el.paused) el.pause();
       });
-    },{threshold:.02}).observe(sk);
+    },{threshold:.05}).observe(el);
+
+    // первое касание разблокирует автоплей на мобильных
+    const kick = ()=>{ tries = 0; tryPlay(); };
+    window.addEventListener('touchstart', kick, {passive:true});
+    window.addEventListener('click', kick);
+
+    // страховка: если через 4 с не пошло — сообщаем наружу
+    setTimeout(()=>{ if(!ok && onFail) onFail(); }, 4000);
+
+    return { isOk: ()=> ok };
   }
 
-  /* ═══ МОРФ «Искусство» ⇄ «prët» ═══
-     Работает и на телефоне: gooey-фильтр там отключён в CSS,
-     перетекание держится на blur + opacity + сдвиге. */
+  /* фоновый скетч: если нет файла — слой прячется, фон чистый */
+  const sk = document.getElementById('sketchVideo');
+  setupVideo(sk, {
+    loop:true,
+    onFail: ()=>{
+      const layer = sk.closest('.sketch-layer');
+      if(layer) layer.style.display = 'none';
+    }
+  });
+
+  /* видео манифеста: вторая анимация */
+  const mv = document.getElementById('manifestVideo');
+
+  function showManifestText(){
+    if(document.getElementById('manifestFallback')) return;
+    const h2 = document.createElement('h2');
+    h2.id = 'manifestFallback';
+    h2.className = 'manifest-fallback';
+    h2.textContent = TEXT[currentLang];
+    document.getElementById('manifestInner').prepend(h2);
+  }
+  function hideManifestText(){
+    const fb = document.getElementById('manifestFallback');
+    if(fb) fb.remove();
+  }
+
+  setupVideo(mv, {
+    loop:true,
+    onFail: ()=>{ mv.style.display = 'none'; showManifestText(); },
+    onOk:   ()=>{ hideManifestText(); }
+  });
+
+  /* ═══ МОРФ «Искусство» ⇄ «prët» ═══ */
   const morphBox = document.getElementById('morph');
   const wordA = document.getElementById('wordA');
   const wordB = document.getElementById('wordB');
@@ -630,18 +674,15 @@
   const CYCLE = 4200, HOLD = 0.34;
   function smooth(t){ return t*t*t*(t*(t*6 - 15) + 10); }
 
-  let morphRunning = true;
+  let morphAF = null;
 
   function morphTick(now){
-    if(!morphRunning) return;
     const isMobile = window.innerWidth <= 900;
     const phase = (now % (CYCLE * 2)) / CYCLE;
     const dir = phase < 1 ? 0 : 1;
     const local = phase % 1;
 
-    let p;
-    if(local < HOLD) p = 0;
-    else p = (local - HOLD) / (1 - HOLD);
+    const p = local < HOLD ? 0 : (local - HOLD) / (1 - HOLD);
 
     const wob =
       Math.sin(now * 0.0016) * 0.055 +
@@ -664,191 +705,61 @@
       gooNoise.setAttribute('baseFrequency', f.toFixed(4));
     }
 
-    requestAnimationFrame(morphTick);
+    morphAF = requestAnimationFrame(morphTick);
   }
 
   function apply(el, vis, side, maxBlur, shiftX, now, isMobile){
     const inv = 1 - vis;
-    const blur = (inv * maxBlur).toFixed(2);
     const sx = (0.86 + vis * 0.14).toFixed(3);
     const sy = (1.16 - vis * 0.16 + Math.sin(now * 0.0021 + side) * 0.02).toFixed(3);
     const tx = (side * inv * shiftX).toFixed(1);
     const ty = (Math.sin(now * 0.0013 + side * 1.3) * (isMobile ? 3 : 6) * inv).toFixed(1);
 
     el.style.opacity = Math.max(0, Math.min(1, vis * 1.12)).toFixed(3);
-    el.style.filter = `blur(${blur}px)`;
+    el.style.filter = `blur(${(inv * maxBlur).toFixed(2)}px)`;
     el.style.transform =
       `translate(${tx}px, calc(-50% + ${ty}px)) scale(${sx}, ${sy})`;
   }
 
-  if(!window.matchMedia('(prefers-reduced-motion: reduce)').matches){
-    requestAnimationFrame(morphTick);
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(!reduceMotion){
+    morphAF = requestAnimationFrame(morphTick);
+  } else {
+    wordA.style.opacity = '1';
+    wordA.style.transform = 'translateY(-50%)';
+    wordB.style.opacity = '0';
   }
 
-  /* ═══ РУКОПИСНАЯ ФРАЗА ═══ */
-  const liquidStage = document.getElementById('liquidStage');
-  const liquidSVG = document.getElementById('liquidSVG');
-
-  function buildLiquidPath(txt, w, h){
-    const chars = txt.split('');
-    const cw = w / Math.max(chars.length, 8);
-    let path = '';
-
-    chars.forEach((ch, i)=>{
-      const x = cw * i + cw * 0.3;
-      const y = h * 0.5;
-      const ww = cw * 0.7;
-      const hh = h * 0.35;
-
-      const seed = ch.charCodeAt(0) * 3.14;
-      const c1x = x + ww * 0.2 + Math.sin(seed) * ww * 0.1;
-      const c1y = y - hh * 0.6 + Math.cos(seed * 1.3) * hh * 0.1;
-      const c2x = x + ww * 0.8 + Math.sin(seed * 2.1) * ww * 0.1;
-      const c2y = y + hh * 0.6 + Math.cos(seed * 1.7) * hh * 0.1;
-
-      path += `M ${x.toFixed(1)} ${y.toFixed(1)} `;
-      path += `Q ${c1x.toFixed(1)} ${c1y.toFixed(1)}, ${(x + ww * 0.5).toFixed(1)} ${(y - hh * 0.2).toFixed(1)} `;
-      path += `T ${(x + ww).toFixed(1)} ${y.toFixed(1)} `;
-      path += `Q ${c2x.toFixed(1)} ${c2y.toFixed(1)}, ${(x + ww * 0.5).toFixed(1)} ${(y + hh * 0.2).toFixed(1)} `;
-      path += `T ${x.toFixed(1)} ${y.toFixed(1)} `;
-    });
-
-    return path;
-  }
-
-  let liquidPath = buildLiquidPath(TEXT[currentLang], 1200, 600);
-
-  function animateLiquid(now){
-    const t = now * 0.0008;
-    const off = (Math.sin(t) * 0.5 + 0.5) * 300;
-    const width = 2.4 + Math.sin(t * 1.4) * 0.8;
-
-    liquidSVG.innerHTML = `<path d="${liquidPath}" fill="none" stroke="#1a1a1a"
-      stroke-width="${width.toFixed(2)}" stroke-dasharray="${(20 + Math.sin(t * 0.7) * 10).toFixed(1)},${(30 + Math.cos(t * 0.9) * 15).toFixed(1)}"
-      stroke-dashoffset="${off.toFixed(1)}" stroke-linecap="round" stroke-linejoin="round" opacity="0.92"/>`;
-
-    if(liquidStage.classList.contains('active')){
-      requestAnimationFrame(animateLiquid);
-    }
-  }
-
-  /* ═══ СКРОЛЛ ═══
-     Белая сцена включается, когда герой почти прокручен,
-     поэтому весь синий блок читается как один экран. */
+  /* ═══ СКРОЛЛ ═══ */
   const header = document.getElementById('header');
   const heroSection = document.getElementById('top');
   const ornament = document.querySelector('.ornament');
-  const manifestEl = document.getElementById('manifest');
 
   window.addEventListener('scroll', ()=>{
-    const heroRect = heroSection.getBoundingClientRect();
-
-    if(heroRect.bottom < window.innerHeight * 0.55){
-      morphBox.style.opacity = '0';
-      morphRunning = false;
-
-      if(!liquidStage.classList.contains('active')){
-        liquidStage.classList.add('active');
-        header.classList.add('light');
-        requestAnimationFrame(animateLiquid);
-      }
-    } else {
-      morphBox.style.opacity = '1';
-      if(!morphRunning){
-        morphRunning = true;
-        requestAnimationFrame(morphTick);
-      }
-      liquidStage.classList.remove('active');
-      header.classList.remove('light');
-    }
-
-    if(manifestEl.getBoundingClientRect().top < window.innerHeight * 0.5){
-      liquidStage.classList.remove('active');
-      header.classList.remove('light');
-    }
-
     header.classList.toggle('scrolled', window.scrollY > 80);
+
+    const heroRect = heroSection.getBoundingClientRect();
+    const heroVisible = heroRect.bottom > 0;
+
+    /* морф крутим только пока герой на экране */
+    if(heroVisible && !morphAF && !reduceMotion){
+      morphAF = requestAnimationFrame(morphTick);
+    } else if(!heroVisible && morphAF){
+      cancelAnimationFrame(morphAF);
+      morphAF = null;
+    }
 
     if(!ornament) return;
     if(window.innerWidth <= 900){
       const p = Math.max(0, Math.min(1, -heroRect.top / (heroRect.height * 1.1)));
       ornament.style.transform = `translate(${p*70}%, ${p*32}%) rotate(${p*88}deg)`;
-      ornament.style.opacity = 0.36 - p*0.24;
+      ornament.style.opacity = (0.36 - p*0.24).toFixed(3);
     } else {
       const p = Math.max(0, Math.min(1, -heroRect.top / (heroRect.height * 1.6)));
-      ornament.style.transform = `translateY(-${p*380}px) rotate(${p*50}deg)`;
-      ornament.style.opacity = 0.38 - p*0.26;
+      ornament.style.transform = `translateY(-${(p*380).toFixed(0)}px) rotate(${(p*50).toFixed(1)}deg)`;
+      ornament.style.opacity = (0.38 - p*0.26).toFixed(3);
     }
   }, {passive:true});
-
-  /* ═══ ВИДЕО МАНИФЕСТА ═══ */
-  const mv = document.getElementById('manifestVideo');
-
-  function showManifestText(){
-    if(document.getElementById('manifestFallback')) return;
-    const h2 = document.createElement('h2');
-    h2.id = 'manifestFallback';
-    h2.style.cssText = "font-family:var(--display);font-style:italic;font-size:clamp(22px,4.6vw,58px);line-height:1.3;text-align:center;margin-bottom:34px;color:#FFF9F5";
-    h2.textContent = TEXT[currentLang];
-    document.getElementById('manifestInner').prepend(h2);
-  }
-
-  if(mv){
-    mv.loop = false; mv.muted = true;
-    mv.defaultMuted = true;
-    mv.setAttribute('muted',''); mv.playsInline = true;
-
-    let playedOk = false, tries = 0;
-
-    function tryManifest(){
-      if(playedOk) return;
-      tries++;
-      const pr = mv.play();
-      if(pr && pr.catch){
-        pr.catch(()=>{
-          if(tries >= 3 && !playedOk){
-            mv.style.display = 'none';
-            showManifestText();
-          }
-        });
-      }
-    }
-
-    mv.addEventListener('loadeddata', tryManifest);
-    mv.addEventListener('canplay', tryManifest);
-    mv.addEventListener('playing', ()=>{
-      playedOk = true;
-      mv.style.display = '';
-      const fb = document.getElementById('manifestFallback');
-      if(fb) fb.remove();
-    });
-    mv.addEventListener('error', ()=>{
-      mv.style.display = 'none';
-      showManifestText();
-    });
-    mv.load();
-
-    new IntersectionObserver(entries=>{
-      entries.forEach(e=>{
-        if(e.isIntersecting){
-          mv.currentTime = 0;
-          tryManifest();
-        } else if(!mv.paused){
-          mv.pause();
-        }
-      });
-    },{threshold:.25}).observe(mv);
-
-    mv.addEventListener('ended', ()=> mv.pause());
-
-    const kick = ()=>{ tries = 0; tryManifest(); };
-    window.addEventListener('touchstart', kick, {passive:true});
-    window.addEventListener('click', kick);
-
-    setTimeout(()=>{
-      if(!playedOk){ mv.style.display = 'none'; showManifestText(); }
-    }, 3500);
-  }
 
   /* ═══ ГАЛЕРЕЯ ═══ */
   const CATEGORIES = [
