@@ -10,13 +10,13 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Averia+Serif+Libre:ital,wght@0,400;1,400&family=PT+Serif+Caption:ital@0;1&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-/* ─────────── БЛОКИРОВКА ТЁМНОЙ ТЕМЫ ───────────
+/* ── Блокировка тёмной темы браузера ──
    Samsung Internet и Chrome Android перекрашивают страницу сами.
-   Спасает связка: color-scheme + forced-color-adjust + явные hex
-   + -webkit-text-fill-color на светлом тексте.                   */
+   Спасает связка color-scheme + forced-color-adjust + явные hex
+   + -webkit-text-fill-color на светлом тексте. */
 :root{
-  color-scheme: light only;
-  forced-color-adjust: none;
+  color-scheme:light only;
+  forced-color-adjust:none;
   --navy:#0B1E3C;
   --blue:#4A7BA7;
   --cream:#FFF9F5;
@@ -42,14 +42,13 @@ body{
   overflow-x:hidden;
 }
 
-/* ─────────── HEADER ─────────── */
+/* ── HEADER ── */
 header{
   position:fixed;top:0;left:0;right:0;z-index:100;
   display:flex;justify-content:space-between;align-items:center;
   padding:20px 48px;
   transition:background .4s,color .4s;
-  color:#FFF9F5;
-  background:transparent;
+  color:#FFF9F5;background:transparent;
 }
 header.scrolled,header.light{
   background:rgba(255,249,245,.96);
@@ -58,13 +57,13 @@ header.scrolled,header.light{
 }
 .logo{
   font-family:var(--disp);font-size:32px;font-style:italic;
-  text-decoration:none;font-weight:400;color:inherit;
-  -webkit-text-fill-color:currentColor;
+  text-decoration:none;font-weight:400;
+  color:inherit;-webkit-text-fill-color:currentColor;
 }
 nav{display:flex;gap:32px;align-items:center}
 nav a{
-  text-decoration:none;color:inherit;
-  -webkit-text-fill-color:currentColor;
+  text-decoration:none;
+  color:inherit;-webkit-text-fill-color:currentColor;
   font-family:var(--ui);font-size:12px;font-weight:600;
   letter-spacing:.14em;text-transform:uppercase;
   transition:opacity .2s;
@@ -78,11 +77,12 @@ nav a:hover{opacity:.6}
   color:inherit;-webkit-text-fill-color:currentColor;
   transition:background .2s,color .2s;
 }
-.lang-toggle:hover{background:#2B1810;color:#FFF9F5;-webkit-text-fill-color:#FFF9F5;border-color:#2B1810}
+.lang-toggle:hover{
+  background:#2B1810;border-color:#2B1810;
+  color:#FFF9F5;-webkit-text-fill-color:#FFF9F5;
+}
 
-/* ─────────── ГЕРОЙ ───────────
-   .hero держит морф. Липкая дорожка ниже отвечает за переход
-   в liquid: пока прокручиваем её, морф уходит, приходит фраза. */
+/* ── ГЕРОЙ: морф «Искусство» ⇄ «prët», чистый фон ── */
 .hero{
   min-height:100vh;
   background:#0B1E3C;
@@ -91,18 +91,10 @@ nav a:hover{opacity:.6}
   position:relative;overflow:hidden;
   padding:0 48px 60px;
 }
-.ornament{
-  position:absolute;
-  width:clamp(800px,100vw,1400px);
-  bottom:-10%;right:-15%;
-  opacity:.38;pointer-events:none;z-index:1;
-  transform-origin:center;
-  filter:invert(1);mix-blend-mode:screen;
-}
 .morph{
   position:relative;z-index:2;
   width:100%;
-  height:clamp(150px,22vw,280px);
+  height:clamp(150px,20vw,260px);
   overflow:visible;
 }
 .morph-word{
@@ -110,72 +102,54 @@ nav a:hover{opacity:.6}
   transform:translateY(-50%);
   font-family:var(--disp);
   font-style:italic;font-weight:400;
-  font-size:clamp(72px,14vw,168px);
-  line-height:.9;
-  letter-spacing:-.02em;
-  color:#FFFFFF;
-  -webkit-text-fill-color:#FFFFFF;
-  white-space:nowrap;
-  will-change:opacity,filter,transform;
-}
-
-/* ─────────── ПЕРЕХОД: морф → фраза ───────────
-   Высокая дорожка со sticky-экраном внутри: скролл по ней
-   управляет прогрессом перетекания, страница при этом
-   продолжает двигаться обычным образом.                    */
-.flow{
-  position:relative;
-  height:260vh;
-  background:#0B1E3C;
-}
-.flow-screen{
-  position:sticky;top:0;
-  height:100vh;
-  overflow:hidden;
-  background:#0B1E3C;
-  display:flex;align-items:center;justify-content:center;
-  will-change:background-color;
-}
-/* тёмный слой с уходящим prët */
-.flow-dark{
-  position:absolute;inset:0;
-  display:flex;align-items:center;
-  padding:0 48px;
-  z-index:2;
-}
-.flow-word{
-  font-family:var(--disp);font-style:italic;font-weight:400;
-  font-size:clamp(72px,14vw,168px);
-  line-height:.9;letter-spacing:-.02em;
+  font-size:clamp(64px,12vw,140px);
+  line-height:.92;letter-spacing:-.02em;
   color:#FFFFFF;-webkit-text-fill-color:#FFFFFF;
   white-space:nowrap;
   will-change:opacity,filter,transform;
 }
-/* светлый слой с рукописной фразой */
-.flow-light{
-  position:absolute;inset:0;
+.hero-hint{
+  position:absolute;left:48px;bottom:44px;
+  font-family:var(--ui);font-size:11px;font-weight:600;
+  letter-spacing:.24em;text-transform:uppercase;
+  color:#FFF9F5;-webkit-text-fill-color:#FFF9F5;
+  opacity:.34;z-index:3;pointer-events:none;
+}
+
+/* ── ПЕРЕХОД: prët → рукописная фраза ──
+   Высокая дорожка со sticky-экраном: скролл по ней двигает
+   прогресс перетекания, страница идёт обычным образом. */
+.flow{position:relative;height:250vh;background:#0B1E3C}
+.flow-screen{
+  position:sticky;top:0;height:100vh;
+  overflow:hidden;background:#0B1E3C;
   display:flex;align-items:center;justify-content:center;
-  z-index:3;opacity:0;
+  will-change:background-color;
+}
+.flow-dark{
+  position:absolute;inset:0;z-index:2;
+  display:flex;align-items:center;padding:0 48px;
+}
+.flow-word{
+  font-family:var(--disp);font-style:italic;font-weight:400;
+  font-size:clamp(64px,12vw,140px);
+  line-height:.92;letter-spacing:-.02em;
+  color:#FFFFFF;-webkit-text-fill-color:#FFFFFF;
+  white-space:nowrap;
+  will-change:opacity,filter,transform;
+}
+.flow-light{
+  position:absolute;inset:0;z-index:3;opacity:0;
+  display:flex;align-items:center;justify-content:center;
   will-change:opacity;
 }
 .flow-svg{
   width:min(92vw,1180px);
   height:min(62vh,560px);
-  display:block;
-  overflow:visible;
-}
-.flow-hint{
-  position:absolute;left:50%;bottom:34px;
-  transform:translateX(-50%);
-  font-family:var(--ui);font-size:11px;font-weight:600;
-  letter-spacing:.24em;text-transform:uppercase;
-  color:#FFF9F5;-webkit-text-fill-color:#FFF9F5;
-  opacity:.4;z-index:5;
-  transition:opacity .5s;
-  pointer-events:none;
+  display:block;overflow:visible;
 }
 
-/* ─────────── МАНИФЕСТ ─────────── */
+/* ── МАНИФЕСТ ── */
 .manifest{background:#0B1E3C;padding:70px 48px 90px}
 .manifest .inner{
   max-width:680px;margin:0 auto;
@@ -184,10 +158,8 @@ nav a:hover{opacity:.6}
 .manifest-video{
   width:100%;max-width:800px;height:auto;display:block;
   margin:0 auto 24px;
-  /* на тёмной теме инверсия сохраняется — задаём жёстко */
   filter:invert(1)!important;
-  mix-blend-mode:screen;
-  background:transparent;
+  mix-blend-mode:screen;background:transparent;
 }
 .manifest-fallback{
   font-family:var(--disp);font-style:italic;
@@ -205,21 +177,18 @@ nav a:hover{opacity:.6}
 }
 .btn:hover{opacity:.7}
 
-/* ─────────── Я ХУДОЖНИЦА ───────────
-   flourish.jpg — чёрный росчерк на белом. Инверсия обязательна,
-   иначе на синем фоне он сливается. Дублируем !important, чтобы
-   тёмная тема браузера не сбросила фильтр.                      */
+/* ── Я ХУДОЖНИЦА ──
+   flourish.jpg — чёрный росчерк на белом, инверсия обязательна,
+   иначе на синем фоне он сливается. */
 .artist{background:#4A7BA7}
 .artist-flourish-wrap{
-  width:100%;padding:80px 48px;
+  width:100%;padding:80px 48px;background:#4A7BA7;
   display:flex;align-items:center;justify-content:center;
-  background:#4A7BA7;
 }
 .artist-flourish{
   width:100%;max-width:1400px;height:auto;display:block;
   filter:invert(1)!important;
-  mix-blend-mode:screen;
-  background:transparent;
+  mix-blend-mode:screen;background:transparent;
 }
 .artist-text{padding:0 48px 90px;background:#4A7BA7}
 .artist-text .container{
@@ -229,15 +198,16 @@ nav a:hover{opacity:.6}
 .artist-text .lead{
   align-self:flex-end;text-align:right;max-width:54%;
   font-size:clamp(20px,2.6vw,38px);line-height:1.25;
-  font-style:italic;color:#FFF9F5;-webkit-text-fill-color:#FFF9F5;
+  font-style:italic;
+  color:#FFF9F5;-webkit-text-fill-color:#FFF9F5;
 }
 .artist-text .bottom{
   align-self:flex-start;max-width:42%;
-  font-size:clamp(16px,1.8vw,23px);
-  font-style:italic;color:#FFF9F5;-webkit-text-fill-color:#FFF9F5;
+  font-size:clamp(16px,1.8vw,23px);font-style:italic;
+  color:#FFF9F5;-webkit-text-fill-color:#FFF9F5;
 }
 
-/* ─────────── ГАЛЕРЕЯ ─────────── */
+/* ── ГАЛЕРЕЯ ── */
 .journey{background:#FFF9F5;padding:90px 48px}
 .journey .head{
   display:flex;justify-content:space-between;align-items:center;
@@ -289,14 +259,13 @@ nav a:hover{opacity:.6}
 .carousel-item:hover .carousel-label,
 .carousel-item.active .carousel-label{opacity:1}
 
-/* ─────────── КОЛЛАБОРАЦИИ ─────────── */
+/* ── КОЛЛАБОРАЦИИ ── */
 .collab{background:#0B1E3C;padding:110px 0 120px;overflow:hidden}
 .collab .head{padding:0 48px;margin-bottom:64px;display:flex;justify-content:center}
 .collab-title{
   font-family:var(--disp);font-style:italic;
-  font-size:clamp(44px,9vw,120px);
+  font-size:clamp(44px,9vw,120px);line-height:1.1;text-align:center;
   color:#FFF9F5;-webkit-text-fill-color:#FFF9F5;
-  line-height:1.1;text-align:center;
 }
 .collab-scroll{width:100%;overflow:hidden}
 .collab-marquee{
@@ -315,7 +284,7 @@ nav a:hover{opacity:.6}
 .collab-card img{width:100%;height:100%;object-fit:cover;display:block}
 .collab-card:hover{transform:scale(1.03);box-shadow:0 20px 50px rgba(0,0,0,.35)}
 
-/* ─────────── ФУТЕР ─────────── */
+/* ── ФУТЕР ── */
 footer{background:#4A7BA7;padding:110px 48px 60px}
 footer .inner{
   max-width:1300px;margin:0 auto;
@@ -324,15 +293,13 @@ footer .inner{
 }
 footer .left h2{
   font-size:clamp(48px,9vw,120px);font-style:italic;
-  font-weight:400;font-family:var(--disp);
+  font-weight:400;font-family:var(--disp);margin-bottom:28px;
   color:#FFF9F5;-webkit-text-fill-color:#FFF9F5;
-  margin-bottom:28px;
 }
 footer .left a,footer .right a{
   color:#FFF9F5;-webkit-text-fill-color:#FFF9F5;
-  text-decoration:none;
+  text-decoration:none;font-family:var(--disp);
   font-size:clamp(16px,2vw,24px);display:block;margin:10px 0;
-  font-family:var(--disp);
 }
 footer a:hover{opacity:.7}
 .disclaimer{
@@ -348,7 +315,7 @@ footer .copy{
   color:#FFF9F5;-webkit-text-fill-color:#FFF9F5;
 }
 
-/* ═══════════ МОБИЛЬНАЯ ═══════════ */
+/* ═══ МОБИЛЬНАЯ ═══ */
 @media(max-width:900px){
   header{padding:10px 16px}
   .logo{font-size:18px}
@@ -357,19 +324,14 @@ footer .copy{
   .lang-toggle{font-size:8px;padding:2px 6px}
 
   .hero{padding:0 16px 40px;min-height:100vh;justify-content:center}
-  /* крупнее, как просили */
-  .morph{height:clamp(150px,42vw,230px)}
-  .morph-word{font-size:clamp(52px,17vw,88px);line-height:.88}
-  .ornament{
-    width:clamp(600px,170vw,950px);
-    top:6%;left:-38%;bottom:auto;right:auto;opacity:.34;
-  }
+  .morph{height:clamp(110px,30vw,170px)}
+  .morph-word{font-size:clamp(40px,12.5vw,62px);line-height:.88}
+  .hero-hint{left:16px;bottom:28px;font-size:9px;letter-spacing:.2em}
 
-  .flow{height:230vh}
+  .flow{height:220vh}
   .flow-dark{padding:0 16px}
-  .flow-word{font-size:clamp(52px,17vw,88px)}
-  .flow-svg{width:95vw;height:min(54vh,400px)}
-  .flow-hint{bottom:24px;font-size:9px;letter-spacing:.2em}
+  .flow-word{font-size:clamp(40px,12.5vw,62px)}
+  .flow-svg{width:95vw;height:min(56vh,420px)}
 
   .manifest{padding:28px 16px 36px}
   .manifest-video{max-width:100%;margin-bottom:12px}
@@ -407,7 +369,9 @@ footer .copy{
   .carousel-item.active{background:#2B1810;border-color:#2B1810}
   .carousel-dot{display:none}
   .carousel-label{font-size:9px}
-  .carousel-item.active .carousel-label{color:#FFF9F5;-webkit-text-fill-color:#FFF9F5;opacity:1}
+  .carousel-item.active .carousel-label{
+    color:#FFF9F5;-webkit-text-fill-color:#FFF9F5;opacity:1;
+  }
 
   .collab{padding:48px 0 56px}
   .collab .head{padding:0 16px;margin-bottom:26px}
@@ -450,29 +414,28 @@ footer .copy{
   </nav>
 </header>
 
-<!-- ГЕРОЙ: морф «Искусство» ⇄ «prët» -->
+<!-- ГЕРОЙ: морф без орнамента -->
 <div class="hero" id="heroSection">
-  <img class="ornament" id="ornamentImg" src="img/ornament.jpg" alt="">
-  <div class="morph" id="morphBox" aria-label="Искусство prët">
+  <div class="morph" aria-label="Искусство prët">
     <span class="morph-word" id="wordA" data-ru="Искусство" data-en="The Art of">Искусство</span>
     <span class="morph-word" id="wordB" style="opacity:0">prët</span>
   </div>
+  <div class="hero-hint" data-ru="Листайте" data-en="Scroll">Листайте</div>
 </div>
 
-<!-- ПЕРЕХОД: при скролле prët перетекает в рукописную фразу -->
+<!-- ПЕРЕХОД: prët перетекает в рукописную фразу -->
 <div class="flow" id="flow">
   <div class="flow-screen" id="flowScreen">
-    <div class="flow-dark" id="flowDark">
+    <div class="flow-dark">
       <span class="flow-word" id="flowWord">prët</span>
     </div>
     <div class="flow-light" id="flowLight">
       <svg class="flow-svg" id="flowSVG" viewBox="0 0 1180 560" preserveAspectRatio="xMidYMid meet"></svg>
     </div>
-    <div class="flow-hint" id="flowHint" data-ru="Листайте" data-en="Scroll">Листайте</div>
   </div>
 </div>
 
-<section class="manifest" id="manifestSection">
+<section class="manifest">
   <div class="inner" id="manifestInner">
     <video id="manifestVideo" class="manifest-video"
            src="img/manifest.MP4"
@@ -563,7 +526,7 @@ footer .copy{
 </footer>
 
 <script>
-/* ═════════ ЯЗЫК ═════════ */
+/* ═════ ЯЗЫК ═════ */
 let lang = 'ru';
 const PHRASE = {
   ru:'Моя цель, мой смысл и возможность жить — создавать искры',
@@ -576,18 +539,19 @@ function setLang(l){
     const t = el.getAttribute('data-'+l);
     if(t !== null) el.innerHTML = t;
   });
-  document.getElementById('langBtn').textContent = l==='ru' ? 'EN' : 'RU';
+  document.getElementById('langBtn').textContent = l === 'ru' ? 'EN' : 'RU';
   document.documentElement.lang = l;
   relabelNav();
-  buildStrokes();          // фраза перерисовывается на новом языке
+  buildStrokes();
+  onScroll();
   if(fallbackEl) fallbackEl.textContent = PHRASE[lang];
 }
 document.getElementById('langBtn').addEventListener('click',
   ()=> setLang(lang === 'ru' ? 'en' : 'ru'));
 
-/* ═════════ МОРФ В ГЕРОЕ ═════════
-   Cross-fade двух слов: blur + opacity + сдвиг. SVG-фильтр
-   не используем — на мобильных браузерах он рвётся. */
+/* ═════ МОРФ «Искусство» ⇄ «prët» ═════
+   Cross-fade двух слов: blur + opacity + сдвиг.
+   SVG-фильтр не используем — на мобильных он рвётся. */
 const wA = document.getElementById('wordA');
 const wB = document.getElementById('wordB');
 let morphAF = null;
@@ -628,34 +592,33 @@ if(!reduceMotion){
   wA.style.transform = 'translateY(-50%)';
 }
 
-/* ═════════ РУКОПИСНАЯ ФРАЗА ═════════
-   Каждое слово — одна непрерывная линия: волна, по которой
-   идут петли-«буквы». Рисуем через stroke-dashoffset, поэтому
-   линия выписывается как ручкой, а потом живёт волной. */
+/* ═════ РУКОПИСНАЯ ФРАЗА ═════
+   Каждое слово — одна непрерывная линия: волна, по которой идут
+   петли вместо букв. Чётные коды гнут вверх, нечётные вниз,
+   каждый третий даёт петлю. Рисуется через stroke-dashoffset,
+   поэтому линия выписывается как ручкой. */
 const flowSVG = document.getElementById('flowSVG');
-let strokePaths = [];
+let strokeCount = 0;
 
 function wordStroke(word, x0, y0, scale){
-  const n = word.length;
-  const step = 26 * scale;
-  const amp  = 21 * scale;
+  const step = 25 * scale;
+  const amp  = 20 * scale;
   let d = `M ${x0.toFixed(1)} ${y0.toFixed(1)}`;
   let x = x0;
 
-  for(let i = 0; i < n; i++){
+  for(let i = 0; i < word.length; i++){
     const c = word.charCodeAt(i);
     const up = (c % 2 === 0) ? -1 : 1;
-    const loop = (c % 3 === 0);
-    const h = amp * (0.7 + (c % 5) / 7);
+    const h = amp * (0.68 + (c % 5) / 6.5);
 
-    if(loop){
-      // петля: буква с закруглением
-      d += ` c ${(step*.16).toFixed(1)} ${(up*h).toFixed(1)},`
-         + ` ${(step*.74).toFixed(1)} ${(up*h*1.25).toFixed(1)},`
+    if(c % 3 === 0){
+      // петля
+      d += ` c ${(step*.15).toFixed(1)} ${(up*h).toFixed(1)},`
+         + ` ${(step*.76).toFixed(1)} ${(up*h*1.3).toFixed(1)},`
          + ` ${step.toFixed(1)} 0`;
     } else {
-      // простая дуга
-      d += ` q ${(step*.5).toFixed(1)} ${(up*h*1.1).toFixed(1)},`
+      // дуга
+      d += ` q ${(step*.5).toFixed(1)} ${(up*h*1.15).toFixed(1)},`
          + ` ${step.toFixed(1)} 0`;
     }
     x += step;
@@ -667,71 +630,69 @@ function buildStrokes(){
   const words = PHRASE[lang].split(' ');
   const VBW = 1180, VBH = 560;
   const mob = innerWidth <= 900;
-  const scale = mob ? 1.15 : 1.0;
+  const scale = mob ? 1.1 : 1.0;
+  const gap = 28 * scale;
+  const maxW = VBW * 0.88;
 
-  // раскладываем слова по строкам
+  // раскладка по строкам
   const lines = [];
   let line = [], lineW = 0;
-  const maxW = VBW * 0.86;
-
   words.forEach(w=>{
-    const est = w.length * 26 * scale + 30;
+    const est = w.length * 25 * scale + gap;
     if(lineW + est > maxW && line.length){
-      lines.push({ words: line, w: lineW });
+      lines.push({ words: line, w: lineW - gap });
       line = []; lineW = 0;
     }
     line.push(w); lineW += est;
   });
-  if(line.length) lines.push({ words: line, w: lineW });
+  if(line.length) lines.push({ words: line, w: lineW - gap });
 
   const lh = VBH / (lines.length + 1);
-  strokePaths = [];
+  const paths = [];
 
   lines.forEach((ln, li)=>{
     const y = lh * (li + 1);
     let x = (VBW - ln.w) / 2;
     ln.words.forEach(w=>{
       const s = wordStroke(w, x, y, scale);
-      strokePaths.push(s.d);
-      x += s.width + 30 * scale;
+      paths.push(s.d);
+      x += s.width + gap;
     });
   });
 
-  flowSVG.innerHTML = strokePaths.map((d,i)=>
+  strokeCount = paths.length;
+  const sw = (2.5 * (innerWidth <= 900 ? 1.15 : 1)).toFixed(1);
+
+  flowSVG.innerHTML = paths.map((d,i)=>
     `<path id="fp${i}" d="${d}" fill="none" stroke="#1A1A1A"
-       stroke-width="${(2.6*(innerWidth<=900?1.1:1)).toFixed(1)}"
-       stroke-linecap="round" stroke-linejoin="round"/>`
+       stroke-width="${sw}" stroke-linecap="round" stroke-linejoin="round"/>`
   ).join('');
 
-  // готовим «выписывание»: прячем линии через dashoffset
-  strokePaths.forEach((_, i)=>{
+  // прячем линии — будут выписываться по скроллу
+  for(let i = 0; i < strokeCount; i++){
     const el = document.getElementById('fp'+i);
     const len = el.getTotalLength();
     el.dataset.len = len;
     el.style.strokeDasharray = len;
     el.style.strokeDashoffset = len;
-  });
+  }
 }
 
-/* ═════════ СКРОЛЛ-ПЕРЕХОД ═════════
-   Прогресс по липкой дорожке:
-   0.00–0.30  prët уплывает и размывается
-   0.20–0.55  фон синий → белый
-   0.30–0.90  линии фразы выписываются
-   0.90–1.00  всё стоит, можно листать дальше   */
-const flow       = document.getElementById('flow');
+/* ═════ СКРОЛЛ-ПЕРЕХОД ═════
+   0–28%   prët уплывает и размывается
+   18–52%  фон синий → белый
+   28–92%  линии фразы выписываются
+   дальше  линии «дышат» волной */
+const flow = document.getElementById('flow');
 const flowScreen = document.getElementById('flowScreen');
-const flowDark   = document.getElementById('flowDark');
-const flowWord   = document.getElementById('flowWord');
-const flowLight  = document.getElementById('flowLight');
-const flowHint   = document.getElementById('flowHint');
+const flowWord = document.getElementById('flowWord');
+const flowLight = document.getElementById('flowLight');
 const siteHeader = document.getElementById('siteHeader');
-const heroEl     = document.getElementById('heroSection');
-const ornament   = document.getElementById('ornamentImg');
+const heroEl = document.getElementById('heroSection');
 
-function lerp(a,b,t){ return a + (b-a)*t; }
 function clamp01(v){ return Math.max(0, Math.min(1, v)); }
-function seg(p, a, b){ return clamp01((p - a) / (b - a)); }
+function lerp(a,b,t){ return a + (b-a)*t; }
+function seg(p,a,b){ return clamp01((p-a)/(b-a)); }
 
 let liveWave = false, waveAF = null;
 
@@ -741,88 +702,66 @@ function onScroll(){
   const p = clamp01(-fRect.top / Math.max(total, 1));
 
   /* prët уходит */
-  const pw = seg(p, 0, 0.30);
+  const pw = seg(p, 0, 0.28);
   flowWord.style.opacity = (1 - pw).toFixed(3);
-  flowWord.style.filter = `blur(${(pw*26).toFixed(1)}px)`;
+  flowWord.style.filter = `blur(${(pw*28).toFixed(1)}px)`;
   flowWord.style.transform =
-    `translateX(${(-pw*70).toFixed(1)}px) scale(${lerp(1,.82,pw).toFixed(3)})`;
+    `translateX(${(-pw*72).toFixed(1)}px) scale(${lerp(1,.8,pw).toFixed(3)})`;
 
   /* фон перетекает в белый */
-  const pb = seg(p, 0.20, 0.55);
-  const r = Math.round(lerp(11,255,pb));
-  const g = Math.round(lerp(30,249,pb));
-  const b = Math.round(lerp(60,245,pb));
-  flowScreen.style.backgroundColor = `rgb(${r},${g},${b})`;
+  const pb = seg(p, 0.18, 0.52);
+  flowScreen.style.backgroundColor =
+    `rgb(${Math.round(lerp(11,255,pb))},${Math.round(lerp(30,249,pb))},${Math.round(lerp(60,245,pb))})`;
 
-  /* линии выписываются */
-  const pl = seg(p, 0.30, 0.90);
-  flowLight.style.opacity = seg(p, 0.28, 0.42).toFixed(3);
+  /* линии выписываются по очереди */
+  const pl = seg(p, 0.28, 0.92);
+  flowLight.style.opacity = seg(p, 0.26, 0.40).toFixed(3);
 
-  strokePaths.forEach((_, i)=>{
+  for(let i = 0; i < strokeCount; i++){
     const el = document.getElementById('fp'+i);
-    if(!el) return;
+    if(!el) continue;
     const len = +el.dataset.len;
-    // каждая линия стартует со своим сдвигом — фраза пишется по порядку
-    const local = clamp01((pl * strokePaths.length) - i * 0.72);
+    const local = clamp01((pl * strokeCount) - i * 0.78);
     el.style.strokeDashoffset = (len * (1 - local)).toFixed(1);
-  });
+  }
 
   /* шапка светлеет вместе с фоном */
   const lightOn = pb > 0.5;
   siteHeader.classList.toggle('light', lightOn);
   siteHeader.classList.toggle('scrolled', scrollY > 80 && !lightOn);
 
-  /* подсказка «Листайте» гаснет */
-  flowHint.style.opacity = (0.4 * (1 - seg(p, 0, 0.18))).toFixed(3);
-  flowHint.style.color = pb > 0.5 ? '#2B1810' : '#FFF9F5';
-  flowHint.style.webkitTextFillColor = pb > 0.5 ? '#2B1810' : '#FFF9F5';
-
-  /* когда фраза выписана — включаем живую волну */
+  /* живая волна после написания */
   if(pl > 0.98 && !liveWave && !reduceMotion){
     liveWave = true;
     waveAF = requestAnimationFrame(waveTick);
   } else if(pl < 0.9 && liveWave){
     liveWave = false;
     cancelAnimationFrame(waveAF);
-    strokePaths.forEach((_, i)=>{
+    const sw = (2.5 * (innerWidth <= 900 ? 1.15 : 1)).toFixed(1);
+    for(let i = 0; i < strokeCount; i++){
       const el = document.getElementById('fp'+i);
-      if(el) el.style.strokeWidth = (2.6*(innerWidth<=900?1.1:1)).toFixed(1);
-    });
+      if(el) el.style.strokeWidth = sw;
+    }
   }
 
-  /* морф в герое: считаем только пока герой на экране */
-  const hRect = heroEl.getBoundingClientRect();
-  const heroVisible = hRect.bottom > 0;
+  /* морф считаем только пока герой на экране */
+  const heroVisible = heroEl.getBoundingClientRect().bottom > 0;
   if(heroVisible && !morphAF && !reduceMotion){
     morphAF = requestAnimationFrame(morphTick);
   } else if(!heroVisible && morphAF){
     cancelAnimationFrame(morphAF);
     morphAF = null;
   }
-
-  /* орнамент — параллакс */
-  if(ornament && heroVisible){
-    const hp = clamp01(-hRect.top / (hRect.height*1.5));
-    if(innerWidth <= 900){
-      ornament.style.transform = `translate(${(hp*65).toFixed(1)}%,${(hp*30).toFixed(1)}%) rotate(${(hp*85).toFixed(1)}deg)`;
-      ornament.style.opacity = (0.34 - hp*.22).toFixed(3);
-    } else {
-      ornament.style.transform = `translateY(-${(hp*360).toFixed(0)}px) rotate(${(hp*46).toFixed(1)}deg)`;
-      ornament.style.opacity = (0.38 - hp*.24).toFixed(3);
-    }
-  }
 }
 
-/* живая волна: толщина линий дышит */
 function waveTick(ts){
   if(!liveWave) return;
   const t = ts * .0011;
-  strokePaths.forEach((_, i)=>{
+  const base = 2.5 * (innerWidth <= 900 ? 1.15 : 1);
+  for(let i = 0; i < strokeCount; i++){
     const el = document.getElementById('fp'+i);
-    if(!el) return;
-    const base = 2.6 * (innerWidth<=900 ? 1.1 : 1);
-    el.style.strokeWidth = (base + Math.sin(t + i*.6)*.75).toFixed(2);
-  });
+    if(el) el.style.strokeWidth = (base + Math.sin(t + i*.6)*.7).toFixed(2);
+  }
   waveAF = requestAnimationFrame(waveTick);
 }
 
@@ -832,11 +771,10 @@ window.addEventListener('resize', ()=>{
   window._rz = setTimeout(()=>{ buildStrokes(); onScroll(); }, 200);
 });
 
-/* ═════════ ВИДЕО МАНИФЕСТА ═════════
-   На мобильных первый автоплей часто глушится, а при
-   перезагрузке файл уже в кеше и стартует. Поэтому:
-   грузим принудительно, пробуем играть при появлении,
-   повторяем попытку после первого касания экрана. */
+/* ═════ ВИДЕО МАНИФЕСТА ═════
+   На мобильных первый автоплей часто глушится, а при перезагрузке
+   файл уже в кеше и стартует. Поэтому: принудительная загрузка,
+   попытки при появлении в кадре, повтор после первого касания. */
 const mv = document.getElementById('manifestVideo');
 let fallbackEl = null;
 
@@ -866,7 +804,6 @@ if(mv){
     const pr = mv.play();
     if(pr && pr.catch){
       pr.catch(()=>{
-        // до трёх попыток, дальше показываем текст
         if(tries >= 3 && !ok){
           mv.style.display = 'none';
           showFallback();
@@ -887,7 +824,6 @@ if(mv){
     showFallback();
   });
 
-  // принудительная загрузка — иначе Android ждёт взаимодействия
   mv.load();
 
   new IntersectionObserver(entries=>{
@@ -903,23 +839,16 @@ if(mv){
 
   mv.addEventListener('ended', ()=> mv.pause());
 
-  // первое касание разблокирует воспроизведение
-  const kick = ()=>{
-    tries = 0;
-    tryPlay();
-    window.removeEventListener('touchstart', kick);
-    window.removeEventListener('click', kick);
-  };
-  window.addEventListener('touchstart', kick, {passive:true, once:false});
-  window.addEventListener('click', kick, {once:false});
+  const kick = ()=>{ tries = 0; tryPlay(); };
+  window.addEventListener('touchstart', kick, {passive:true});
+  window.addEventListener('click', kick);
 
-  // страховка: если через 3.5 с не пошло — текст
   setTimeout(()=>{
     if(!ok){ mv.style.display = 'none'; showFallback(); }
   }, 3500);
 }
 
-/* ═════════ ГАЛЕРЕЯ ═════════ */
+/* ═════ ГАЛЕРЕЯ ═════ */
 const CATS = [
   {ru:'Перформанс',en:'Performance',works:[
     {img:'img/posestrie.jpg',href:'https://hsedesign.ru/project/posestrie-fdd4656391a44e98b69133c583dda03f',alt:'Посестрие'},
