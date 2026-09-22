@@ -37,8 +37,7 @@
     .journey{background:#FFF9F5 !important}
     .ornament,.artist-flourish{filter:invert(1) brightness(0.9) !important}
     .manifest-video{filter:invert(1) !important}
-    .sketch-video{filter:invert(1) !important}
-    .morph span{color:#FFFFFF !important}
+    .morph span{color:#FFFFFF !important;-webkit-text-fill-color:#FFFFFF !important}
     .logo,nav a,.lang-toggle{color:#FFF9F5 !important}
     header.scrolled .logo,header.scrolled nav a,header.light .logo,header.light nav a{color:#2B1810 !important}
   }
@@ -73,26 +72,27 @@
   header.scrolled .lang-toggle,header.light .lang-toggle{border-color:var(--ink);color:var(--ink)}
   .lang-toggle:hover{background:var(--ink);color:var(--cream)}
 
-  /* ═══ ГЕРОЙ ═══ */
+  /* ═══════════ ГЕРОЙ ═══════════
+     Экран удлинён: видео успевает проиграться больше.
+     Морф держится по центру через sticky, поэтому пока
+     листаем герой — синий фон непрерывный, стыка нет. */
   .hero{
-    min-height:100vh;
-    background:var(--navy);
-    display:flex;flex-direction:column;
-    justify-content:center;align-items:flex-start;
-    position:relative;overflow:hidden;
-    padding:0 48px 48px;
+    min-height:175vh;
+    background:#0B1E3C;
+    position:relative;
+    overflow:hidden;
+    padding:0;
   }
 
-  /* ── СКЕТЧ-ВИДЕО ФОНОМ ──
-     Файл img/sketch.mp4 — чёрные линии на белом.
-     invert(1) делает линии белыми, фон чёрным;
-     mix-blend-mode:screen выбивает чёрный, оставляя
-     только светлые штрихи поверх тёмно-синего.       */
+  /* скетч-видео на всю высоту героя, снизу растворяется */
   .sketch-layer{
     position:absolute;inset:0;
-    z-index:0;
-    overflow:hidden;
-    pointer-events:none;
+    z-index:0;overflow:hidden;pointer-events:none;
+    /* мягкий уход в синий у нижней кромки — без резкой границы */
+    -webkit-mask-image:linear-gradient(to bottom,
+      #000 0%, #000 62%, rgba(0,0,0,.55) 82%, transparent 100%);
+            mask-image:linear-gradient(to bottom,
+      #000 0%, #000 62%, rgba(0,0,0,.55) 82%, transparent 100%);
   }
   .sketch-video{
     position:absolute;
@@ -100,9 +100,7 @@
     transform:translate(-50%,-50%);
     min-width:100%;min-height:100%;
     width:auto;height:auto;
-    object-fit:cover;
-    display:block;
-    /* приглушение и блюр */
+    object-fit:cover;display:block;
     opacity:.16;
     filter:invert(1) blur(1.4px);
     mix-blend-mode:screen;
@@ -111,15 +109,23 @@
   .ornament{
     position:absolute;
     width:clamp(800px,100vw,1400px);
-    bottom:-10%;right:-15%;
+    bottom:-6%;right:-15%;
     opacity:.38;pointer-events:none;
     will-change:transform,opacity;z-index:1;
     transform-origin:center center;
     filter:invert(1);mix-blend-mode:screen;
   }
 
+  /* липкая сцена: заголовок стоит по центру, пока идёт герой */
+  .hero-stage{
+    position:sticky;top:0;
+    height:100vh;
+    display:flex;align-items:center;
+    padding:0 48px;
+    z-index:2;
+  }
   .morph{
-    position:relative;z-index:2;
+    position:relative;
     width:100%;max-width:1150px;
     height:clamp(150px,20vw,260px);
     filter:url(#gooey);
@@ -133,13 +139,13 @@
     font-family:var(--display);
     font-style:italic;font-weight:400;
     font-size:clamp(64px,12vw,140px);
-    line-height:.92;
-    letter-spacing:-.02em;
-    color:#FFFFFF;
+    line-height:.92;letter-spacing:-.02em;
+    color:#FFFFFF;-webkit-text-fill-color:#FFFFFF;
     white-space:nowrap;
     will-change:transform,opacity,filter;
   }
 
+  /* ═══ БЕЛАЯ СЦЕНА С РУКОПИСНОЙ ФРАЗОЙ ═══ */
   .liquid-stage{
     position:fixed;top:0;left:0;right:0;
     height:100vh;z-index:10;
@@ -154,11 +160,9 @@
     height:min(70vh,600px);
     position:relative;
   }
-  .liquid-svg{
-    position:absolute;inset:0;width:100%;height:100%;
-  }
+  .liquid-svg{position:absolute;inset:0;width:100%;height:100%}
 
-  .manifest{background:var(--navy);padding:60px 48px 80px;position:relative;overflow:hidden}
+  .manifest{background:#0B1E3C;padding:60px 48px 80px;position:relative;overflow:hidden}
   .manifest .inner{
     max-width:700px;margin:0 auto;
     display:flex;flex-direction:column;align-items:center;
@@ -248,7 +252,7 @@
   .carousel-item:hover .carousel-label,
   .carousel-item.active .carousel-label{opacity:1}
 
-  .collab{background:var(--navy);padding:120px 0 130px;position:relative;overflow:hidden}
+  .collab{background:#0B1E3C;padding:120px 0 130px;position:relative;overflow:hidden}
   .collab .head{padding:0 48px;margin-bottom:70px;display:flex;justify-content:center}
   .collab-title{
     font-family:var(--display);font-style:italic;
@@ -304,6 +308,7 @@
     font-family:var(--ui);color:var(--cream);
   }
 
+  /* ═══════════ МОБИЛЬНАЯ ═══════════ */
   @media(max-width:900px){
     header{padding:11px 16px}
     .logo{font-size:17px}
@@ -311,24 +316,30 @@
     nav a{font-size:8px;letter-spacing:.07em}
     .lang-toggle{font-size:8px;padding:2px 5px}
 
-    .hero{
-      min-height:100vh;
-      padding:0 16px 30px;
-      justify-content:center;
-    }
-    /* на телефоне ещё тише и мягче */
-    .sketch-video{
-      opacity:.12;
-      filter:invert(1) blur(1px);
-    }
+    /* экран длиннее — видео успевает показать больше */
+    .hero{min-height:165vh}
+    .hero-stage{padding:0 16px}
+
+    /* SVG-фильтр на мобильных браузерах ломает отрисовку
+       текста — надпись пропадала. Здесь его выключаем,
+       перетекание остаётся за счёт blur + opacity из JS. */
     .morph{
-      height:clamp(100px,28vw,160px);
+      filter:none;
+      height:clamp(96px,26vw,150px);
       max-width:100%;
     }
     .morph span{
-      font-size:clamp(36px,11vw,56px);
-      letter-spacing:-.03em;
-      line-height:.88;
+      font-size:clamp(30px,9.2vw,48px);
+      letter-spacing:-.025em;
+      line-height:.9;
+    }
+
+    .sketch-video{opacity:.12;filter:invert(1) blur(1px)}
+    .sketch-layer{
+      -webkit-mask-image:linear-gradient(to bottom,
+        #000 0%, #000 58%, rgba(0,0,0,.5) 80%, transparent 100%);
+              mask-image:linear-gradient(to bottom,
+        #000 0%, #000 58%, rgba(0,0,0,.5) 80%, transparent 100%);
     }
     .ornament{
       width:clamp(640px,180vw,980px);
@@ -336,10 +347,7 @@
       opacity:.36;
     }
 
-    .liquid-canvas{
-      width:94%;
-      height:min(60vh,480px);
-    }
+    .liquid-canvas{width:94%;height:min(60vh,480px)}
 
     .manifest{padding:28px 16px 36px}
     .manifest-video{max-width:100%;margin-bottom:12px}
@@ -440,7 +448,7 @@
 </header>
 
 <div class="hero" id="top">
-  <!-- ваша скетч-анимация фоном: положите файл как img/sketch.mp4 -->
+  <!-- ваша скетч-анимация: файл img/sketch.mp4 -->
   <div class="sketch-layer">
     <video class="sketch-video" id="sketchVideo"
            src="img/sketch.mp4"
@@ -449,9 +457,12 @@
   </div>
 
   <img class="ornament" src="img/ornament.jpg" alt="">
-  <div class="morph" id="morph" aria-label="Искусство prët">
-    <span id="wordA" data-ru="Искусство" data-en="The Art of">Искусство</span>
-    <span id="wordB">prët</span>
+
+  <div class="hero-stage">
+    <div class="morph" id="morph" aria-label="Искусство prët">
+      <span id="wordA" data-ru="Искусство" data-en="The Art of">Искусство</span>
+      <span id="wordB">prët</span>
+    </div>
   </div>
 </div>
 
@@ -567,16 +578,14 @@
     document.getElementById('langBtn').textContent = currentLang === 'en' ? 'RU' : 'EN';
     document.documentElement.lang = currentLang;
     relabelNav();
+    liquidPath = buildLiquidPath(TEXT[currentLang], 1200, 600);
   }
   document.getElementById('langBtn').addEventListener('click', ()=>{
     currentLang = currentLang === 'ru' ? 'en' : 'ru';
     applyLang();
   });
 
-  /* ═══ СКЕТЧ-ВИДЕО ФОНОМ ═══
-     Крутится по кругу, пока герой на экране. Если файла нет
-     или автоплей заблокирован — слой просто прячется, фон
-     остаётся чистым тёмно-синим. */
+  /* ═══ СКЕТЧ-ВИДЕО ФОНОМ ═══ */
   const sk = document.getElementById('sketchVideo');
   if(sk){
     sk.muted = true;
@@ -589,7 +598,6 @@
       const layer = sk.closest('.sketch-layer');
       if(layer) layer.style.display = 'none';
     };
-
     const trySketch = ()=>{
       const pr = sk.play();
       if(pr && pr.catch) pr.catch(()=>{});
@@ -600,21 +608,20 @@
     sk.addEventListener('error', hideSketch);
     sk.load();
 
-    // первое касание разблокирует автоплей на мобильных
-    const kickSketch = ()=> trySketch();
-    window.addEventListener('touchstart', kickSketch, {passive:true});
-    window.addEventListener('click', kickSketch);
+    window.addEventListener('touchstart', trySketch, {passive:true});
+    window.addEventListener('click', trySketch);
 
-    // экономим ресурсы: пауза, когда герой ушёл с экрана
     new IntersectionObserver(entries=>{
       entries.forEach(e=>{
         if(e.isIntersecting) trySketch();
         else if(!sk.paused) sk.pause();
       });
-    },{threshold:.05}).observe(sk);
+    },{threshold:.02}).observe(sk);
   }
 
-  /* ═══ МОРФ ═══ */
+  /* ═══ МОРФ «Искусство» ⇄ «prët» ═══
+     Работает и на телефоне: gooey-фильтр там отключён в CSS,
+     перетекание держится на blur + opacity + сдвиге. */
   const morphBox = document.getElementById('morph');
   const wordA = document.getElementById('wordA');
   const wordB = document.getElementById('wordB');
@@ -630,7 +637,7 @@
     const isMobile = window.innerWidth <= 900;
     const phase = (now % (CYCLE * 2)) / CYCLE;
     const dir = phase < 1 ? 0 : 1;
-    let local = phase % 1;
+    const local = phase % 1;
 
     let p;
     if(local < HOLD) p = 0;
@@ -641,21 +648,18 @@
       Math.sin(now * 0.0031 + 1.7) * 0.035 +
       Math.sin(now * 0.0047 + 0.4) * 0.022;
 
-    let e = smooth(Math.max(0, Math.min(1, p + wob * (p > 0 && p < 1 ? 1 : 0))));
-
-    const visFrom = 1 - e;
-    const visTo   = e;
+    const e = smooth(Math.max(0, Math.min(1, p + wob * (p > 0 && p < 1 ? 1 : 0))));
 
     const from = dir === 0 ? wordA : wordB;
     const to   = dir === 0 ? wordB : wordA;
 
-    const maxBlur = isMobile ? 9 : 15;
-    const shiftX  = isMobile ? 26 : 54;
+    const maxBlur = isMobile ? 10 : 15;
+    const shiftX  = isMobile ? 22 : 54;
 
-    apply(from, visFrom, -1, maxBlur, shiftX, now, isMobile);
-    apply(to,   visTo,   +1, maxBlur, shiftX, now, isMobile);
+    apply(from, 1 - e, -1, maxBlur, shiftX, now, isMobile);
+    apply(to,   e,     +1, maxBlur, shiftX, now, isMobile);
 
-    if(gooNoise){
+    if(gooNoise && !isMobile){
       const f = 0.009 + (Math.sin(now * 0.0009) * 0.5 + 0.5) * 0.007;
       gooNoise.setAttribute('baseFrequency', f.toFixed(4));
     }
@@ -666,8 +670,8 @@
   function apply(el, vis, side, maxBlur, shiftX, now, isMobile){
     const inv = 1 - vis;
     const blur = (inv * maxBlur).toFixed(2);
-    const sx = (0.82 + vis * 0.18).toFixed(3);
-    const sy = (1.22 - vis * 0.22 + Math.sin(now * 0.0021 + side) * 0.02).toFixed(3);
+    const sx = (0.86 + vis * 0.14).toFixed(3);
+    const sy = (1.16 - vis * 0.16 + Math.sin(now * 0.0021 + side) * 0.02).toFixed(3);
     const tx = (side * inv * shiftX).toFixed(1);
     const ty = (Math.sin(now * 0.0013 + side * 1.3) * (isMobile ? 3 : 6) * inv).toFixed(1);
 
@@ -681,7 +685,7 @@
     requestAnimationFrame(morphTick);
   }
 
-  /* ═══ LIQUID ═══ */
+  /* ═══ РУКОПИСНАЯ ФРАЗА ═══ */
   const liquidStage = document.getElementById('liquidStage');
   const liquidSVG = document.getElementById('liquidSVG');
 
@@ -728,16 +732,18 @@
     }
   }
 
-  /* ═══ СКРОЛЛ ═══ */
+  /* ═══ СКРОЛЛ ═══
+     Белая сцена включается, когда герой почти прокручен,
+     поэтому весь синий блок читается как один экран. */
   const header = document.getElementById('header');
   const heroSection = document.getElementById('top');
   const ornament = document.querySelector('.ornament');
+  const manifestEl = document.getElementById('manifest');
 
   window.addEventListener('scroll', ()=>{
     const heroRect = heroSection.getBoundingClientRect();
-    const heroBottom = heroRect.bottom;
 
-    if(heroBottom < window.innerHeight * 0.3){
+    if(heroRect.bottom < window.innerHeight * 0.55){
       morphBox.style.opacity = '0';
       morphRunning = false;
 
@@ -756,8 +762,7 @@
       header.classList.remove('light');
     }
 
-    const manifestTop = document.getElementById('manifest').getBoundingClientRect().top;
-    if(manifestTop < window.innerHeight * 0.5){
+    if(manifestEl.getBoundingClientRect().top < window.innerHeight * 0.5){
       liquidStage.classList.remove('active');
       header.classList.remove('light');
     }
@@ -765,17 +770,16 @@
     header.classList.toggle('scrolled', window.scrollY > 80);
 
     if(!ornament) return;
-    const rect = heroSection.getBoundingClientRect();
     if(window.innerWidth <= 900){
-      const p = Math.max(0, Math.min(1, -rect.top / (rect.height * 1.1)));
+      const p = Math.max(0, Math.min(1, -heroRect.top / (heroRect.height * 1.1)));
       ornament.style.transform = `translate(${p*70}%, ${p*32}%) rotate(${p*88}deg)`;
       ornament.style.opacity = 0.36 - p*0.24;
     } else {
-      const p = Math.max(0, Math.min(1, -rect.top / (rect.height * 1.6)));
+      const p = Math.max(0, Math.min(1, -heroRect.top / (heroRect.height * 1.6)));
       ornament.style.transform = `translateY(-${p*380}px) rotate(${p*50}deg)`;
       ornament.style.opacity = 0.38 - p*0.26;
     }
-  });
+  }, {passive:true});
 
   /* ═══ ВИДЕО МАНИФЕСТА ═══ */
   const mv = document.getElementById('manifestVideo');
@@ -784,47 +788,66 @@
     if(document.getElementById('manifestFallback')) return;
     const h2 = document.createElement('h2');
     h2.id = 'manifestFallback';
-    h2.style.cssText = "font-family:var(--display);font-style:italic;font-size:clamp(22px,4.6vw,58px);line-height:1.3;text-align:center;margin-bottom:34px;color:var(--cream)";
-    h2.textContent = TEXT.ru;
+    h2.style.cssText = "font-family:var(--display);font-style:italic;font-size:clamp(22px,4.6vw,58px);line-height:1.3;text-align:center;margin-bottom:34px;color:#FFF9F5";
+    h2.textContent = TEXT[currentLang];
     document.getElementById('manifestInner').prepend(h2);
   }
 
   if(mv){
     mv.loop = false; mv.muted = true;
+    mv.defaultMuted = true;
     mv.setAttribute('muted',''); mv.playsInline = true;
 
-    let inView = false, playedOk = false;
+    let playedOk = false, tries = 0;
 
-    const watchdog = setTimeout(()=>{
-      if(!playedOk && (mv.readyState < 2 || mv.paused)){
-        mv.style.display = 'none';
-        showManifestText();
+    function tryManifest(){
+      if(playedOk) return;
+      tries++;
+      const pr = mv.play();
+      if(pr && pr.catch){
+        pr.catch(()=>{
+          if(tries >= 3 && !playedOk){
+            mv.style.display = 'none';
+            showManifestText();
+          }
+        });
       }
-    }, 2200);
+    }
 
+    mv.addEventListener('loadeddata', tryManifest);
+    mv.addEventListener('canplay', tryManifest);
     mv.addEventListener('playing', ()=>{
-      playedOk = true; clearTimeout(watchdog);
+      playedOk = true;
       mv.style.display = '';
       const fb = document.getElementById('manifestFallback');
       if(fb) fb.remove();
     });
+    mv.addEventListener('error', ()=>{
+      mv.style.display = 'none';
+      showManifestText();
+    });
+    mv.load();
 
     new IntersectionObserver(entries=>{
       entries.forEach(e=>{
         if(e.isIntersecting){
-          if(!inView){
-            mv.currentTime = 0;
-            mv.play().catch(()=>{ mv.style.display='none'; showManifestText(); });
-          }
-          inView = true;
-        } else inView = false;
+          mv.currentTime = 0;
+          tryManifest();
+        } else if(!mv.paused){
+          mv.pause();
+        }
       });
-    },{threshold:.4}).observe(mv);
+    },{threshold:.25}).observe(mv);
 
     mv.addEventListener('ended', ()=> mv.pause());
-    mv.addEventListener('error', ()=>{
-      clearTimeout(watchdog); mv.remove(); showManifestText();
-    });
+
+    const kick = ()=>{ tries = 0; tryManifest(); };
+    window.addEventListener('touchstart', kick, {passive:true});
+    window.addEventListener('click', kick);
+
+    setTimeout(()=>{
+      if(!playedOk){ mv.style.display = 'none'; showManifestText(); }
+    }, 3500);
   }
 
   /* ═══ ГАЛЕРЕЯ ═══ */
@@ -853,7 +876,7 @@
       const cols = Math.min(cat.works.length, 3);
       const cards = cat.works.map(w=>`
         <a class="card" href="${w.href}" target="_blank" rel="noopener">
-          <img src="${w.img}" alt="${w.alt}">
+          <img src="${w.img}" alt="${w.alt}" loading="lazy">
         </a>`).join('');
       return `<div class="gallery-page${ci === 0 ? ' active-page' : ''}"
                    data-page="${ci}"
