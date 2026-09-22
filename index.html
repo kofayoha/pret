@@ -37,8 +37,9 @@
     .journey{background:#FFF9F5 !important}
     .ornament,.artist-flourish{filter:invert(1) brightness(0.9) !important}
     .manifest-video{filter:invert(1) !important}
+    .sketch-video{filter:invert(1) !important}
     .morph span{color:#FFFFFF !important}
-    .logo,.nav a,.lang-toggle{color:#FFF9F5 !important}
+    .logo,nav a,.lang-toggle{color:#FFF9F5 !important}
     header.scrolled .logo,header.scrolled nav a,header.light .logo,header.light nav a{color:#2B1810 !important}
   }
 
@@ -72,6 +73,7 @@
   header.scrolled .lang-toggle,header.light .lang-toggle{border-color:var(--ink);color:var(--ink)}
   .lang-toggle:hover{background:var(--ink);color:var(--cream)}
 
+  /* ═══ ГЕРОЙ ═══ */
   .hero{
     min-height:100vh;
     background:var(--navy);
@@ -80,6 +82,32 @@
     position:relative;overflow:hidden;
     padding:0 48px 48px;
   }
+
+  /* ── СКЕТЧ-ВИДЕО ФОНОМ ──
+     Файл img/sketch.mp4 — чёрные линии на белом.
+     invert(1) делает линии белыми, фон чёрным;
+     mix-blend-mode:screen выбивает чёрный, оставляя
+     только светлые штрихи поверх тёмно-синего.       */
+  .sketch-layer{
+    position:absolute;inset:0;
+    z-index:0;
+    overflow:hidden;
+    pointer-events:none;
+  }
+  .sketch-video{
+    position:absolute;
+    top:50%;left:50%;
+    transform:translate(-50%,-50%);
+    min-width:100%;min-height:100%;
+    width:auto;height:auto;
+    object-fit:cover;
+    display:block;
+    /* приглушение и блюр */
+    opacity:.16;
+    filter:invert(1) blur(1.4px);
+    mix-blend-mode:screen;
+  }
+
   .ornament{
     position:absolute;
     width:clamp(800px,100vw,1400px);
@@ -288,6 +316,11 @@
       padding:0 16px 30px;
       justify-content:center;
     }
+    /* на телефоне ещё тише и мягче */
+    .sketch-video{
+      opacity:.12;
+      filter:invert(1) blur(1px);
+    }
     .morph{
       height:clamp(100px,28vw,160px);
       max-width:100%;
@@ -374,6 +407,7 @@
   @media(prefers-reduced-motion:reduce){
     .collab-marquee{animation:none !important}
     .morph,.liquid-stage{transition:none !important;animation:none !important}
+    .sketch-layer{display:none}
   }
 </style>
 </head>
@@ -406,6 +440,14 @@
 </header>
 
 <div class="hero" id="top">
+  <!-- ваша скетч-анимация фоном: положите файл как img/sketch.mp4 -->
+  <div class="sketch-layer">
+    <video class="sketch-video" id="sketchVideo"
+           src="img/sketch.mp4"
+           autoplay loop muted playsinline preload="auto"
+           webkit-playsinline disablepictureinpicture></video>
+  </div>
+
   <img class="ornament" src="img/ornament.jpg" alt="">
   <div class="morph" id="morph" aria-label="Искусство prët">
     <span id="wordA" data-ru="Искусство" data-en="The Art of">Искусство</span>
@@ -531,6 +573,48 @@
     applyLang();
   });
 
+  /* ═══ СКЕТЧ-ВИДЕО ФОНОМ ═══
+     Крутится по кругу, пока герой на экране. Если файла нет
+     или автоплей заблокирован — слой просто прячется, фон
+     остаётся чистым тёмно-синим. */
+  const sk = document.getElementById('sketchVideo');
+  if(sk){
+    sk.muted = true;
+    sk.defaultMuted = true;
+    sk.setAttribute('muted','');
+    sk.playsInline = true;
+    sk.loop = true;
+
+    const hideSketch = ()=>{
+      const layer = sk.closest('.sketch-layer');
+      if(layer) layer.style.display = 'none';
+    };
+
+    const trySketch = ()=>{
+      const pr = sk.play();
+      if(pr && pr.catch) pr.catch(()=>{});
+    };
+
+    sk.addEventListener('loadeddata', trySketch);
+    sk.addEventListener('canplay', trySketch);
+    sk.addEventListener('error', hideSketch);
+    sk.load();
+
+    // первое касание разблокирует автоплей на мобильных
+    const kickSketch = ()=> trySketch();
+    window.addEventListener('touchstart', kickSketch, {passive:true});
+    window.addEventListener('click', kickSketch);
+
+    // экономим ресурсы: пауза, когда герой ушёл с экрана
+    new IntersectionObserver(entries=>{
+      entries.forEach(e=>{
+        if(e.isIntersecting) trySketch();
+        else if(!sk.paused) sk.pause();
+      });
+    },{threshold:.05}).observe(sk);
+  }
+
+  /* ═══ МОРФ ═══ */
   const morphBox = document.getElementById('morph');
   const wordA = document.getElementById('wordA');
   const wordB = document.getElementById('wordB');
@@ -597,6 +681,7 @@
     requestAnimationFrame(morphTick);
   }
 
+  /* ═══ LIQUID ═══ */
   const liquidStage = document.getElementById('liquidStage');
   const liquidSVG = document.getElementById('liquidSVG');
 
@@ -643,6 +728,7 @@
     }
   }
 
+  /* ═══ СКРОЛЛ ═══ */
   const header = document.getElementById('header');
   const heroSection = document.getElementById('top');
   const ornament = document.querySelector('.ornament');
@@ -691,6 +777,7 @@
     }
   });
 
+  /* ═══ ВИДЕО МАНИФЕСТА ═══ */
   const mv = document.getElementById('manifestVideo');
 
   function showManifestText(){
@@ -740,6 +827,7 @@
     });
   }
 
+  /* ═══ ГАЛЕРЕЯ ═══ */
   const CATEGORIES = [
     { ru:'Перформанс', en:'Performance', works:[
       {img:'img/posestrie.jpg',  href:'https://hsedesign.ru/project/posestrie-fdd4656391a44e98b69133c583dda03f', alt:'Посестрие'},
