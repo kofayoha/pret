@@ -1,0 +1,859 @@
+<!DOCTYPE html>
+<html lang="ru" style="color-scheme:light !important;background:#FFF9F5 !important">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<meta name="color-scheme" content="light">
+<title>prët — Мария Балаян | искусство prët</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Averia+Serif+Libre:ital,wght@0,400;1,400&family=PT+Serif+Caption:ital@0;1&family=Lora:ital,wght@0,400;0,500;1,400;1,500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    color-scheme:light !important;
+    --navy:#0B1E3C;
+    --blue:#4A7BA7;
+    --cream:#FFF9F5;
+    --ink:#2B1810;
+    --display:'Averia Serif Libre','PT Serif Caption','Lora',Georgia,serif;
+    --ui:'IBM Plex Sans',Arial,sans-serif;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth;color-scheme:light !important;background:#FFF9F5 !important}
+  body{
+    font-family:var(--display);
+    color:#2B1810 !important;background:#FFF9F5 !important;
+    line-height:1.6;overflow-x:hidden;
+    -webkit-text-size-adjust:100%;
+    forced-color-adjust:none;
+  }
+
+  @media(prefers-color-scheme:dark){
+    :root{color-scheme:light !important}
+    html,body{background:#FFF9F5 !important;color:#2B1810 !important}
+    .hero,.manifest,.collab{background:#0B1E3C !important;color:#FFF9F5 !important}
+    .artist,.artist-flourish-wrap,.artist-text,footer{background:#4A7BA7 !important}
+    .journey{background:#FFF9F5 !important}
+    .ornament,.artist-flourish{filter:invert(1) brightness(.9) !important}
+    /* видео манифеста: инверсия обязательна, иначе виден белый квадрат */
+    .manifest-video{filter:invert(1) !important;mix-blend-mode:screen !important}
+    .sketch-video{filter:invert(1) blur(1.4px) !important;mix-blend-mode:screen !important}
+    .morph span{color:#FFFFFF !important;-webkit-text-fill-color:#FFFFFF !important}
+    .logo,nav a,.lang-toggle{color:#FFF9F5 !important}
+    header.scrolled .logo,header.scrolled nav a{color:#2B1810 !important}
+  }
+
+  header{
+    position:fixed;top:0;left:0;right:0;z-index:100;
+    display:flex;justify-content:space-between;align-items:center;
+    padding:24px 48px;transition:background .4s,color .4s;
+  }
+  header.scrolled{background:rgba(255,249,245,.96);backdrop-filter:blur(10px)}
+  .logo{
+    font-family:var(--display);font-size:32px;font-style:italic;
+    text-decoration:none;color:var(--cream);font-weight:400;
+    transition:color .4s;
+  }
+  header.scrolled .logo{color:var(--ink)}
+  nav{display:flex;gap:36px;align-items:center}
+  nav a{
+    text-decoration:none;color:var(--cream);
+    font-family:var(--ui);font-size:13px;font-weight:500;
+    letter-spacing:.12em;text-transform:uppercase;
+    transition:color .4s;
+  }
+  header.scrolled nav a{color:var(--ink)}
+  nav a:hover{opacity:.6}
+  .lang-toggle{
+    cursor:pointer;font-size:14px;padding:6px 12px;
+    border:1px solid var(--cream);color:var(--cream);border-radius:4px;
+    font-family:var(--ui);font-weight:500;background:none;
+    transition:all .4s;
+  }
+  header.scrolled .lang-toggle{border-color:var(--ink);color:var(--ink)}
+  .lang-toggle:hover{background:var(--ink);color:var(--cream)}
+
+  /* ═══════════ ГЕРОЙ ═══════════
+     Один непрерывный синий блок. Заголовок держится по центру
+     через sticky, поэтому стыка между анимациями не видно. */
+  .hero{
+    min-height:175vh;
+    background:#0B1E3C;
+    position:relative;overflow:hidden;padding:0;
+  }
+  .sketch-layer{
+    position:absolute;inset:0;
+    z-index:0;overflow:hidden;pointer-events:none;
+    display:flex;align-items:center;justify-content:center;
+    /* к низу растворяется в синий, без резкой кромки */
+    -webkit-mask-image:linear-gradient(to bottom,
+      #000 0%, #000 62%, rgba(0,0,0,.55) 82%, transparent 100%);
+            mask-image:linear-gradient(to bottom,
+      #000 0%, #000 62%, rgba(0,0,0,.55) 82%, transparent 100%);
+  }
+  .sketch-video{
+    width:100%;height:100%;
+    object-fit:cover;display:block;
+    opacity:.16;
+    filter:invert(1) blur(1.4px);
+    mix-blend-mode:screen;
+  }
+
+  .ornament{
+    position:absolute;
+    width:clamp(800px,100vw,1400px);
+    bottom:-6%;right:-15%;
+    opacity:.38;pointer-events:none;
+    will-change:transform,opacity;z-index:1;
+    transform-origin:center center;
+    filter:invert(1);mix-blend-mode:screen;
+  }
+
+  .hero-stage{
+    position:sticky;top:0;
+    height:100vh;
+    display:flex;align-items:center;
+    padding:0 48px;z-index:2;
+  }
+  .morph{
+    position:relative;
+    width:100%;max-width:1150px;
+    height:clamp(150px,20vw,260px);
+    filter:url(#gooey);
+    pointer-events:none;
+    transition:opacity .5s ease;
+  }
+  .morph span{
+    position:absolute;left:0;top:50%;
+    transform-origin:0% 50%;
+    font-family:var(--display);
+    font-style:italic;font-weight:400;
+    font-size:clamp(64px,12vw,140px);
+    line-height:.92;letter-spacing:-.02em;
+    color:#FFFFFF;-webkit-text-fill-color:#FFFFFF;
+    white-space:nowrap;
+    will-change:transform,opacity,filter;
+  }
+
+  /* ═══════════ МАНИФЕСТ ═══════════
+     Вторая анимация — ваше видео. Лежит на том же синем,
+     инвертировано и смешано screen, поэтому тёмные слова
+     читаются светлыми штрихами, а белый фон выбивается. */
+  .manifest{
+    background:#0B1E3C;
+    padding:40px 48px 90px;
+    position:relative;overflow:hidden;
+  }
+  .manifest .inner{
+    max-width:900px;margin:0 auto;
+    display:flex;flex-direction:column;align-items:center;
+  }
+  .manifest-video{
+    width:100%;max-width:860px;height:auto;display:block;
+    margin:0 auto 26px;
+    filter:invert(1);
+    mix-blend-mode:screen;
+    background:transparent;
+  }
+  .manifest-fallback{
+    font-family:var(--display);font-style:italic;
+    font-size:clamp(22px,4.4vw,56px);
+    line-height:1.3;text-align:center;margin-bottom:30px;
+    color:#FFF9F5;-webkit-text-fill-color:#FFF9F5;
+  }
+  .btn{
+    padding:14px 40px;background:transparent;border:none;
+    text-decoration:underline;text-underline-offset:6px;
+    color:var(--cream);font-size:17px;letter-spacing:.06em;
+    font-family:var(--display);font-style:italic;cursor:pointer;
+    transition:opacity .3s;
+  }
+  .btn:hover{opacity:.7}
+
+  .artist{background:var(--blue);position:relative;overflow:hidden}
+  .artist-flourish-wrap{
+    width:100%;background:var(--blue);padding:80px 48px;
+    display:flex;align-items:center;justify-content:center;
+  }
+  .artist-flourish{
+    width:100%;max-width:1400px;height:auto;display:block;
+    filter:invert(1);mix-blend-mode:screen;
+  }
+  .artist-text{background:var(--blue);padding:0 48px 90px}
+  .artist-text .container{
+    max-width:1200px;margin:0 auto;
+    display:flex;flex-direction:column;gap:52px;
+  }
+  .artist-text .lead{
+    align-self:flex-end;text-align:right;max-width:54%;
+    font-size:clamp(20px,2.6vw,38px);line-height:1.25;
+    font-style:italic;color:var(--cream);
+  }
+  .artist-text .bottom{
+    align-self:flex-start;text-align:left;max-width:42%;
+    font-size:clamp(16px,1.8vw,23px);
+    font-style:italic;color:var(--cream);margin-top:6px;
+  }
+
+  .journey{background:var(--cream);padding:90px 48px;position:relative}
+  .journey .head{
+    display:flex;justify-content:space-between;align-items:center;
+    margin-bottom:50px;
+  }
+  .journey h2{
+    font-size:clamp(40px,6vw,80px);
+    font-style:italic;font-weight:400;font-family:var(--display);
+  }
+  .journey .head a{
+    text-decoration:underline;text-underline-offset:6px;
+    color:var(--ink);font-size:17px;font-style:italic;
+  }
+  .gallery-container{position:relative;overflow:hidden}
+  .gallery-track{display:flex;transition:transform .55s cubic-bezier(.4,0,.2,1)}
+  .gallery-page{min-width:100%;display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+  .card{
+    border-radius:12px;overflow:hidden;position:relative;display:block;
+    aspect-ratio:3/4;transition:transform .4s ease,box-shadow .4s ease;
+    background:var(--blue);
+  }
+  .card:hover{transform:translateY(-8px);box-shadow:0 20px 50px rgba(43,24,16,.15)}
+  .card img{width:100%;height:100%;object-fit:cover;display:block}
+
+  .carousel-nav{
+    display:flex;justify-content:center;gap:34px;
+    margin-top:42px;align-items:center;flex-wrap:wrap;
+  }
+  .carousel-item{
+    display:flex;flex-direction:column;align-items:center;gap:8px;
+    cursor:pointer;background:none;border:none;padding:0;font:inherit;color:inherit;
+  }
+  .carousel-dot{
+    width:10px;height:10px;border-radius:50%;
+    background:var(--ink);opacity:.3;
+    transition:opacity .3s,transform .3s;
+  }
+  .carousel-item:hover .carousel-dot{transform:scale(1.2)}
+  .carousel-dot.active{opacity:1}
+  .carousel-label{
+    font-family:var(--ui);font-size:12px;font-weight:500;
+    letter-spacing:.12em;text-transform:uppercase;
+    opacity:.5;transition:opacity .3s;
+  }
+  .carousel-item:hover .carousel-label,
+  .carousel-item.active .carousel-label{opacity:1}
+
+  .collab{background:#0B1E3C;padding:120px 0 130px;position:relative;overflow:hidden}
+  .collab .head{padding:0 48px;margin-bottom:70px;display:flex;justify-content:center}
+  .collab-title{
+    font-family:var(--display);font-style:italic;
+    font-size:clamp(48px,9vw,120px);
+    color:var(--cream);line-height:1.1;text-align:center;
+  }
+  .collab-scroll{width:100%;overflow:hidden}
+  .collab-marquee{
+    display:flex;width:max-content;
+    animation:marquee 48s linear infinite;
+    animation-play-state:paused;
+  }
+  .collab:hover .collab-marquee{animation-play-state:running}
+  @keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+  .collab-track{display:flex;gap:28px;padding:0 14px}
+  .collab-card{
+    width:clamp(280px,30vw,420px);
+    height:clamp(340px,36vw,520px);
+    border-radius:14px;flex-shrink:0;overflow:hidden;
+    background:var(--blue);
+    transition:transform .4s ease,box-shadow .4s ease;
+  }
+  .collab-card img{width:100%;height:100%;object-fit:cover;display:block}
+  .collab-card:hover{transform:scale(1.03);box-shadow:0 20px 50px rgba(0,0,0,.35)}
+
+  footer{background:var(--blue);padding:120px 48px 60px;position:relative}
+  footer .inner{
+    max-width:1300px;margin:0 auto;
+    display:flex;justify-content:space-between;
+    align-items:flex-start;flex-wrap:wrap;gap:40px;
+  }
+  footer .left h2{
+    font-size:clamp(52px,9vw,120px);font-style:italic;
+    margin-bottom:32px;font-weight:400;
+    font-family:var(--display);color:var(--cream);
+  }
+  footer .left a,footer .right a{
+    color:var(--cream);text-decoration:none;
+    font-size:clamp(18px,2.1vw,24px);display:block;margin:12px 0;
+    font-family:var(--display);
+  }
+  footer a:hover{opacity:.7}
+  .ast{font-size:.6em;vertical-align:super;opacity:.75;margin-left:2px}
+  .disclaimer{
+    max-width:250px;margin-top:14px;
+    font-family:var(--ui);font-size:11px;line-height:1.5;
+    color:rgba(255,249,245,.55);letter-spacing:.01em;
+  }
+  footer .copy{
+    margin-top:70px;font-size:14px;letter-spacing:.08em;
+    text-transform:uppercase;opacity:.6;text-align:center;
+    font-family:var(--ui);color:var(--cream);
+  }
+
+  /* ═══════════ МОБИЛЬНАЯ ═══════════ */
+  @media(max-width:900px){
+    header{padding:11px 16px}
+    .logo{font-size:17px}
+    nav{gap:9px}
+    nav a{font-size:8px;letter-spacing:.07em}
+    .lang-toggle{font-size:8px;padding:2px 5px}
+
+    .hero{min-height:165vh}
+    .hero-stage{padding:0 16px}
+
+    /* фоновый рисунок мельче: не заполняет кадр целиком,
+       а вписывается в 74% ширины по центру */
+    .sketch-layer{
+      -webkit-mask-image:linear-gradient(to bottom,
+        #000 0%, #000 58%, rgba(0,0,0,.5) 80%, transparent 100%);
+              mask-image:linear-gradient(to bottom,
+        #000 0%, #000 58%, rgba(0,0,0,.5) 80%, transparent 100%);
+    }
+    /* рисунок во весь кадр — как на компьютерной версии */
+    .sketch-video{
+      width:100%;height:100%;
+      object-fit:cover;
+      opacity:.16;
+      filter:invert(1) blur(1.2px);
+    }
+
+    /* SVG-фильтр на мобильных рвёт отрисовку текста — выключаем,
+       перетекание держится на blur + opacity из JS */
+    .morph{
+      filter:none;
+      height:clamp(96px,26vw,150px);
+      max-width:100%;
+    }
+    .morph span{
+      font-size:clamp(30px,9.2vw,48px);
+      letter-spacing:-.025em;line-height:.9;
+    }
+
+    .ornament{
+      width:clamp(640px,180vw,980px);
+      top:4%;left:-36%;bottom:auto;right:auto;
+      opacity:.36;
+    }
+
+    .manifest{padding:18px 16px 40px}
+    .manifest-video{max-width:100%;margin-bottom:16px}
+    .manifest-fallback{font-size:clamp(17px,5vw,26px);margin-bottom:20px}
+    .btn{padding:9px 18px;font-size:12.5px}
+
+    .artist-flourish-wrap{padding:38px 16px 24px}
+    .artist-text{padding:0 16px 42px}
+    .artist-text .container{gap:30px}
+    .artist-text .lead{
+      align-self:flex-end;max-width:84%;text-align:right;
+      font-size:clamp(15px,4.2vw,20px);line-height:1.2;
+    }
+    .artist-text .bottom{
+      align-self:flex-start;max-width:78%;text-align:left;
+      font-size:clamp(12.5px,3.4vw,16px);margin-top:0;
+    }
+
+    .journey{padding:40px 16px}
+    .journey h2{font-size:clamp(22px,6.4vw,34px)}
+    .journey .head{flex-direction:column;align-items:flex-start;gap:10px;margin-bottom:18px}
+    .journey .head a{font-size:13px}
+
+    .gallery-container{overflow:visible}
+    .gallery-track{display:block;transform:none !important}
+    .gallery-page{display:none}
+    .gallery-page.active-page{
+      display:grid;grid-template-columns:1fr !important;gap:11px;
+    }
+    .card{aspect-ratio:3/4;border-radius:8px}
+
+    .carousel-nav{display:flex;justify-content:flex-start;gap:6px;margin-top:18px}
+    .carousel-item{
+      flex-direction:row;
+      border:1px solid rgba(43,24,16,.22);
+      padding:5px 11px;border-radius:20px;
+      transition:background .25s,border-color .25s;
+    }
+    .carousel-item.active{background:var(--ink);border-color:var(--ink)}
+    .carousel-dot{display:none}
+    .carousel-label{font-size:9px;letter-spacing:.09em;opacity:.65}
+    .carousel-item.active .carousel-label{opacity:1;color:var(--cream)}
+
+    .collab{padding:52px 0 60px}
+    .collab .head{padding:0 16px;margin-bottom:28px}
+    .collab-title{font-size:clamp(26px,9vw,44px)}
+    .collab-scroll{overflow-x:auto;overflow-y:hidden;-webkit-overflow-scrolling:touch}
+    .collab-marquee{animation:none !important;transform:none !important}
+    .collab-track{padding:0 14px;gap:14px}
+    .collab-track[aria-hidden="true"]{display:none}
+    .collab-card[aria-hidden="true"],
+    .collab-card[tabindex="-1"]{display:none}
+    .collab-card{width:clamp(190px,58vw,250px);height:clamp(280px,84vw,370px);border-radius:10px}
+    .collab-scroll::-webkit-scrollbar{height:4px}
+    .collab-scroll::-webkit-scrollbar-thumb{background:rgba(255,249,245,.3);border-radius:3px}
+
+    footer{padding:44px 16px 24px}
+    footer .inner{flex-direction:column;gap:14px;max-width:300px;margin:0}
+    footer .left h2{font-size:clamp(24px,7vw,40px);margin-bottom:10px}
+    footer .left a,footer .right a{font-size:clamp(12.5px,3.3vw,14px);margin:5px 0}
+    .disclaimer{max-width:210px;font-size:9px;margin-top:9px;line-height:1.45}
+    footer .copy{margin-top:24px;font-size:8px}
+  }
+
+  @media(prefers-reduced-motion:reduce){
+    .collab-marquee{animation:none !important}
+    .morph{transition:none !important}
+    .sketch-layer{display:none}
+  }
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <filter id="gooey">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="9" result="soft"/>
+      <feColorMatrix in="soft" mode="matrix" result="thick"
+        values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 22 -9"/>
+      <feTurbulence id="gooNoise" type="fractalNoise" baseFrequency="0.011"
+                    numOctaves="2" seed="4" result="noise"/>
+      <feDisplacementMap in="thick" in2="noise" scale="13"
+                         xChannelSelector="R" yChannelSelector="G" result="wobble"/>
+      <feGaussianBlur in="wobble" stdDeviation="0.6"/>
+    </filter>
+  </defs>
+</svg>
+
+<header id="header">
+  <a class="logo" href="#top">prët</a>
+  <nav>
+    <a href="#journey" data-ru="Галерея" data-en="Gallery">Галерея</a>
+    <a href="./shop.html" data-ru="Магазин" data-en="Shop">Магазин</a>
+    <a href="./about.html" data-ru="О&nbsp;себе" data-en="About">О&nbsp;себе</a>
+    <a href="#contact" data-ru="Контакты" data-en="Contact">Контакты</a>
+    <button class="lang-toggle" id="langBtn" type="button">EN</button>
+  </nav>
+</header>
+
+<!-- ПЕРВАЯ АНИМАЦИЯ: скетч фоном + морф заголовка -->
+<div class="hero" id="top">
+  <div class="sketch-layer">
+    <video class="sketch-video" id="sketchVideo"
+           src="img/sketch.mp4"
+           autoplay loop muted playsinline preload="auto"
+           webkit-playsinline disablepictureinpicture></video>
+  </div>
+
+  <img class="ornament" src="img/ornament.jpg" alt="">
+
+  <div class="hero-stage">
+    <div class="morph" id="morph" aria-label="Искусство prët">
+      <span id="wordA" data-ru="Искусство" data-en="The Art of">Искусство</span>
+      <span id="wordB">prët</span>
+    </div>
+  </div>
+</div>
+
+<!-- ВТОРАЯ АНИМАЦИЯ: ваше видео с фразой, на том же синем -->
+<section class="manifest" id="manifest">
+  <div class="inner" id="manifestInner">
+    <video class="manifest-video" id="manifestVideo"
+           src="img/manifest.MP4"
+           autoplay loop muted playsinline preload="auto"
+           webkit-playsinline disablepictureinpicture></video>
+    <a class="btn" href="./about.html" data-ru="Узнать больше" data-en="Explore Now">Узнать больше</a>
+  </div>
+</section>
+
+<section class="artist" id="artist">
+  <div class="artist-flourish-wrap">
+    <img class="artist-flourish" src="img/flourish.jpg" alt="">
+  </div>
+  <div class="artist-text">
+    <div class="container">
+      <div class="lead"
+           data-ru="Я работаю с&nbsp;материалом, который есть всегда: с&nbsp;телом, с&nbsp;линией, с&nbsp;энергией"
+           data-en="I work with material that is always present: the body, the line, the energy">
+        Я&nbsp;работаю с&nbsp;материалом, который есть всегда: с&nbsp;телом, с&nbsp;линией, с&nbsp;энергией
+      </div>
+      <div class="bottom"
+           data-ru="Использую телесную живопись"
+           data-en="Using body painting">
+        Использую телесную живопись
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="journey" id="journey">
+  <div class="head">
+    <h2 data-ru="Моя галерея" data-en="Follow my Journey">Моя&nbsp;галерея</h2>
+    <a href="https://www.behance.net/kofayoha" target="_blank" rel="noopener">Behance →</a>
+  </div>
+  <div class="gallery-container">
+    <div class="gallery-track" id="galleryTrack"></div>
+  </div>
+  <div class="carousel-nav" id="carouselNav"></div>
+</section>
+
+<section class="collab" id="collab">
+  <div class="head">
+    <h2 class="collab-title" data-ru="Коллаборации" data-en="Collaborations">Коллаборации</h2>
+  </div>
+  <div class="collab-scroll">
+    <div class="collab-marquee">
+      <div class="collab-track" id="collabTrackA"></div>
+      <div class="collab-track" id="collabTrackB" aria-hidden="true"></div>
+    </div>
+  </div>
+</section>
+
+<footer id="contact">
+  <div class="inner">
+    <div class="left">
+      <h2 data-ru="Пишите!" data-en="Get in Touch!">Пишите!</h2>
+      <a href="https://t.me/kofayoha" target="_blank" rel="noopener">t.me/kofayoha</a>
+      <a href="https://instagram.com/kofayoha" target="_blank" rel="noopener">@kofayoha<span class="ast">*</span></a>
+      <p class="disclaimer"
+         data-ru="* Instagram — продукт компании Meta, признанной экстремистской организацией, её деятельность запрещена на территории Российской Федерации."
+         data-en="* Instagram is a product of Meta, designated an extremist organisation; its activity is banned in the Russian Federation.">
+        * Instagram — продукт компании Meta, признанной экстремистской
+        организацией, её деятельность запрещена на территории
+        Российской Федерации.
+      </p>
+    </div>
+    <div class="right">
+      <a href="/cdn-cgi/l/email-protection#ea81858c8b9385828baa8d878b8386c4898587"><span class="__cf_email__" data-cfemail="adc6c2cbccd4c2c5ccedcac0ccc4c183cec2c0">[email&#160;protected]</span></a>
+    </div>
+  </div>
+  <p class="copy">© 2026 prët — art &amp; energy</p>
+</footer>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+  /* ═══ ЯЗЫК ═══ */
+  let currentLang = 'ru';
+  const TEXT = {
+    ru:'Моя цель, мой смысл и возможность жить — создавать искры',
+    en:'My purpose, my meaning, and the ability to live — creating sparks'
+  };
+
+  function applyLang(){
+    document.querySelectorAll('[data-ru]').forEach(el=>{
+      const t = el.getAttribute('data-' + currentLang);
+      if(t !== null) el.innerHTML = t;
+    });
+    document.getElementById('langBtn').textContent = currentLang === 'en' ? 'RU' : 'EN';
+    document.documentElement.lang = currentLang;
+    relabelNav();
+    renderCollab();
+    const fb = document.getElementById('manifestFallback');
+    if(fb) fb.textContent = TEXT[currentLang];
+  }
+  document.getElementById('langBtn').addEventListener('click', ()=>{
+    currentLang = currentLang === 'ru' ? 'en' : 'ru';
+    applyLang();
+  });
+
+  /* ═══ ОБЩИЙ ЗАПУСК ВИДЕО ═══
+     Оба видео ведут себя одинаково: грузим принудительно,
+     пробуем играть на canplay и при появлении в кадре,
+     добиваем после первого касания. Никаких подменных
+     сцен — если видео не пошло, показываем текст. */
+  function setupVideo(el, opts){
+    if(!el) return;
+    const { loop = true, onFail = null, onOk = null } = opts || {};
+
+    el.muted = true;
+    el.defaultMuted = true;
+    el.setAttribute('muted','');
+    el.playsInline = true;
+    el.loop = loop;
+
+    let ok = false, tries = 0;
+
+    const tryPlay = ()=>{
+      if(ok && !el.paused) return;
+      tries++;
+      const pr = el.play();
+      if(pr && pr.catch){
+        pr.catch(()=>{
+          if(tries >= 4 && !ok && onFail) onFail();
+        });
+      }
+    };
+
+    el.addEventListener('loadeddata', tryPlay);
+    el.addEventListener('canplay', tryPlay);
+    el.addEventListener('playing', ()=>{
+      ok = true;
+      el.style.display = '';
+      if(onOk) onOk();
+    });
+    el.addEventListener('error', ()=>{ if(onFail) onFail(); });
+
+    el.load();
+
+    // держим в кадре — играет, ушло — пауза
+    new IntersectionObserver(entries=>{
+      entries.forEach(e=>{
+        if(e.isIntersecting) tryPlay();
+        else if(!el.paused) el.pause();
+      });
+    },{threshold:.05}).observe(el);
+
+    // первое касание разблокирует автоплей на мобильных
+    const kick = ()=>{ tries = 0; tryPlay(); };
+    window.addEventListener('touchstart', kick, {passive:true});
+    window.addEventListener('click', kick);
+
+    // страховка: если через 4 с не пошло — сообщаем наружу
+    setTimeout(()=>{ if(!ok && onFail) onFail(); }, 4000);
+
+    return { isOk: ()=> ok };
+  }
+
+  /* фоновый скетч: если нет файла — слой прячется, фон чистый */
+  const sk = document.getElementById('sketchVideo');
+  setupVideo(sk, {
+    loop:true,
+    onFail: ()=>{
+      const layer = sk.closest('.sketch-layer');
+      if(layer) layer.style.display = 'none';
+    }
+  });
+
+  /* видео манифеста: вторая анимация */
+  const mv = document.getElementById('manifestVideo');
+
+  function showManifestText(){
+    if(document.getElementById('manifestFallback')) return;
+    const h2 = document.createElement('h2');
+    h2.id = 'manifestFallback';
+    h2.className = 'manifest-fallback';
+    h2.textContent = TEXT[currentLang];
+    document.getElementById('manifestInner').prepend(h2);
+  }
+  function hideManifestText(){
+    const fb = document.getElementById('manifestFallback');
+    if(fb) fb.remove();
+  }
+
+  setupVideo(mv, {
+    loop:true,
+    onFail: ()=>{ mv.style.display = 'none'; showManifestText(); },
+    onOk:   ()=>{ hideManifestText(); }
+  });
+
+  /* ═══ МОРФ «Искусство» ⇄ «prët» ═══ */
+  const morphBox = document.getElementById('morph');
+  const wordA = document.getElementById('wordA');
+  const wordB = document.getElementById('wordB');
+  const gooNoise = document.getElementById('gooNoise');
+
+  const CYCLE = 4200, HOLD = 0.34;
+  function smooth(t){ return t*t*t*(t*(t*6 - 15) + 10); }
+
+  let morphAF = null;
+
+  function morphTick(now){
+    const isMobile = window.innerWidth <= 900;
+    const phase = (now % (CYCLE * 2)) / CYCLE;
+    const dir = phase < 1 ? 0 : 1;
+    const local = phase % 1;
+
+    const p = local < HOLD ? 0 : (local - HOLD) / (1 - HOLD);
+
+    const wob =
+      Math.sin(now * 0.0016) * 0.055 +
+      Math.sin(now * 0.0031 + 1.7) * 0.035 +
+      Math.sin(now * 0.0047 + 0.4) * 0.022;
+
+    const e = smooth(Math.max(0, Math.min(1, p + wob * (p > 0 && p < 1 ? 1 : 0))));
+
+    const from = dir === 0 ? wordA : wordB;
+    const to   = dir === 0 ? wordB : wordA;
+
+    const maxBlur = isMobile ? 10 : 15;
+    const shiftX  = isMobile ? 22 : 54;
+
+    apply(from, 1 - e, -1, maxBlur, shiftX, now, isMobile);
+    apply(to,   e,     +1, maxBlur, shiftX, now, isMobile);
+
+    if(gooNoise && !isMobile){
+      const f = 0.009 + (Math.sin(now * 0.0009) * 0.5 + 0.5) * 0.007;
+      gooNoise.setAttribute('baseFrequency', f.toFixed(4));
+    }
+
+    morphAF = requestAnimationFrame(morphTick);
+  }
+
+  function apply(el, vis, side, maxBlur, shiftX, now, isMobile){
+    const inv = 1 - vis;
+    const sx = (0.86 + vis * 0.14).toFixed(3);
+    const sy = (1.16 - vis * 0.16 + Math.sin(now * 0.0021 + side) * 0.02).toFixed(3);
+    const tx = (side * inv * shiftX).toFixed(1);
+    const ty = (Math.sin(now * 0.0013 + side * 1.3) * (isMobile ? 3 : 6) * inv).toFixed(1);
+
+    el.style.opacity = Math.max(0, Math.min(1, vis * 1.12)).toFixed(3);
+    el.style.filter = `blur(${(inv * maxBlur).toFixed(2)}px)`;
+    el.style.transform =
+      `translate(${tx}px, calc(-50% + ${ty}px)) scale(${sx}, ${sy})`;
+  }
+
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(!reduceMotion){
+    morphAF = requestAnimationFrame(morphTick);
+  } else {
+    wordA.style.opacity = '1';
+    wordA.style.transform = 'translateY(-50%)';
+    wordB.style.opacity = '0';
+  }
+
+  /* ═══ СКРОЛЛ ═══ */
+  const header = document.getElementById('header');
+  const heroSection = document.getElementById('top');
+  const ornament = document.querySelector('.ornament');
+
+  window.addEventListener('scroll', ()=>{
+    header.classList.toggle('scrolled', window.scrollY > 80);
+
+    const heroRect = heroSection.getBoundingClientRect();
+    const heroVisible = heroRect.bottom > 0;
+
+    /* морф крутим только пока герой на экране */
+    if(heroVisible && !morphAF && !reduceMotion){
+      morphAF = requestAnimationFrame(morphTick);
+    } else if(!heroVisible && morphAF){
+      cancelAnimationFrame(morphAF);
+      morphAF = null;
+    }
+
+    if(!ornament) return;
+    if(window.innerWidth <= 900){
+      const p = Math.max(0, Math.min(1, -heroRect.top / (heroRect.height * 1.1)));
+      ornament.style.transform = `translate(${p*70}%, ${p*32}%) rotate(${p*88}deg)`;
+      ornament.style.opacity = (0.36 - p*0.24).toFixed(3);
+    } else {
+      const p = Math.max(0, Math.min(1, -heroRect.top / (heroRect.height * 1.6)));
+      ornament.style.transform = `translateY(-${(p*380).toFixed(0)}px) rotate(${(p*50).toFixed(1)}deg)`;
+      ornament.style.opacity = (0.38 - p*0.26).toFixed(3);
+    }
+  }, {passive:true});
+
+  /* ═══ ГАЛЕРЕЯ ═══ */
+  /* ═══════════ ГАЛЕРЕЯ ═══════════════════════════════════════
+     Чтобы добавить работу: скопируйте одну строку внутри works
+     и поменяйте значения.
+
+     {img:'img/файл.jpg', href:'https://ссылка', alt:'Название'}
+
+     img  — картинка-превью из папки img
+     href — куда ведёт клик (Behance, hsedesign и т. п.)
+     alt  — подпись для поиска и озвучки
+
+     Чтобы добавить категорию — скопируйте весь блок
+     { ru:'…', en:'…', works:[ … ] } целиком.
+     ════════════════════════════════════════════════════════════ */
+  const CATEGORIES = [
+    { ru:'Перформанс', en:'Performance', works:[
+      {img:'img/posestrie.jpg',  href:'https://hsedesign.ru/project/posestrie-fdd4656391a44e98b69133c583dda03f', alt:'Посестрие'},
+      {img:'img/posestrie2.jpg', href:'https://hsedesign.ru/project/posestrie-b7607978d5fb46828f213abeb44d5003', alt:'Посестрие 2'},
+      {img:'img/city.jpg',       href:'https://hsedesign.ru/project/20fde7d552894e3ab208171906388f3d',          alt:'Город'}
+    ]},
+    { ru:'Брендинг', en:'Branding', works:[
+      {img:'img/chenergy.jpg', href:'https://www.behance.net/gallery/242092697/Chenergy',            alt:'Chenergy'},
+      {img:'img/jazz.jpg',     href:'https://www.behance.net/gallery/242108047/dzhazovyj-festival',  alt:'Джазовый фестиваль'},
+      {img:'img/lines.jpg',    href:'https://hsedesign.ru/project/24aa67ae77f24a5d96496677a6ca3dc4', alt:'Линии'}
+    ]},
+    { ru:'Иллюстрация', en:'Illustration', works:[
+      {img:'img/elian.jpg',  href:'https://www.behance.net/gallery/242102615/Elian-script',        alt:'Элианский шрифт'},
+      {img:'img/shadow.jpg', href:'https://hsedesign.ru/project/1947070780544d21889e203d6e2ff548', alt:'Тень'}
+    ]}
+  ];
+
+  const galleryTrack = document.getElementById('galleryTrack');
+  const carouselNav  = document.getElementById('carouselNav');
+
+  function renderGallery(){
+    galleryTrack.innerHTML = CATEGORIES.map((cat, ci)=>{
+      const cols = Math.min(cat.works.length, 3);
+      const cards = cat.works.map(w=>`
+        <a class="card" href="${w.href}" target="_blank" rel="noopener">
+          <img src="${w.img}" alt="${w.alt}" loading="lazy">
+        </a>`).join('');
+      return `<div class="gallery-page${ci === 0 ? ' active-page' : ''}"
+                   data-page="${ci}"
+                   style="grid-template-columns:repeat(${cols},1fr)">${cards}</div>`;
+    }).join('');
+
+    carouselNav.innerHTML = CATEGORIES.map((cat, i)=>`
+      <button class="carousel-item${i === 0 ? ' active' : ''}" data-page="${i}" type="button">
+        <span class="carousel-dot${i === 0 ? ' active' : ''}"></span>
+        <span class="carousel-label" data-ru="${cat.ru}" data-en="${cat.en}">${cat.ru}</span>
+      </button>`).join('');
+
+    carouselNav.querySelectorAll('.carousel-item').forEach(btn=>{
+      btn.addEventListener('click', ()=> goToPage(parseInt(btn.dataset.page, 10)));
+    });
+  }
+
+  function goToPage(i){
+    galleryTrack.style.transform = `translateX(-${i * 100}%)`;
+    galleryTrack.querySelectorAll('.gallery-page').forEach(p=>{
+      p.classList.toggle('active-page', +p.dataset.page === i);
+    });
+    carouselNav.querySelectorAll('.carousel-item').forEach(b=>{
+      const on = +b.dataset.page === i;
+      b.classList.toggle('active', on);
+      b.querySelector('.carousel-dot').classList.toggle('active', on);
+    });
+  }
+
+  /* ═══════════ КОЛЛАБОРАЦИИ ═══════════════════════════════════
+     Чтобы добавить проект: скопируйте одну строку в списке ниже
+     и поменяйте значения. id — это конец ссылки, он должен
+     совпадать с ключом в collab.html.
+
+     { id:'имя', img:'img/файл.jpg', ru:'Название', en:'Title' }
+     ════════════════════════════════════════════════════════════ */
+  const COLLABS = [
+    { id:'crystals',  img:'img/collab-1.png', ru:'Кристаллы в руке', en:'Crystals in Hand' },
+    { id:'mountain',  img:'img/collab-2.png', ru:'Розовая гора',     en:'Pink Mountain' },
+    { id:'cat',       img:'img/collab-3.png', ru:'Пятнистый кот',    en:'Spotted Cat' },
+    { id:'butterfly', img:'img/collab-4.png', ru:'Бабочка',          en:'Butterfly' }
+  ];
+
+  function collabCard(item, hidden){
+    const title = currentLang === 'en' ? item.en : item.ru;
+    const attrs = hidden ? ' aria-hidden="true" tabindex="-1"' : '';
+    return `<a class="collab-card" href="collab.html?id=${item.id}"${attrs}>` +
+           `<img src="${item.img}" alt="${title}"></a>`;
+  }
+
+  function renderCollab(){
+    const A = document.getElementById('collabTrackA');
+    const B = document.getElementById('collabTrackB');
+    if(!A || !B) return;
+    /* дублируем список, чтобы бегущая строка шла без разрыва */
+    const items = COLLABS.concat(COLLABS);
+    A.innerHTML = items.map(c=>collabCard(c,false)).join('');
+    B.innerHTML = items.map(c=>collabCard(c,true)).join('');
+  }
+
+  function relabelNav(){
+    document.querySelectorAll('.carousel-label').forEach(el=>{
+      const t = el.getAttribute('data-' + currentLang);
+      if(t) el.textContent = t;
+    });
+  }
+
+  renderGallery();
+  renderCollab();
+</script>
+</body>
+</html>
