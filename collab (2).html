@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+<html lang="ru" style="color-scheme:light !important;background:#FFF9F5 !important">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="light">
+<title>Коллаборация — prët</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Averia+Serif+Libre:ital,wght@0,400;1,400&family=PT+Serif+Caption:ital@0;1&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    color-scheme:light !important;
+    --navy:#0B1E3C;
+    --blue:#4A7BA7;
+    --cream:#FFF9F5;
+    --ink:#2B1810;
+    --display:'Averia Serif Libre','PT Serif Caption',Georgia,serif;
+    --ui:'IBM Plex Sans',Arial,sans-serif;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth;color-scheme:light !important;background:#FFF9F5 !important}
+  body{
+    font-family:var(--display);
+    color:#2B1810 !important;background:#FFF9F5 !important;
+    line-height:1.6;overflow-x:hidden;
+    -webkit-text-size-adjust:100%;
+    forced-color-adjust:none;
+  }
+  body.locked{overflow:hidden}
+
+  @media(prefers-color-scheme:dark){
+    :root{color-scheme:light !important}
+    html,body{background:#FFF9F5 !important;color:#2B1810 !important}
+    .proj-hero,.proj-cover,.proj-next,.lightbox{background:#0B1E3C !important}
+    .proj-body,.proj-gallery,.proj-link{background:#FFF9F5 !important}
+    .proj-hero h1,.proj-hero .back,.proj-meta,
+    .proj-next a,.proj-next .lbl{color:#FFF9F5 !important;-webkit-text-fill-color:#FFF9F5 !important}
+  }
+
+  header{
+    position:fixed;top:0;left:0;right:0;z-index:100;
+    display:flex;justify-content:space-between;align-items:center;
+    padding:20px 48px;
+    background:rgba(255,249,245,.96);backdrop-filter:blur(10px);
+  }
+  .logo{
+    font-family:var(--display);font-size:32px;font-style:italic;
+    text-decoration:none;font-weight:400;
+    color:#2B1810;-webkit-text-fill-color:#2B1810;
+  }
+  nav{display:flex;gap:32px;align-items:center}
+  nav a{
+    text-decoration:none;
+    color:#2B1810;-webkit-text-fill-color:#2B1810;
+    font-family:var(--ui);font-size:12px;font-weight:600;
+    letter-spacing:.14em;text-transform:uppercase;
+    transition:opacity .2s;
+  }
+  nav a:hover{opacity:.6}
+  .lang-toggle{
+    font-size:12px;padding:5px 11px;
+    border:1.5px solid #2B1810;border-radius:4px;
+    background:none;cursor:pointer;
+    font-family:var(--ui);font-weight:600;
+    color:#2B1810;-webkit-text-fill-color:#2B1810;
+    transition:background .2s,color .2s;
+  }
+  .lang-toggle:hover{background:#2B1810;color:#FFF9F5;-webkit-text-fill-color:#FFF9F5}
+
+  /* ── ШАПКА ПРОЕКТА ── */
+  .proj-hero{background:#0B1E3C;padding:150px 48px 70px}
+  .proj-hero .wrap{max-width:1000px;margin:0 auto}
+  .back{
+    display:inline-block;
+    font-family:var(--ui);font-size:12px;font-weight:600;
+    letter-spacing:.14em;text-transform:uppercase;
+    color:#FFF9F5;-webkit-text-fill-color:#FFF9F5;
+    text-decoration:none;opacity:.55;margin-bottom:34px;
+    transition:opacity .2s;
+  }
+  .back:hover{opacity:1}
+  .proj-hero h1{
+    font-family:var(--display);font-style:italic;font-weight:400;
+    font-size:clamp(40px,7vw,92px);
+    line-height:1.05;letter-spacing:-.02em;
+    color:#FFF9F5;-webkit-text-fill-color:#FFF9F5;
+  }
+  .proj-meta{
+    margin-top:22px;
+    font-family:var(--ui);font-size:12px;font-weight:600;
+    letter-spacing:.14em;text-transform:uppercase;
+    color:#FFF9F5;-webkit-text-fill-color:#FFF9F5;
+    opacity:.55;
+  }
+
+  /* ── БОЛЬШАЯ КАРТИНКА ── */
+  .proj-cover{background:#0B1E3C;padding:0 48px 70px}
+  .proj-cover .wrap{max-width:1000px;margin:0 auto}
+  .proj-cover img{
+    width:100%;height:auto;display:block;
+    border-radius:14px;
+    box-shadow:0 24px 60px rgba(0,0,0,.35);
+    cursor:zoom-in;
+  }
+
+  /* ── СЕТКА МИНИАТЮР ── */
+  .proj-thumbs{
+    background:#0B1E3C;padding:0 48px 90px;
+  }
+  .proj-thumbs .wrap{max-width:1000px;margin:0 auto}
+  .proj-thumbs .hint{
+    font-family:var(--ui);font-size:11px;font-weight:600;
+    letter-spacing:.18em;text-transform:uppercase;
+    color:#FFF9F5;-webkit-text-fill-color:#FFF9F5;
+    opacity:.4;margin-bottom:18px;
+  }
+  .thumb-grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:14px;
+  }
+  .thumb{
+    position:relative;
+    aspect-ratio:1/1;
+    border-radius:10px;
+    overflow:hidden;
+    cursor:pointer;
+    background:#4A7BA7;
+    border:none;padding:0;
+    transition:transform .28s ease,box-shadow .28s ease;
+  }
+  .thumb img{width:100%;height:100%;object-fit:cover;display:block}
+  .thumb::after{
+    content:'';position:absolute;inset:0;
+    background:rgba(11,30,60,0);
+    transition:background .28s ease;
+  }
+  .thumb:hover{transform:translateY(-4px);box-shadow:0 14px 30px rgba(0,0,0,.4)}
+  .thumb:hover::after{background:rgba(11,30,60,.22)}
+
+  /* ── ТЕКСТ ── */
+  .proj-body{background:#FFF9F5;padding:90px 48px 60px}
+  .proj-body .wrap{max-width:760px;margin:0 auto}
+  .proj-lead{
+    font-family:var(--display);font-style:italic;
+    font-size:clamp(22px,3vw,36px);
+    line-height:1.35;color:#2B1810;-webkit-text-fill-color:#2B1810;
+    margin-bottom:38px;
+  }
+  .proj-body p{
+    font-family:'PT Serif Caption','Lora',Georgia,serif;
+    font-size:clamp(16px,1.7vw,19px);
+    line-height:1.8;color:#2B1810;-webkit-text-fill-color:#2B1810;
+    margin-bottom:24px;
+  }
+
+  .proj-link{background:#FFF9F5;padding:0 48px 90px;text-align:center}
+  .proj-link a{
+    display:inline-block;padding:14px 38px;
+    border:1.5px solid #2B1810;border-radius:40px;
+    font-family:var(--ui);font-size:12px;font-weight:600;
+    letter-spacing:.16em;text-transform:uppercase;
+    color:#2B1810;-webkit-text-fill-color:#2B1810;
+    text-decoration:none;
+    transition:background .25s,color .25s;
+  }
+  .proj-link a:hover{background:#2B1810;color:#FFF9F5;-webkit-text-fill-color:#FFF9F5}
+
+  /* ── НАВИГАЦИЯ ПО ПРОЕКТАМ ── */
+  .proj-nav{
+    background:#0B1E3C;
+    display:flex;justify-content:space-between;align-items:center;
+    gap:20px;padding:60px 48px;
+  }
+  .proj-nav a{
+    flex:1;
+    text-decoration:none;
+    font-family:var(--display);font-style:italic;
+    color:#FFF9F5;-webkit-text-fill-color:#FFF9F5;
+    transition:opacity .25s;
+    cursor:pointer;
+  }
+  .proj-nav a:hover{opacity:.6}
+  .proj-nav a.prev{text-align:left}
+  .proj-nav a.next{text-align:right}
+  .proj-nav .lbl{
+    display:block;
+    font-family:var(--ui);font-size:11px;font-weight:600;
+    letter-spacing:.2em;text-transform:uppercase;
+    opacity:.45;margin-bottom:12px;
+  }
+  .proj-nav .name{font-size:clamp(22px,3.4vw,42px);line-height:1.1}
+  .proj-nav .arrow{opacity:.5;margin:0 10px;font-size:clamp(18px,2.6vw,30px)}
+
+  /* ── ПРОСМОТР ── */
+  .lightbox{
+    position:fixed;inset:0;z-index:200;
+    background:#0B1E3C;
+    display:none;align-items:center;justify-content:center;
+    opacity:0;transition:opacity .3s ease;
+  }
+  .lightbox.open{display:flex}
+  .lightbox.show{opacity:1}
+  .lb-img{
+    max-width:92vw;max-height:82vh;
+    width:auto;height:auto;
+    object-fit:contain;
+    border-radius:8px;
+    box-shadow:0 30px 80px rgba(0,0,0,.6);
+    user-select:none;-webkit-user-drag:none;
+  }
+  .lb-close{
+    position:absolute;top:22px;right:26px;
+    width:44px;height:44px;border-radius:50%;
+    background:rgba(255,249,245,.12);
+    border:1.5px solid rgba(255,249,245,.35);
+    color:#FFF9F5;-webkit-text-fill-color:#FFF9F5;
+    font-size:20px;line-height:1;cursor:pointer;
+    display:flex;align-items:center;justify-content:center;
+    transition:background .2s,transform .2s;
+  }
+  .lb-close:hover{background:rgba(255,249,245,.24);transform:scale(1.06)}
+  .lb-arrow{
+    position:absolute;top:50%;transform:translateY(-50%);
+    width:52px;height:52px;border-radius:50%;
+    background:rgba(255,249,245,.1);
+    border:1.5px solid rgba(255,249,245,.3);
+    color:#FFF9F5;-webkit-text-fill-color:#FFF9F5;
+    font-size:24px;line-height:1;cursor:pointer;
+    display:flex;align-items:center;justify-content:center;
+    transition:background .2s,transform .2s;
+  }
+  .lb-arrow:hover{background:rgba(255,249,245,.24)}
+  .lb-arrow.left{left:26px}
+  .lb-arrow.right{right:26px}
+  .lb-arrow:disabled{opacity:.25;cursor:default}
+  .lb-count{
+    position:absolute;bottom:26px;left:50%;
+    transform:translateX(-50%);
+    font-family:var(--ui);font-size:12px;font-weight:600;
+    letter-spacing:.2em;
+    color:#FFF9F5;-webkit-text-fill-color:#FFF9F5;
+    opacity:.6;
+  }
+
+  footer{background:#4A7BA7;padding:60px 48px 40px;text-align:center}
+  footer p{
+    font-size:12px;letter-spacing:.14em;text-transform:uppercase;
+    font-family:var(--ui);
+    color:#FFF9F5;-webkit-text-fill-color:#FFF9F5;opacity:.55;
+  }
+  .not-found{
+    display:none;padding:200px 48px;text-align:center;
+    font-family:var(--display);font-style:italic;
+    font-size:clamp(20px,3vw,34px);
+    color:#2B1810;-webkit-text-fill-color:#2B1810;
+  }
+
+  @media(max-width:900px){
+    header{padding:10px 16px}
+    .logo{font-size:18px}
+    nav{gap:8px}
+    nav a{font-size:8px;letter-spacing:.06em}
+    .lang-toggle{font-size:8px;padding:2px 6px}
+
+    .proj-hero{padding:104px 16px 44px}
+    .back{margin-bottom:22px;font-size:9px}
+    .proj-hero h1{font-size:clamp(28px,9vw,44px)}
+    .proj-meta{margin-top:14px;font-size:9px}
+
+    .proj-cover{padding:0 16px 36px}
+    .proj-cover img{border-radius:9px}
+
+    .proj-thumbs{padding:0 16px 52px}
+    .proj-thumbs .hint{font-size:9px;margin-bottom:12px}
+    .thumb-grid{grid-template-columns:repeat(3,1fr);gap:9px}
+    .thumb{border-radius:7px}
+
+    .proj-body{padding:52px 16px 36px}
+    .proj-lead{font-size:clamp(17px,5.2vw,23px);margin-bottom:24px}
+    .proj-body p{font-size:clamp(14px,4vw,16px);line-height:1.7;margin-bottom:18px}
+
+    .proj-link{padding:0 16px 52px}
+    .proj-link a{padding:11px 26px;font-size:10px}
+
+    .proj-nav{padding:40px 16px;gap:12px}
+    .proj-nav .lbl{font-size:8px;margin-bottom:8px}
+    .proj-nav .name{font-size:clamp(16px,5vw,24px)}
+    .proj-nav .arrow{display:none}
+
+    .lb-arrow{width:42px;height:42px;font-size:19px}
+    .lb-arrow.left{left:12px}
+    .lb-arrow.right{right:12px}
+    .lb-close{top:14px;right:14px;width:38px;height:38px;font-size:17px}
+    .lb-img{max-width:94vw;max-height:74vh}
+
+    footer{padding:36px 16px 24px}
+    footer p{font-size:8px}
+    .not-found{padding:140px 16px;font-size:clamp(16px,5vw,22px)}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <a class="logo" href="./index.html">prët</a>
+  <nav>
+    <a href="./index.html#journey" data-ru="Галерея" data-en="Gallery">Галерея</a>
+    <a href="./shop.html" data-ru="Магазин" data-en="Shop">Магазин</a>
+    <a href="./about.html" data-ru="О&nbsp;себе" data-en="About">О&nbsp;себе</a>
+    <a href="./index.html#contact" data-ru="Контакты" data-en="Contact">Контакты</a>
+    <button class="lang-toggle" id="langBtn" type="button">EN</button>
+  </nav>
+</header>
+
+<div id="content" style="display:none">
+  <section class="proj-hero">
+    <div class="wrap">
+      <a class="back" href="./index.html#collab"
+         data-ru="← Все коллаборации" data-en="← All collaborations">← Все коллаборации</a>
+      <h1 id="pTitle"></h1>
+      <div class="proj-meta" id="pMeta"></div>
+    </div>
+  </section>
+
+  <section class="proj-cover">
+    <div class="wrap">
+      <img id="pCover" src="" alt="">
+    </div>
+  </section>
+
+  <section class="proj-thumbs" id="pThumbsSec">
+    <div class="wrap">
+      <div class="hint" data-ru="Нажмите, чтобы увеличить" data-en="Tap to enlarge">Нажмите, чтобы увеличить</div>
+      <div class="thumb-grid" id="pThumbs"></div>
+    </div>
+  </section>
+
+  <section class="proj-body">
+    <div class="wrap">
+      <div class="proj-lead" id="pLead"></div>
+      <div id="pText"></div>
+    </div>
+  </section>
+
+  <section class="proj-link" id="pLinkSec" style="display:none">
+    <a id="pLink" href="#" target="_blank" rel="noopener"
+       data-ru="Смотреть проект" data-en="View project">Смотреть проект</a>
+  </section>
+
+  <nav class="proj-nav">
+    <a class="prev" id="pPrevBtn" href="#">
+      <span class="lbl" data-ru="Предыдущая" data-en="Previous">Предыдущая</span>
+      <span class="name" id="pPrev"></span>
+    </a>
+    <a class="next" id="pNextBtn" href="#">
+      <span class="lbl" data-ru="Следующая" data-en="Next">Следующая</span>
+      <span class="name" id="pNext"></span>
+    </a>
+  </nav>
+</div>
+
+<div class="not-found" id="notFound">
+  Такой коллаборации нет. <a href="./index.html#collab" style="color:inherit">Вернуться</a>
+</div>
+
+<!-- просмотр картинок -->
+<div class="lightbox" id="lightbox">
+  <button class="lb-close" id="lbClose" type="button" aria-label="Закрыть">✕</button>
+  <button class="lb-arrow left"  id="lbPrev" type="button" aria-label="Назад">‹</button>
+  <img class="lb-img" id="lbImg" src="" alt="">
+  <button class="lb-arrow right" id="lbNext" type="button" aria-label="Вперёд">›</button>
+  <div class="lb-count" id="lbCount"></div>
+</div>
+
+<footer>
+  <p>© 2026 prët — maria balayan</p>
+</footer>
+
+<script>
+/* ═══════════════════════════════════════════════════════════════════
+   ДАННЫЕ КОЛЛАБОРАЦИЙ
+   ═══════════════════════════════════════════════════════════════════
+
+   Новый проект: скопируйте блок целиком и поменяйте значения.
+   Порядок кнопок «предыдущая / следующая» берётся сам из этого
+   списка — отдельно ничего прописывать не нужно.
+
+   ключ (crystals, mountain, …) — конец ссылки:
+   он же идёт в index.html:  collab.html?id=crystals
+
+   cover   — большая картинка сверху
+   images  — сетка миниатюр под ней (4–6 штук), по клику
+             открываются на весь экран. Не нужна — []
+   link    — кнопка «Смотреть проект». Не нужна — ''
+   ru / en — title (название) · meta (год, роль)
+             lead (крупная фраза) · body (абзацы через запятую)
+   ═══════════════════════════════════════════════════════════════════ */
+
+const COLLABS = {
+
+  crystals: {
+    cover: 'img/collab-1.png',
+    images: [
+      'img/collab-1.png',
+      'img/collab-2.png',
+      'img/collab-3.png',
+      'img/collab-4.png',
+      'img/collab-1.png',
+      'img/collab-2.png'
+    ],
+    link: '',
+    ru: {
+      title: 'Кристаллы в руке',
+      meta: 'коллаборация · 2025',
+      lead: 'Короткая вводная фраза о проекте — одна-две строки.',
+      body: [
+        'Здесь рассказ о том, как проект начался и с кем вы работали.',
+        'Ещё один абзац: что получилось в итоге, что было важно.'
+      ]
+    },
+    en: {
+      title: 'Crystals in Hand',
+      meta: 'collaboration · 2025',
+      lead: 'A short opening line about the project — one or two lines.',
+      body: [
+        'Here goes the story of how the project started and who you worked with.',
+        'One more paragraph: what came out of it, what mattered.'
+      ]
+    }
+  },
+
+  mountain: {
+    cover: 'img/collab-2.png',
+    images: [
+      'img/collab-2.png',
+      'img/collab-3.png',
+      'img/collab-4.png',
+      'img/collab-1.png'
+    ],
+    link: '',
+    ru: {
+      title: 'Розовая гора',
+      meta: 'коллаборация · 2025',
+      lead: 'Вводная фраза о проекте.',
+      body: ['Первый абзац рассказа.', 'Второй абзац рассказа.']
+    },
+    en: {
+      title: 'Pink Mountain',
+      meta: 'collaboration · 2025',
+      lead: 'An opening line about the project.',
+      body: ['First paragraph of the story.', 'Second paragraph of the story.']
+    }
+  },
+
+  cat: {
+    cover: 'img/collab-3.png',
+    images: [
+      'img/collab-3.png',
+      'img/collab-4.png',
+      'img/collab-1.png',
+      'img/collab-2.png',
+      'img/collab-4.png'
+    ],
+    link: '',
+    ru: {
+      title: 'Пятнистый кот',
+      meta: 'коллаборация · 2025',
+      lead: 'Вводная фраза о проекте.',
+      body: ['Первый абзац рассказа.', 'Второй абзац рассказа.']
+    },
+    en: {
+      title: 'Spotted Cat',
+      meta: 'collaboration · 2025',
+      lead: 'An opening line about the project.',
+      body: ['First paragraph of the story.', 'Second paragraph of the story.']
+    }
+  },
+
+  butterfly: {
+    cover: 'img/collab-4.png',
+    images: [
+      'img/collab-4.png',
+      'img/collab-1.png',
+      'img/collab-2.png',
+      'img/collab-3.png'
+    ],
+    link: '',
+    ru: {
+      title: 'Бабочка',
+      meta: 'коллаборация · 2025',
+      lead: 'Вводная фраза о проекте.',
+      body: ['Первый абзац рассказа.', 'Второй абзац рассказа.']
+    },
+    en: {
+      title: 'Butterfly',
+      meta: 'collaboration · 2025',
+      lead: 'An opening line about the project.',
+      body: ['First paragraph of the story.', 'Second paragraph of the story.']
+    }
+  }
+
+};
+
+/* ═══════════ НИЖЕ МОЖНО НЕ ТРОГАТЬ ═══════════ */
+
+/* порядок берём прямо из списка — добавлять вручную не нужно */
+const ORDER = Object.keys(COLLABS);
+
+let lang = 'ru';
+let currentId = null;
+
+/* читаем id из ?id=… , а если ссылку открыли без него — берём первый */
+function readId(){
+  const q = new URLSearchParams(location.search).get('id');
+  if(q && COLLABS[q]) return q;
+  return ORDER[0];
+}
+
+function go(id){
+  if(!COLLABS[id]) return;
+  currentId = id;
+  /* адрес меняем без перезагрузки — так кнопки работают надёжно */
+  if(history.replaceState){
+    history.replaceState(null, '', location.pathname + '?id=' + id);
+  }
+  render();
+  window.scrollTo({ top: 0, behavior: 'auto' });
+}
+
+/* ── отрисовка ── */
+function render(){
+  const d = COLLABS[currentId];
+  if(!d) return;
+  const t = d[lang] || d.ru;
+
+  document.title = (t.title || currentId) + ' — prët';
+
+  document.getElementById('pTitle').textContent = t.title || '';
+  document.getElementById('pMeta').textContent  = t.meta  || '';
+  document.getElementById('pLead').textContent  = t.lead  || '';
+
+  const cover = document.getElementById('pCover');
+  cover.src = d.cover || '';
+  cover.alt = t.title || '';
+
+  /* большая картинка тоже открывается по клику */
+  cover.onclick = ()=> openBox(d.cover ? [d.cover] : [], 0);
+
+  /* сетка миниатюр */
+  const sec = document.getElementById('pThumbsSec');
+  const box = document.getElementById('pThumbs');
+  const imgs = d.images || [];
+
+  if(imgs.length){
+    sec.style.display = 'block';
+    box.innerHTML = imgs.map((src,i)=>
+      `<button class="thumb" type="button" data-i="${i}" aria-label="${i+1}">
+         <img src="${src}" alt="${t.title || ''} ${i+1}" loading="lazy">
+       </button>`
+    ).join('');
+    box.querySelectorAll('.thumb').forEach(b=>{
+      b.addEventListener('click', ()=> openBox(imgs, +b.dataset.i));
+    });
+  } else {
+    sec.style.display = 'none';
+    box.innerHTML = '';
+  }
+
+  /* абзацы */
+  document.getElementById('pText').innerHTML =
+    (t.body || []).map(p=>`<p>${p}</p>`).join('');
+
+  /* внешняя ссылка */
+  const lSec = document.getElementById('pLinkSec');
+  const lEl  = document.getElementById('pLink');
+  if(d.link){ lSec.style.display = 'block'; lEl.href = d.link; }
+  else { lSec.style.display = 'none'; }
+
+  /* предыдущая и следующая — по кругу */
+  const i    = ORDER.indexOf(currentId);
+  const prev = ORDER[(i - 1 + ORDER.length) % ORDER.length];
+  const next = ORDER[(i + 1) % ORDER.length];
+
+  const pd = COLLABS[prev], nd = COLLABS[next];
+  document.getElementById('pPrev').textContent = pd ? (pd[lang] ? pd[lang].title : prev) : '';
+  document.getElementById('pNext').textContent = nd ? (nd[lang] ? nd[lang].title : next) : '';
+
+  document.getElementById('pPrevBtn').onclick = e=>{ e.preventDefault(); go(prev); };
+  document.getElementById('pNextBtn').onclick = e=>{ e.preventDefault(); go(next); };
+}
+
+/* ── просмотр картинок ── */
+const lb      = document.getElementById('lightbox');
+const lbImg   = document.getElementById('lbImg');
+const lbCount = document.getElementById('lbCount');
+let boxList = [], boxIndex = 0;
+
+function openBox(list, idx){
+  if(!list.length) return;
+  boxList = list;
+  boxIndex = Math.max(0, Math.min(idx, list.length - 1));
+  paintBox();
+  lb.classList.add('open');
+  document.body.classList.add('locked');
+  requestAnimationFrame(()=> lb.classList.add('show'));
+}
+function closeBox(){
+  lb.classList.remove('show');
+  document.body.classList.remove('locked');
+  setTimeout(()=> lb.classList.remove('open'), 260);
+}
+function stepBox(dir){
+  if(boxList.length < 2) return;
+  boxIndex = (boxIndex + dir + boxList.length) % boxList.length;
+  paintBox();
+}
+function paintBox(){
+  lbImg.src = boxList[boxIndex];
+  lbCount.textContent = boxList.length > 1
+    ? (boxIndex + 1) + ' / ' + boxList.length
+    : '';
+  const many = boxList.length > 1;
+  document.getElementById('lbPrev').style.display = many ? 'flex' : 'none';
+  document.getElementById('lbNext').style.display = many ? 'flex' : 'none';
+}
+
+document.getElementById('lbClose').addEventListener('click', closeBox);
+document.getElementById('lbPrev').addEventListener('click', ()=> stepBox(-1));
+document.getElementById('lbNext').addEventListener('click', ()=> stepBox(1));
+lb.addEventListener('click', e=>{ if(e.target === lb) closeBox(); });
+
+document.addEventListener('keydown', e=>{
+  if(!lb.classList.contains('open')) return;
+  if(e.key === 'Escape') closeBox();
+  if(e.key === 'ArrowLeft') stepBox(-1);
+  if(e.key === 'ArrowRight') stepBox(1);
+});
+
+/* свайп на телефоне */
+let touchX = 0;
+lb.addEventListener('touchstart', e=>{ touchX = e.touches[0].clientX; }, {passive:true});
+lb.addEventListener('touchend', e=>{
+  const dx = e.changedTouches[0].clientX - touchX;
+  if(Math.abs(dx) > 50) stepBox(dx < 0 ? 1 : -1);
+}, {passive:true});
+
+/* ── запуск ── */
+currentId = readId();
+
+if(!COLLABS[currentId]){
+  document.getElementById('notFound').style.display = 'block';
+} else {
+  document.getElementById('content').style.display = 'block';
+  render();
+}
+
+/* переключение языка */
+document.getElementById('langBtn').addEventListener('click', ()=>{
+  lang = lang === 'ru' ? 'en' : 'ru';
+  document.getElementById('langBtn').textContent = lang === 'ru' ? 'EN' : 'RU';
+  document.documentElement.lang = lang;
+  document.querySelectorAll('[data-ru]').forEach(el=>{
+    const v = el.getAttribute('data-' + lang);
+    if(v !== null) el.innerHTML = v;
+  });
+  render();
+});
+</script>
+</body>
+</html>
